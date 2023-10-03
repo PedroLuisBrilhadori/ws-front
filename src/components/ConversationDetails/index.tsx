@@ -10,7 +10,6 @@ import { selectMessage, setMessages } from "@/store/messages";
 export default function ConversationDetails() {
   const current = useSelector(selectCurrentConversation);
   const messages = useSelector(selectMessage);
-  const dispatch = useDispatch();
   const messageRef = useRef<HTMLDivElement>(null);
 
   const scroll = () => {
@@ -20,22 +19,6 @@ export default function ConversationDetails() {
         block: "end",
       });
   };
-
-  useEffect(() => {
-    if (current) {
-      const { to } = current as unknown as Conversation;
-
-      fetch(`http://localhost:3000/messages/${to}`).then(async (response) => {
-        const messages = await response.json();
-
-        dispatch(setMessages(messages));
-      });
-
-      setTimeout(() => {
-        scroll();
-      }, 100);
-    }
-  }, [current, messageRef.current]);
 
   return (
     <div className="flex flex-col w-full">

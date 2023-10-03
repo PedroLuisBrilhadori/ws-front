@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectConversations } from "@/store/conversations";
 import { Conversation } from "@/models";
 import { setCurrentConversation } from "@/store/currentConversation";
+import { useNavigate } from "react-router-dom";
 
 export default function ConversationList() {
   const conversations = useSelector(selectConversations);
@@ -22,6 +23,7 @@ type ItemProps = {
 
 const Item = ({ conversation }: ItemProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div
@@ -29,6 +31,7 @@ const Item = ({ conversation }: ItemProps) => {
     "
       onClick={() => {
         dispatch(setCurrentConversation(conversation));
+        navigate(`/${conversation?.to}`);
       }}
     >
       <div className="flex w-[4.8rem]"></div>
