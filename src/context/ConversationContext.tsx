@@ -8,33 +8,38 @@ interface ConversationProviderProps {
 interface ConversationContextType {
   conversation: Conversation;
   message: Message[];
-  setConversation: ( conversation: Conversation ) => void;
-  setMessage: ( message: Message[] ) => void;
+  setConversation: (conversation: Conversation) => void;
+  setMessage: (message: Message[]) => void;
 }
 
 export const ConversationContext = createContext({} as ConversationContextType);
 
-export const ConversationProvider = ({ children }: ConversationProviderProps) => {
-  const [ conversation, setConversationData ] = useState<Conversation>({} as Conversation);
-  const [ message, setMessageData ] = useState<Message[]>([]);
+export const ConversationProvider = ({
+  children,
+}: ConversationProviderProps) => {
+  const [conversation, setConversationData] = useState<Conversation>(
+    {} as Conversation
+  );
+  const [message, setMessageData] = useState<Message[]>([]);
 
   function setConversation(conversation: Conversation) {
     setConversationData(conversation);
   }
 
-  function setMessage( message: Message[] ) {
-    console.log(message);
-    setMessageData(message)
+  function setMessage(message: Message[]) {
+    setMessageData(message);
   }
 
   return (
-    <ConversationContext.Provider value={{
-      conversation,
-      message,
-      setConversation,
-      setMessage,
-    }}>
+    <ConversationContext.Provider
+      value={{
+        conversation,
+        message,
+        setConversation,
+        setMessage,
+      }}
+    >
       {children}
     </ConversationContext.Provider>
-  )
-}
+  );
+};
