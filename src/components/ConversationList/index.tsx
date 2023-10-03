@@ -34,8 +34,7 @@ const Item = ({ conversation }: ItemProps) => {
         navigate(`/${conversation?.to}`);
       }}
     >
-      <div className="flex w-[4.8rem]"></div>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full px-2">
         <hr style={{ borderTop: ` solid rgba(134,150,160,0.15)` }} />
         <div className="flex py-2">
           <div className="flex flex-col w-full h-full ">

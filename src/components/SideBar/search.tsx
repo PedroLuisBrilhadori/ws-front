@@ -22,6 +22,7 @@ export const SideBarSearch = ({ search, setSearch }: SidaBarSearchProps) => {
         </div>
         <div className="">
           <input
+            disabled
             className="w-[96%] h-9 rounded-lg bg-[#202c33] text-white text-sm px-10"
             placeholder="Pesquisar ou começar uma nova conversa"
             value={search}

@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 
 import ConversationList from "../ConversationList";
 import { SideBarSearch } from "./search";
-import { useDispatch, useSelector } from "react-redux";
-import { selectConversations, setConversations } from "@/store/conversations";
+import { useDispatch } from "react-redux";
+import { setConversations } from "@/store/conversations";
 
 export default function SideBar() {
   const [search, setSearch] = useState("");
-
-  const conversation = useSelector(selectConversations);
   const dispatch = useDispatch();
 
   useEffect(() => {
