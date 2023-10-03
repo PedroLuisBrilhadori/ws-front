@@ -1,12 +1,14 @@
-import { useSelector } from "react-redux";
-import { selectConversations } from "@/store/conversations";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectConversations,
+  setCurrentConversation,
+} from "@/store/conversations";
 import { Conversation } from "@/models";
 
 export default function ConversationList() {
-  const conversations = useSelector(selectConversations);
+  const { conversations } = useSelector(selectConversations);
 
   return conversations.map((conversation) => {
-    console.log(conversation);
     return (
       <Item
         key={`item-${conversation?.to || conversation?.from}`}
@@ -21,8 +23,16 @@ type ItemProps = {
 };
 
 const Item = ({ conversation }: ItemProps) => {
+  const dispatch = useDispatch();
+
   return (
-    <div className="flex items-center w-full h-[4.5rem] bg-[#111B21] pl-3 pr-4 hover:bg-[#2A3942] cursor-pointer">
+    <div
+      className="flex items-center w-full h-[4.5rem] bg-[#111B21] pl-3 pr-4 hover:bg-[#2A3942] cursor-pointer
+    "
+      onClick={() => {
+        dispatch(setCurrentConversation(conversation));
+      }}
+    >
       <div className="flex w-[4.8rem]"></div>
       <div className="flex flex-col w-full">
         <hr style={{ borderTop: ` solid rgba(134,150,160,0.15)` }} />

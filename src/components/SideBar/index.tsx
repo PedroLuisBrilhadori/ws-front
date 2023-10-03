@@ -14,8 +14,8 @@ export default function SideBar() {
   useEffect(() => {
     fetch(`http://localhost:3000/messages/conversations`).then(
       async (response) => {
-        const data = await response.json();
-        dispatch(setConversations(data));
+        const conversations = await response.json();
+        dispatch(setConversations({ conversations }));
       }
     );
   }, []);
