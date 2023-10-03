@@ -11,10 +11,14 @@ const slice = createSlice({
     setMessages(state, action) {
       return action.payload;
     },
+    addMessage(state, action) {
+      state.push(action.payload);
+      return state;
+    },
   },
 });
 
-export const { setMessages } = slice.actions;
+export const { setMessages, addMessage } = slice.actions;
 
 export const selectMessage = (state: RootState) => {
   return state.messages;

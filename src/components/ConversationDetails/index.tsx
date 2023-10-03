@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MessageBalloon from "../MessageBalloon";
 import { ConversationFooter } from "./footer";
 import { ConversationHeader } from "./header";
@@ -12,8 +12,6 @@ export default function ConversationDetails() {
   const messages = useSelector(selectMessage);
   const dispatch = useDispatch();
   const messageRef = useRef<HTMLDivElement>(null);
-
-  const [messageSend, setMessageSend] = useState("");
 
   const scroll = () => {
     messageRef.current &&
@@ -38,14 +36,6 @@ export default function ConversationDetails() {
       }, 100);
     }
   }, [current, messageRef.current]);
-
-  function changeHandler(evt: KeyboardEvent<HTMLInputElement>) {
-    const { key } = evt;
-
-    if (key === "Enter") {
-      setMessageSend("");
-    }
-  }
 
   return (
     <div className="flex flex-col w-full">
@@ -76,11 +66,7 @@ export default function ConversationDetails() {
         })}
       </div>
 
-      <ConversationFooter
-        changeHandler={changeHandler}
-        setMessageSend={setMessageSend}
-        messageSend={messageSend}
-      />
+      <ConversationFooter />
     </div>
   );
 }
