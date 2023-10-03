@@ -30,7 +30,7 @@ export default function ConversationDetails() {
       />
 
       <div
-        className="flex flex-col w-full h-full px-24 py-6 overflow-y-auto"
+        className="flex flex-col w-full h-full px-5 py-6 overflow-y-auto"
         style={{ backgroundImage: "url('/assets/images/background.jpg')" }}
       >
         {messages.map((message, index) => {
