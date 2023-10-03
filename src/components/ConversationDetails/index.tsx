@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import MessageBalloon from "../MessageBalloon";
 import { ConversationFooter } from "./footer";
 import { ConversationHeader } from "./header";
@@ -11,8 +11,17 @@ export default function ConversationDetails() {
   const current = useSelector(selectCurrentConversation);
   const messages = useSelector(selectMessage);
   const dispatch = useDispatch();
+  const messageRef = useRef<HTMLDivElement>(null);
 
   const [messageSend, setMessageSend] = useState("");
+
+  const scroll = () => {
+    messageRef.current &&
+      messageRef.current.scrollIntoView({
+        behavior: "auto",
+        block: "end",
+      });
+  };
 
   useEffect(() => {
     if (current) {
@@ -23,8 +32,12 @@ export default function ConversationDetails() {
 
         dispatch(setMessages(messages));
       });
+
+      setTimeout(() => {
+        scroll();
+      }, 100);
     }
-  }, [current]);
+  }, [current, messageRef.current]);
 
   function changeHandler(evt: KeyboardEvent<HTMLInputElement>) {
     const { key } = evt;
@@ -47,7 +60,16 @@ export default function ConversationDetails() {
         className="flex flex-col w-full h-full px-24 py-6 overflow-y-auto"
         style={{ backgroundImage: "url('/assets/images/background.jpg')" }}
       >
-        {messages.map((message) => {
+        {messages.map((message, index) => {
+          if (index == messages.length - 1) {
+            messageRef.current && messageRef.current.scrollIntoView();
+
+            return (
+              <div ref={messageRef} key={`message-${message.id}`}>
+                <MessageBalloon message={message} />
+              </div>
+            );
+          }
           return (
             <MessageBalloon key={`message-${message.id}`} message={message} />
           );
