@@ -15,7 +15,7 @@ export default function SideBar() {
     fetch(`http://localhost:3000/messages/conversations`).then(
       async (response) => {
         const conversations = await response.json();
-        dispatch(setConversations({ conversations }));
+        dispatch(setConversations(conversations));
       }
     );
   }, []);

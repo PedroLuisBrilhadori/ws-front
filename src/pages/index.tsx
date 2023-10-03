@@ -1,10 +1,11 @@
-import { useContext, useEffect } from "react";
 import ConversationDetails from "../components/ConversationDetails";
 import SideBar from "../components/SideBar";
-import { ConversationContext } from "../context/ConversationContext";
+import { useSelector } from "react-redux";
+import { selectCurrentConversation } from "@/store/currentConversation";
 
 export default function Home() {
-  const { conversation } = useContext(ConversationContext);
+  const current = useSelector(selectCurrentConversation);
+
   const IconHome = () => (
     <div className="flex flex-col w-full h-full items-center justify-center">
       <svg
@@ -138,7 +139,7 @@ export default function Home() {
       <div className="flex w-full xl:container h-screen xl:py-4">
         <SideBar />
         <div className="flex w-[70%] bg-[#222E35]">
-          {conversation.contactName ? <ConversationDetails /> : <IconHome />}
+          {current ? <ConversationDetails /> : <IconHome />}
         </div>
       </div>
     </div>

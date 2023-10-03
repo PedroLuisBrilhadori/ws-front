@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectConversations,
-  setCurrentConversation,
-} from "@/store/conversations";
+import { selectConversations } from "@/store/conversations";
 import { Conversation } from "@/models";
+import { setCurrentConversation } from "@/store/currentConversation";
 
 export default function ConversationList() {
-  const { conversations } = useSelector(selectConversations);
+  const conversations = useSelector(selectConversations);
 
   return conversations.map((conversation) => {
     return (
