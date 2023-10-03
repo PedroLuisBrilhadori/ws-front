@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentConversation } from "@/store/currentConversation";
 import { Conversation } from "@/models";
 import { selectMessage, setMessages } from "@/store/messages";
+import { ScrollIcon } from "lucide-react";
 
 export default function ConversationDetails() {
   const current = useSelector(selectCurrentConversation);
@@ -19,6 +20,10 @@ export default function ConversationDetails() {
         block: "end",
       });
   };
+
+  setTimeout(() => {
+    scroll();
+  }, 100);
 
   return (
     <div className="flex flex-col w-full">
