@@ -7,14 +7,20 @@ interface MessageBalloonProps {
 export default function MessageBalloon(props: MessageBalloonProps) {
   const { message } = props;
 
-  const me = message.from ? false : true;
+  const me = message.me;
 
   const flexAlignItems = me ? "items-end" : "items-start";
   const backgroundColor = me ? "bg-[#005c4b]" : "bg-[#202c33]";
   const borderRounded = me ? "rounded-tr-none" : "rounded-tl-none";
 
   const date = new Date(Number(message.timestamp) * 1000);
-  const time = `${date.getHours()}:${date.getMinutes()}`;
+  const hour =
+    `${date.getHours()}`.length == 1 ? `0${date.getHours()}` : date.getHours();
+  const minutes =
+    `${date.getMinutes()}`.length == 1
+      ? `0${date.getHours()}`
+      : date.getMinutes();
+  const time = `${hour}:${minutes}`;
 
   return (
     <div className={`flex flex-col ${flexAlignItems} w-full h-max`}>

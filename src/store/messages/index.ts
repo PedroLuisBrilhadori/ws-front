@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { Message } from "@/models";
+import { DayMessages, Message } from "@/models";
 
-const initialState: Message[] = [];
+const initialState: DayMessages[] = [];
 
 const slice = createSlice({
   name: "messages",
@@ -12,8 +12,24 @@ const slice = createSlice({
       return action.payload;
     },
     addMessage(state, action) {
-      state.push(action.payload);
-      return state;
+      const newState = state.map((day) => {
+        const today = `${new Date()
+          .toJSON()
+          .split("T")
+          .map((s, i) => (i == 1 ? "00:00:00.000Z" : s))
+          .join("T")}`;
+
+        console.log(day.day == today);
+        console.log(today);
+
+        if (today == day.day) {
+          day.messages.push(action.payload);
+        }
+
+        return day;
+      });
+
+      return newState;
     },
   },
 });

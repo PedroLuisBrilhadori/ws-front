@@ -1,16 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import MessageBalloon from "../MessageBalloon";
+import { useRef } from "react";
 import { ConversationFooter } from "./footer";
 import { ConversationHeader } from "./header";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectCurrentConversation } from "@/store/currentConversation";
-import { Conversation } from "@/models";
-import { selectMessage, setMessages } from "@/store/messages";
-import { ScrollIcon } from "lucide-react";
+import { Conversation, Message } from "@/models";
+import { selectMessage } from "@/store/messages";
+import MessageBalloon from "../MessageBalloon";
 
-export default function ConversationDetails() {
-  const current = useSelector(selectCurrentConversation);
-  const messages = useSelector(selectMessage);
+const Messages = ({ messages }: { messages: Message[] }) => {
   const messageRef = useRef<HTMLDivElement>(null);
 
   const scroll = () => {
@@ -25,6 +22,24 @@ export default function ConversationDetails() {
     scroll();
   }, 100);
 
+  return messages.map((message, index) => {
+    if (index == messages.length - 1) {
+      messageRef.current && messageRef.current.scrollIntoView();
+
+      return (
+        <div ref={messageRef} key={`message-${message.id}`}>
+          <MessageBalloon message={message} />
+        </div>
+      );
+    }
+    return <MessageBalloon key={`message-${message.id}`} message={message} />;
+  });
+};
+
+export default function ConversationDetails() {
+  const current = useSelector(selectCurrentConversation);
+  const days = useSelector(selectMessage);
+
   return (
     <div className="flex flex-col w-full">
       <ConversationHeader
@@ -38,18 +53,31 @@ export default function ConversationDetails() {
         className="flex flex-col w-full h-full px-5 py-6 overflow-y-auto"
         style={{ backgroundImage: "url('/assets/images/background.jpg')" }}
       >
-        {messages.map((message, index) => {
-          if (index == messages.length - 1) {
-            messageRef.current && messageRef.current.scrollIntoView();
+        {days.map(({ day, messages }, index) => {
+          const date = new Date(day);
 
-            return (
-              <div ref={messageRef} key={`message-${message.id}`}>
-                <MessageBalloon message={message} />
-              </div>
-            );
-          }
+          const dateLabel = () => {
+            if (date) {
+              const day = `${date.getDate()}`;
+              const month = `${date.getMonth() + 1}`;
+
+              return `${day.length == 1 ? "0" + day : day}/${
+                month.length == 1 ? "0" + month : month
+              }/${date.getFullYear()}`;
+            }
+
+            return day;
+          };
+
+          const formattedDate = dateLabel();
+
           return (
-            <MessageBalloon key={`message-${message.id}`} message={message} />
+            <div className="flex flex-col" key={`${day}-${index}`}>
+              <span className="bg-gray-600 text-white px-4 py-1 self-center text-center rounded-full opacity-75">
+                {formattedDate}
+              </span>
+              <Messages messages={messages} />;
+            </div>
           );
         })}
       </div>

@@ -3,6 +3,11 @@ export type Message = {
   status: string;
   message: string;
   timestamp: string;
-  from?: string;
-  to?: string;
+  me?: boolean;
+  to: string;
+};
+
+export type DayMessages = {
+  day: string;
+  messages: Message[];
 };
