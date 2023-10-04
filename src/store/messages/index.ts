@@ -12,24 +12,21 @@ const slice = createSlice({
       return action.payload;
     },
     addMessage(state, action) {
-      const newState = state.map((day) => {
-        const today = `${new Date()
+      let index;
+
+      state.forEach((day, i) => {
+        const today = new Date(Number(action.payload.timestamp) * 1000)
           .toJSON()
-          .split("T")
-          .map((s, i) => (i == 1 ? "00:00:00.000Z" : s))
-          .join("T")}`;
+          .split("T")[0];
 
-        console.log(day.day == today);
-        console.log(today);
-
-        if (today == day.day) {
-          day.messages.push(action.payload);
-        }
+        if (day.day.includes(today)) index = i;
 
         return day;
       });
 
-      return newState;
+      index && state[index].messages.push(action.payload);
+
+      return state;
     },
   },
 });
