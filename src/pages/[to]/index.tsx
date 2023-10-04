@@ -1,18 +1,26 @@
 import ConversationDetails from "@/components/ConversationDetails";
+import { Message } from "@/models";
 import {
   selectCurrentConversation,
   setCurrentConversation,
 } from "@/store/currentConversation";
-import { selectMessage, setMessages } from "@/store/messages";
-import { useEffect } from "react";
+import { addMessage, selectMessage, setMessages } from "@/store/messages";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { io } from "socket.io-client";
 
 export default function Index() {
   const { to } = useParams();
   const current = useSelector(selectCurrentConversation);
   const messages = useSelector(selectMessage);
   const dispatch = useDispatch();
+
+  const [socket, setSocket] = useState(
+    io("http://localhost:3000", {
+      autoConnect: true,
+    })
+  );
 
   useEffect(() => {
     if (to) {
@@ -30,7 +38,17 @@ export default function Index() {
         scroll();
       }, 100);
     }
-  }, []);
+
+    const onMessageRecived = (value: Message) => {
+      if (value.to == to) dispatch(addMessage(value));
+    };
+
+    socket.on("message.recived", onMessageRecived);
+
+    return () => {
+      socket.off("message.recived", onMessageRecived);
+    };
+  }, [messages.length]);
 
   return (
     <div className="flex justify-center">
