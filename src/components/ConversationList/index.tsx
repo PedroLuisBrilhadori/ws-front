@@ -20,8 +20,6 @@ const Item = ({ conversation }: ItemProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(conversation);
-
   return (
     <div
       className="flex items-center w-full h-[4.5rem] bg-[#111B21] pl-3 pr-4 hover:bg-[#2A3942] cursor-pointer
