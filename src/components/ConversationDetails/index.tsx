@@ -2,8 +2,7 @@ import { useRef } from "react";
 import { ConversationFooter } from "./footer";
 import { ConversationHeader } from "./header";
 import { useSelector } from "react-redux";
-import { selectCurrentConversation } from "@/store/currentConversation";
-import { Conversation, Message } from "@/models";
+import { Message } from "@/models";
 import { selectMessage } from "@/store/messages";
 import MessageBalloon from "../MessageBalloon";
 
@@ -37,17 +36,11 @@ const Messages = ({ messages }: { messages: Message[] }) => {
 };
 
 export default function ConversationDetails() {
-  const current = useSelector(selectCurrentConversation);
   const days = useSelector(selectMessage);
 
   return (
     <div className="flex flex-col w-full">
-      <ConversationHeader
-        image={"image"}
-        contactName={
-          (current && (current as unknown as Conversation)?.to) || ""
-        }
-      />
+      <ConversationHeader />
 
       <div
         className="flex flex-col w-full h-full px-5 py-6 overflow-y-auto"

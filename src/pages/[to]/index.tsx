@@ -18,7 +18,6 @@ import { io } from "socket.io-client";
 export default function Index() {
   const { to } = useParams();
   const current = useSelector(selectCurrentConversation);
-  const messages = useSelector(selectMessage);
   const dispatch = useDispatch();
 
   const [socket, setSocket] = useState(
@@ -35,7 +34,13 @@ export default function Index() {
         dispatch(setMessages(messages));
 
         if (!current) {
-          dispatch(setCurrentConversation({ to }));
+          fetch(`http://localhost:3000/messages/conversations/${to}`).then(
+            async (response) => {
+              const conversations = await response.json();
+
+              dispatch(setCurrentConversation(conversations));
+            }
+          );
         }
       });
 
@@ -60,12 +65,12 @@ export default function Index() {
       socket.off("message.recived", onMessageRecived);
       socket.off("message.update", onMessageUpdate);
     };
-  }, [messages.length]);
+  }, []);
 
   return (
     <div className="flex justify-center">
       <div className="flex w-full xl:container h-screen xl:py-4">
-        {messages.length > 0 ? <ConversationDetails /> : null}
+        <ConversationDetails />
       </div>
     </div>
   );

@@ -1,16 +1,17 @@
+import { Conversation } from "@/models";
+import { selectCurrentConversation } from "@/store/currentConversation";
 import { ArrowLeft } from "lucide-react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export type ConversationHeaderProps = {
-  image: string;
-  contactName: string;
-};
-
-export const ConversationHeader = ({
-  image,
-  contactName,
-}: ConversationHeaderProps) => {
+export const ConversationHeader = () => {
   const navigate = useNavigate();
+
+  const current = useSelector(
+    selectCurrentConversation
+  ) as unknown as Conversation;
+
+  const contactName = current ? `${current.name} - ${current.to}` : null;
 
   return (
     <div className="flex justify-between w-full">

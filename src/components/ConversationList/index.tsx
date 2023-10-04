@@ -8,12 +8,7 @@ export default function ConversationList() {
   const conversations = useSelector(selectConversations);
 
   return conversations.map((conversation) => {
-    return (
-      <Item
-        key={`item-${conversation?.to || conversation?.from}`}
-        conversation={conversation}
-      />
-    );
+    return <Item key={`item-${conversation.to}`} conversation={conversation} />;
   });
 }
 
@@ -39,7 +34,7 @@ const Item = ({ conversation }: ItemProps) => {
         <div className="flex py-2">
           <div className="flex flex-col w-full h-full ">
             <span className="overflow-y-hidden text-ellipsis text-white text-base">
-              {conversation?.from || conversation?.to}
+              {conversation.name} - {conversation.to}
             </span>
             <span className="overflow-y-hidden text-ellipsis text-[#aebac1] text-sm">
               {conversation.message}
