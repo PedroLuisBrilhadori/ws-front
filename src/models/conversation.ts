@@ -5,4 +5,5 @@ export type Conversation = {
   status: string;
   timestamp: string;
   to: string;
+  unread: string;
 };

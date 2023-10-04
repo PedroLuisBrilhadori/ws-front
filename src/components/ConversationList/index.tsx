@@ -20,6 +20,8 @@ const Item = ({ conversation }: ItemProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(conversation);
+
   return (
     <div
       className="flex items-center w-full h-[4.5rem] bg-[#111B21] pl-3 pr-4 hover:bg-[#2A3942] cursor-pointer
@@ -40,8 +42,14 @@ const Item = ({ conversation }: ItemProps) => {
               {conversation.message}
             </span>
           </div>
-          <div className="flex flex-col w-auto text-[#aebac1]">
+          <div className="flex flex-col items-end justify-between text-[#aebac1]">
             <DisplayHourItem timestamp={conversation.timestamp} />
+
+            {conversation.unread !== "0" && (
+              <span className="rounded-full w-[20px] h-[20px] bg-green-600 font-medium text-black text-xs flex items-center justify-center">
+                {conversation.unread}
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -51,8 +59,13 @@ const Item = ({ conversation }: ItemProps) => {
 
 const DisplayHourItem = ({ timestamp }: { timestamp: string }) => {
   const date = new Date(Number(timestamp) * 1000);
+  const hour =
+    `${date.getHours()}`.length == 1 ? `0${date.getHours()}` : date.getHours();
+  const minutes =
+    `${date.getMinutes()}`.length == 1
+      ? `0${date.getHours()}`
+      : date.getMinutes();
+  const time = `${hour}:${minutes}`;
 
-  return (
-    <h1 className="text-xs">{`${date.getHours()}:${date.getMinutes()}`}</h1>
-  );
+  return <h1 className="text-xs">{time}</h1>;
 };

@@ -53,5 +53,7 @@ export const StatusMessage = ({ status }: { status: string }) => {
 
   if (status === "recived") return null;
 
+  if (status === "read") return null;
+
   return <Clock {...props} />;
 };
