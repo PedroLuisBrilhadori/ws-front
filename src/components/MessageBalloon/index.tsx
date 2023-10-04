@@ -1,4 +1,5 @@
 import { Message } from "@/models";
+import { Check, CheckCheck, Clock } from "lucide-react";
 
 interface MessageBalloonProps {
   message: Message;
@@ -23,17 +24,34 @@ export default function MessageBalloon(props: MessageBalloonProps) {
   const time = `${hour}:${minutes}`;
 
   return (
-    <div className={`flex flex-col ${flexAlignItems} w-full h-max`}>
+    <div className={`flex flex-col ${flexAlignItems} mb-3`}>
       <div
-        className={`flex flex-col min-w-[5%] max-w-[65%] h-max ${backgroundColor} p-2 text-white rounded-lg ${borderRounded} mb-3`}
+        className={`flex gap-2 ${backgroundColor} p-2 text-white rounded-lg ${borderRounded} `}
       >
-        <div className="flex flex-col w-full break-words">
+        <div className="self-start w-full break-words">
           <span>{message.message}</span>
         </div>
-        <div className="flex justify-end text-[hsla(0,0%,100%,0.6)] text-xs mt-1">
-          <span>{time}</span>
+
+        <div className="self-end text-[hsla(0,0%,100%,0.6)] text-xs mt-1">
+          <div className="flex items-center gap-1 justify-between">
+            <span>{time}</span>
+
+            <StatusMessage status={message.status} />
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+export const StatusMessage = ({ status }: { status: string }) => {
+  const props = { className: `w-[14px]` };
+
+  if (status === "sent") return <Check {...props} />;
+
+  if (status === "delivered") return <CheckCheck {...props} />;
+
+  if (status === "recived") return null;
+
+  return <Clock {...props} />;
+};

@@ -28,10 +28,29 @@ const slice = createSlice({
 
       return state;
     },
+    updateMessage(state, action) {
+      let dayIndex;
+      let index;
+
+      state.forEach((day, dayI) => {
+        day.messages.forEach((message, i) => {
+          if (message.id == action.payload.id) {
+            dayIndex = dayI;
+            index = i;
+          }
+        });
+      });
+
+      if (!index || !dayIndex) return state;
+
+      state[dayIndex].messages[index] = action.payload.update;
+
+      return state;
+    },
   },
 });
 
-export const { setMessages, addMessage } = slice.actions;
+export const { setMessages, addMessage, updateMessage } = slice.actions;
 
 export const selectMessage = (state: RootState) => {
   return state.messages;

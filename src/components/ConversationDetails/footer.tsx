@@ -3,7 +3,7 @@ import { Conversation } from "@/models";
 import { Send } from "lucide-react";
 import { KeyboardEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage } from "@/store/messages";
+import { addMessage, updateMessage } from "@/store/messages";
 
 export const ConversationFooter = () => {
   const [message, setMessage] = useState("");
@@ -36,9 +36,20 @@ export const ConversationFooter = () => {
         message,
       }),
     }).then(async (response) => {
-      const message = await response.json();
+      dispach(
+        addMessage({
+          id: "temp",
+          timestamp: `${new Date().getTime() / 1000}`,
+          message,
+          to,
+          me: true,
+          status: "",
+        })
+      );
 
-      dispach(addMessage(message));
+      const update = await response.json();
+
+      dispach(updateMessage({ id: "temp", update }));
     });
 
     setMessage("");

@@ -1,10 +1,15 @@
 import ConversationDetails from "@/components/ConversationDetails";
-import { Message } from "@/models";
+import { Message, Status } from "@/models";
 import {
   selectCurrentConversation,
   setCurrentConversation,
 } from "@/store/currentConversation";
-import { addMessage, selectMessage, setMessages } from "@/store/messages";
+import {
+  addMessage,
+  selectMessage,
+  setMessages,
+  updateMessage,
+} from "@/store/messages";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -43,10 +48,17 @@ export default function Index() {
       if (value.to == to) dispatch(addMessage(value));
     };
 
+    const onMessageUpdate = (value: Message) => {
+      if (value.to == to)
+        dispatch(updateMessage({ id: value.id, update: value }));
+    };
+
     socket.on("message.recived", onMessageRecived);
+    socket.on("message.update", onMessageUpdate);
 
     return () => {
       socket.off("message.recived", onMessageRecived);
+      socket.off("message.update", onMessageUpdate);
     };
   }, [messages.length]);
 
