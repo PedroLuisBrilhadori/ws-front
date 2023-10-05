@@ -11,10 +11,13 @@ const slice = createSlice({
     setConversations(state, action) {
       return action.payload;
     },
+    addConversation(state, action) {
+      return state.concat([action.payload]);
+    },
   },
 });
 
-export const { setConversations } = slice.actions;
+export const { setConversations, addConversation } = slice.actions;
 
 export const selectConversations = (state: RootState) => {
   return state.conversation;

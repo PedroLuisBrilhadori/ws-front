@@ -1,11 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectConversations } from "@/store/conversations";
+import { selectConversations, setConversations } from "@/store/conversations";
 import { Conversation } from "@/models";
 import { setCurrentConversation } from "@/store/currentConversation";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function ConversationList() {
   const conversations = useSelector(selectConversations);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    !conversations[conversations.length - 1] &&
+      fetch(`http://localhost:3000/messages/conversations`).then(
+        async (response) => {
+          const conversations = await response.json();
+          dispatch(setConversations(conversations));
+        }
+      );
+  }, [conversations]);
+
+  if (!conversations[conversations.length - 1]) return null;
 
   return conversations.map((conversation) => {
     return <Item key={`item-${conversation.to}`} conversation={conversation} />;
