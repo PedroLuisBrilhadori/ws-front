@@ -15,16 +15,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 
+const socket = io("http://localhost:3000", {
+  autoConnect: true,
+});
+
 export default function Index() {
   const { to } = useParams();
   const current = useSelector(selectCurrentConversation);
   const dispatch = useDispatch();
-
-  const [socket, setSocket] = useState(
-    io("http://localhost:3000", {
-      autoConnect: true,
-    })
-  );
 
   useEffect(() => {
     if (to) {
