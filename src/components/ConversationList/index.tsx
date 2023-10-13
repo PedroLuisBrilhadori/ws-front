@@ -49,7 +49,7 @@ const Item = ({ conversation }: ItemProps) => {
     "
       onClick={() => {
         dispatch(setCurrentConversation(conversation));
-        navigate(`/${conversation?.to}`);
+        navigate(`/conversation/${conversation?.to}`);
       }}
     >
       <div className="flex flex-col w-full px-2">

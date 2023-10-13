@@ -1,8 +1,7 @@
 import "../index.css";
 import { Outlet, useParams } from "react-router-dom";
-import { Provider, useDispatch } from "react-redux";
-import { store } from "@/store";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { socket } from "@/services";
 import { addMessage, updateMessage } from "@/store/messages";
 import { Message } from "postcss";

@@ -5,10 +5,10 @@ import { components, hooks, utils } from '@generouted/react-router/client'
 
 export type Path =
   | `/`
-  | `/:to`
+  | `/conversation/:to`
 
 export type Params = {
-  '/:to': { to: string }
+  '/conversation/:to': { to: string }
 }
 
 export type ModalPath = never
