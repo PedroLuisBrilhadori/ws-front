@@ -1,5 +1,5 @@
-import { BookTemplate, Info, NewspaperIcon, Pencil, Plus } from "lucide-react";
-import React, { ReactNode, useState } from "react";
+import { BookTemplate, Plus } from "lucide-react";
+import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const NewAction = () => {

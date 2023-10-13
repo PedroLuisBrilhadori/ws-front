@@ -1,11 +1,5 @@
 import { Message } from "@/models";
-import {
-  AlertTriangle,
-  Check,
-  CheckCheck,
-  Clock,
-  FileWarning,
-} from "lucide-react";
+import { AlertTriangle, Check, CheckCheck, Clock } from "lucide-react";
 
 interface MessageBalloonProps {
   message: Message;
