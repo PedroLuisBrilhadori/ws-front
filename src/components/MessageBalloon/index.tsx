@@ -1,5 +1,11 @@
 import { Message } from "@/models";
-import { Check, CheckCheck, Clock } from "lucide-react";
+import {
+  AlertTriangle,
+  Check,
+  CheckCheck,
+  Clock,
+  FileWarning,
+} from "lucide-react";
 
 interface MessageBalloonProps {
   message: Message;
@@ -54,6 +60,8 @@ export const StatusMessage = ({ status }: { status: string }) => {
   if (status === "recived") return null;
 
   if (status === "read") return null;
+
+  if (status === "fail") return <AlertTriangle {...props} />;
 
   return <Clock {...props} />;
 };

@@ -43,8 +43,6 @@ export const ConversationMessages = () => {
   );
 };
 
-const Days = () => {};
-
 const Messages = ({ messages }: { messages: Message[] }) => {
   const messageRef = useRef<HTMLDivElement>(null);
 

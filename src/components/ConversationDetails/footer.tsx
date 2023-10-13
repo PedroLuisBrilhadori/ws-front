@@ -36,20 +36,27 @@ export const ConversationFooter = () => {
         message,
       }),
     }).then(async (response) => {
-      dispach(
-        addMessage({
-          id: "temp",
-          timestamp: `${new Date().getTime() / 1000}`,
-          message,
-          to,
-          me: true,
-          status: "",
-        })
-      );
+      const dto = {
+        id: "temp",
+        timestamp: `${new Date().getTime() / 1000}`,
+        message,
+        to,
+        me: true,
+        status: "",
+      };
+
+      dispach(addMessage(dto));
 
       const update = await response.json();
 
-      dispach(updateMessage({ id: "temp", update }));
+      if (response.status === 201) {
+        dispach(updateMessage({ id: "temp", update }));
+      } else {
+        dispach(
+          updateMessage({ id: "temp", update: { ...dto, status: "fail" } })
+        );
+        throw new Error("Impossível enviar a menssagem.");
+      }
     });
 
     setMessage("");

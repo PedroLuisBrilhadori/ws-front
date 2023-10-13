@@ -11,14 +11,13 @@ export default function ConversationList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    !conversations[conversations.length - 1] &&
-      fetch(`http://localhost:3000/messages/conversations`).then(
-        async (response) => {
-          const conversations = await response.json();
-          dispatch(setConversations(conversations));
-        }
-      );
-  }, [conversations]);
+    fetch(`http://localhost:3000/messages/conversations`).then(
+      async (response) => {
+        const conversations = await response.json();
+        dispatch(setConversations(conversations));
+      }
+    );
+  }, []);
 
   if (!conversations[conversations.length - 1]) return null;
 
