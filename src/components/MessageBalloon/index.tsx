@@ -25,7 +25,7 @@ export default function MessageBalloon(props: MessageBalloonProps) {
     `${date.getHours()}`.length == 1 ? `0${date.getHours()}` : date.getHours();
   const minutes =
     `${date.getMinutes()}`.length == 1
-      ? `0${date.getHours()}`
+      ? `0${date.getMinutes()}`
       : date.getMinutes();
   const time = `${hour}:${minutes}`;
 

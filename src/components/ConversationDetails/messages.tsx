@@ -20,8 +20,8 @@ export const ConversationMessages = () => {
             const day = `${date.getDate()}`;
             const month = `${date.getMonth() + 1}`;
 
-            return `${day.length == 1 ? "0" + day : day}/${
-              month.length == 1 ? "0" + month : month
+            return `${`${day}`.length == 1 ? `0${day}` : day}/${
+              `${month}`.length == 1 ? `0${month}` : month
             }/${date.getFullYear()}`;
           }
 
@@ -35,7 +35,7 @@ export const ConversationMessages = () => {
             <span className="bg-gray-600 text-white px-4 py-1 self-center text-center rounded-full opacity-75">
               {formattedDate}
             </span>
-            <Messages messages={messages} />;
+            <Messages messages={messages} />
           </div>
         );
       })}
