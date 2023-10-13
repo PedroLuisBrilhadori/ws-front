@@ -7,6 +7,7 @@ export type Path =
   | `/`
   | `/conversation/:to`
   | `/templates`
+  | `/templates/create`
 
 export type Params = {
   '/conversation/:to': { to: string }

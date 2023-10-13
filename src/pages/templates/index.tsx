@@ -27,7 +27,12 @@ export default function Template() {
           }}
         />
 
-        <Plus className="cursor-pointer text-white" />
+        <Plus
+          className="cursor-pointer text-white"
+          onClick={() => {
+            navigate(`/templates/create`);
+          }}
+        />
       </div>
 
       <TemplateCards />
