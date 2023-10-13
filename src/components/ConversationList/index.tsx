@@ -4,6 +4,7 @@ import { Conversation } from "@/models";
 import { setCurrentConversation } from "@/store/currentConversation";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { NewAction } from "./new-action";
 
 export default function ConversationList() {
   const conversations = useSelector(selectConversations);
@@ -21,9 +22,17 @@ export default function ConversationList() {
 
   if (!conversations[conversations.length - 1]) return null;
 
-  return conversations.map((conversation) => {
-    return <Item key={`item-${conversation.to}`} conversation={conversation} />;
-  });
+  return (
+    <div>
+      {conversations.map((conversation) => {
+        return (
+          <Item key={`item-${conversation.to}`} conversation={conversation} />
+        );
+      })}
+
+      <NewAction />
+    </div>
+  );
 }
 
 type ItemProps = {
