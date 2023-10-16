@@ -2,17 +2,15 @@ import { Component } from "@/models/template";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SelectLanguage } from "./_components/select-language";
 import { MessageTemplateView } from "./_components/message-template-view";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Upload } from "lucide-react";
 
 type CreateTemplate = {
   name: string;
   allow_category_change: boolean;
   category: string;
   language: string;
-  components: {
-    header?: Component;
-    body?: Component;
-    footer?: Component;
-  };
+  components: Component[];
 };
 
 export default function CreateTemplates() {
@@ -21,21 +19,21 @@ export default function CreateTemplates() {
     allow_category_change: true,
     category: "MARKETING",
     language: "pt_BR",
-    components: {
-      header: {
+    components: [
+      {
         type: "HEADER",
         format: "TEXT",
         text: "",
       },
-      body: {
+      {
         type: "BODY",
         text: "",
       },
-      footer: {
+      {
         type: "FOOTER",
         text: "",
       },
-    },
+    ],
   };
 
   const {
@@ -45,47 +43,78 @@ export default function CreateTemplates() {
     formState: { errors },
   } = useForm<CreateTemplate>({ defaultValues });
 
-  const onSubmit: SubmitHandler<CreateTemplate> = (data) => console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<CreateTemplate> = (data) => {
+    const headers = new Headers();
+
+    headers.append("Content-Type", "application/json");
+
+    fetch("http://localhost:3000/templates", {
+      method: "POST",
+      headers,
+      body: JSON.stringify(data),
+    }).then(async (response) => {
+      const data = await response.json();
+
+      if (data?.error) throw new Error(data.error);
+
+      navigate("/templates");
+    });
+  };
 
   return (
-    <div className="flex flex-col items-center gap-3 p-4 text-white">
-      <h1 className="font-bold text-xl">Criação de Template</h1>
-
-      <form
-        className="flex flex-col items-center gap-3 w-full "
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <input
-          {...register("name")}
-          type={"text"}
-          className="bg-[#2a3942] rounded-sm w-full px-3 py-3 "
-          placeholder="Nome"
-        />
-
-        <MessageTemplateView
-          {...{
-            inputs: {
-              header: { name: "components.header.text", register },
-              body: { name: "components.body.text", register },
-              footer: { name: "components.footer.text", register },
-            },
+    <div className="flex flex-col items-center  text-white">
+      <div className="flex justify-between items-center bg-[#202c33] w-full h-14 px-4">
+        <ArrowLeft
+          className="cursor-pointer text-white"
+          onClick={() => {
+            navigate(`/templates`);
           }}
         />
+      </div>
 
-        <select
-          {...register("category")}
-          className="bg-[#2a3942] rounded-sm w-full px-3 py-3 "
-          placeholder="Categoria"
+      <div className="flex flex-col w-full items-center  gap-3 p-4">
+        <h1 className="font-bold text-xl">Criação de Template</h1>
+
+        <form
+          className="flex flex-col items-center gap-3 w-full "
+          onSubmit={handleSubmit(onSubmit)}
         >
-          <option value="MARKETING">Marketing</option>
-          <option value="UTILITY">Utilidades</option>
-          <option value="AUTHENTICATION">Autenticação</option>
-        </select>
+          <input
+            {...register("name")}
+            type={"text"}
+            className="bg-[#2a3942] rounded-sm w-full px-3 py-3 "
+            placeholder="Nome"
+          />
 
-        <SelectLanguage register={register} name="language" />
+          <MessageTemplateView
+            {...{
+              inputs: {
+                header: { name: "components.0.text", register },
+                body: { name: "components.1.text", register },
+                footer: { name: "components.2.text", register },
+              },
+            }}
+          />
 
-        <button>create</button>
-      </form>
+          <select
+            {...register("category")}
+            className="bg-[#2a3942] rounded-sm w-full px-3 py-3 "
+            placeholder="Categoria"
+          >
+            <option value="MARKETING">Marketing</option>
+            <option value="UTILITY">Utilidades</option>
+            <option value="AUTHENTICATION">Autenticação</option>
+          </select>
+
+          <SelectLanguage register={register} name="language" />
+
+          <button className="bg-green-600 rounded-lg px-2 py-1">
+            Criar Template
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
