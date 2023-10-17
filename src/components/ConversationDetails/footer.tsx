@@ -1,9 +1,10 @@
 import { selectCurrentConversation } from "@/store/currentConversation";
 import { Conversation } from "@/models";
-import { Send } from "lucide-react";
+import { Paperclip, Send } from "lucide-react";
 import { KeyboardEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, updateMessage } from "@/store/messages";
+import { Clip } from "./clip";
 
 export const ConversationFooter = () => {
   const [message, setMessage] = useState("");
@@ -74,6 +75,8 @@ export const ConversationFooter = () => {
           value={message}
         />
       </div>
+
+      <Clip />
 
       <Send className="cursor-pointer" onClick={sendMessage} />
     </footer>

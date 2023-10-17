@@ -1,6 +1,7 @@
 import { BookTemplate, Plus } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Icon } from "../ui/icon";
 
 export const NewAction = () => {
   const [open, setOpen] = useState(false);
@@ -30,22 +31,5 @@ const Actions = () => {
         <BookTemplate aria-label="Templates" />
       </Icon>
     </>
-  );
-};
-
-type IconProps = {
-  children: ReactNode;
-  className?: string;
-  onClick?: () => void;
-};
-
-const Icon = ({ children, className, onClick }: IconProps) => {
-  return (
-    <div
-      onClick={onClick}
-      className={`w-14 h-14 rounded-full z-20 flex justify-center items-center text-white cursor-pointer ${className}`}
-    >
-      {children}
-    </div>
   );
 };
