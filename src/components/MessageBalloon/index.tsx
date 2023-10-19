@@ -46,13 +46,19 @@ export default function MessageBalloon(props: MessageBalloonProps) {
   );
 }
 
-const MessageBody = ({ message }: { message: string }) => {
+export const MessageBody = ({
+  message,
+  truncate,
+}: {
+  message: string;
+  truncate?: boolean;
+}) => {
   const components = message.split("\n");
 
   return (
     <div className="flex flex-col">
       {components.map((text) => {
-        let className = "";
+        let className = truncate ? "truncate" : "";
 
         if (/(?<![{[?}\]])\*(?!\s)(.+?)\*/.test(text)) {
           className = "font-bold";

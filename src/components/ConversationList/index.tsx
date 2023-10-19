@@ -5,6 +5,7 @@ import { setCurrentConversation } from "@/store/currentConversation";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { NewAction } from "./new-action";
+import { MessageBody } from "../MessageBalloon";
 
 export default function ConversationList() {
   const conversations = useSelector(selectConversations);
@@ -52,17 +53,19 @@ const Item = ({ conversation }: ItemProps) => {
         navigate(`/conversation/${conversation?.to}`);
       }}
     >
-      <div className="flex flex-col w-full px-2">
+      <div className="flex flex-col w-full px-1 justify-between">
         <hr style={{ borderTop: ` solid rgba(134,150,160,0.15)` }} />
-        <div className="flex py-2">
-          <div className="flex flex-col w-full h-full ">
-            <span className="overflow-y-hidden text-ellipsis text-white text-base">
+        <div className="flex">
+          <div className="flex flex-col overflow-hidden w-full">
+            <span className=" text-ellipsis text-white text-base">
               {conversation.name} - {conversation.to}
             </span>
-            <span className="overflow-y-hidden text-ellipsis text-[#aebac1] text-sm">
-              {conversation.message}
+
+            <span className="text-[#aebac1] text-sm truncate ">
+              <MessageBody truncate message={conversation.message} />
             </span>
           </div>
+
           <div className="flex flex-col items-end justify-between text-[#aebac1]">
             <DisplayHourItem timestamp={conversation.timestamp} />
 
