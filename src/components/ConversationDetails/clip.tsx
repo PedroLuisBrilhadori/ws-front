@@ -21,11 +21,13 @@ export const Clip = () => {
   const { to } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:3000/templates").then(async (data) => {
-      const templates = await data.json();
+    fetch("http://localhost:3000/templates?status=APPROVED").then(
+      async (data) => {
+        const templates = await data.json();
 
-      dispatch(setTemplates(templates));
-    });
+        dispatch(setTemplates(templates));
+      }
+    );
   }, []);
 
   const sendTemplate = ({ name, language }: Template) => {
@@ -72,10 +74,7 @@ export const Clip = () => {
 
             <AlertDialogContent>
               <div className="h-[400px] overflow-y-scroll">
-                <TemplateCards
-                  onlyVerify
-                  onClick={(template) => sendTemplate(template)}
-                />
+                <TemplateCards onClick={(template) => sendTemplate(template)} />
               </div>
             </AlertDialogContent>
           </AlertDialog>
