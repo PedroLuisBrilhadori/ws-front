@@ -29,7 +29,7 @@ export default function MessageBalloon(props: MessageBalloonProps) {
         className={`flex gap-2 ${backgroundColor} p-2 text-white rounded-lg ${borderRounded} `}
       >
         <div className="self-start w-full break-words">
-          <span>{message.message}</span>
+          <MessageBody message={message.message} />
         </div>
 
         <div className="self-end text-[hsla(0,0%,100%,0.6)] text-xs mt-1">
@@ -43,6 +43,34 @@ export default function MessageBalloon(props: MessageBalloonProps) {
     </div>
   );
 }
+
+const MessageBody = ({ message }: { message: string }) => {
+  const components = message.split("\\n");
+
+  return (
+    <div className="flex flex-col">
+      {components.map((text) => {
+        let className = "";
+
+        if (/(?<![{[?}\]])\*(?!\s)(.+?)\*/.test(text)) {
+          className = "font-bold";
+          text = text.replace(/(?<![{[?}\]])\*(?!\s)(.+?)\*/, "$1");
+        }
+
+        if (/(?<![{[?}\]])\_(?!\s)(.+?)\_/.test(text)) {
+          className = "italic text-xs";
+          text = text.replace(/(?<![{[?}\]])\_(?!\s)(.+?)\_/, "$1");
+        }
+
+        return (
+          <span className={className} key={`${text}-${Math.random()}`}>
+            {text}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
 
 export const StatusMessage = ({ status }: { status: string }) => {
   const props = { className: `w-[14px]` };
