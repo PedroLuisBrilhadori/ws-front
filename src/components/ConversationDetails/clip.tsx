@@ -8,13 +8,15 @@ import {
 } from "../ui/alert-dialog";
 import { TemplateCards } from "@/pages/templates/_components/templates-cards";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setTemplates } from "@/store/templates";
 import { Template } from "@/models/template";
 import { useParams } from "react-router-dom";
+import { addMessage } from "@/store/messages";
 
 export const Clip = () => {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
   const { to } = useParams();
 
@@ -45,12 +47,17 @@ export const Clip = () => {
       method: "POST",
       headers,
       body: JSON.stringify(dto),
+    }).then(async (data) => {
+      const message = await data.json();
+
+      dispatch(addMessage(message));
+      setOpen(false);
     });
   };
 
   return (
     <div>
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Paperclip className="cursor-pointer" />
         </PopoverTrigger>
