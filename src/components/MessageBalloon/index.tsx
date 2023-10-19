@@ -26,13 +26,15 @@ export default function MessageBalloon(props: MessageBalloonProps) {
   return (
     <div className={`flex flex-col ${flexAlignItems} mb-3`}>
       <div
-        className={`flex gap-2 ${backgroundColor} p-2 text-white rounded-lg ${borderRounded} `}
+        className={`flex flex-col ${backgroundColor} p-2 text-white rounded-lg ${borderRounded} `}
       >
-        <div className="self-start w-full break-words">
-          <MessageBody message={message.message} />
+        <div className="max-w-[700px]">
+          <div className="self-start w-full break-words">
+            <MessageBody message={message.message} />
+          </div>
         </div>
 
-        <div className="self-end text-[hsla(0,0%,100%,0.6)] text-xs mt-1">
+        <div className="self-end text-[hsla(0,0%,100%,0.6)] text-xs">
           <div className="flex items-center gap-1 justify-between">
             <span>{time}</span>
 
@@ -45,7 +47,7 @@ export default function MessageBalloon(props: MessageBalloonProps) {
 }
 
 const MessageBody = ({ message }: { message: string }) => {
-  const components = message.split("\\n");
+  const components = message.split("\n");
 
   return (
     <div className="flex flex-col">
