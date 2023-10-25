@@ -5,7 +5,8 @@ import { setCurrentConversation } from "@/store/currentConversation";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { NewAction } from "./new-action";
-import { MessageBody } from "../MessageBalloon";
+import { MessageBody } from "../MessageBalloon/body";
+import { TextBody } from "../MessageBalloon/text-body";
 
 export default function ConversationList() {
   const conversations = useSelector(selectConversations);
@@ -62,7 +63,7 @@ const Item = ({ conversation }: ItemProps) => {
             </span>
 
             <span className="text-[#aebac1] text-sm truncate ">
-              <MessageBody truncate message={conversation.message} />
+              <TextBody truncate text={conversation.message} />
             </span>
           </div>
 

@@ -1,5 +1,6 @@
 import { Message } from "@/models";
-import { AlertTriangle, Check, CheckCheck, Clock } from "lucide-react";
+import { StatusMessage } from "./status";
+import { MessageBody } from "./body";
 
 interface MessageBalloonProps {
   message: Message;
@@ -45,81 +46,3 @@ export default function MessageBalloon(props: MessageBalloonProps) {
     </div>
   );
 }
-
-export const MessageBody = ({
-  message,
-  truncate,
-}: {
-  message: Message;
-  truncate?: boolean;
-}) => {
-  if (message.type == "text")
-    return <TextBody message={message.message} truncate={truncate} />;
-
-  if (message.type == "image")
-    return (
-      <div>
-        <img src={`http://localhost:3000/${message.id}.jpeg`} />
-        <TextBody message={message.message} truncate={truncate} />
-      </div>
-    );
-};
-
-export const TextBody = ({
-  message,
-  truncate,
-}: {
-  message: string;
-  truncate?: boolean;
-}) => {
-  const components = message.split("\n");
-
-  return (
-    <div className="flex flex-col">
-      {components.map((text) => {
-        let className = truncate ? "truncate" : "";
-
-        if (/(?<![{[?}\]])\*(?!\s)(.+?)\*/.test(text)) {
-          className = "font-bold";
-          text = text.replace(/(?<![{[?}\]])\*(?!\s)(.+?)\*/, "$1");
-        }
-
-        if (/(?<![{[?}\]])\_(?!\s)(.+?)\_/.test(text)) {
-          className = "italic text-xs";
-          text = text.replace(/(?<![{[?}\]])\_(?!\s)(.+?)\_/, "$1");
-        }
-
-        return (
-          <span className={className} key={`${text}-${Math.random()}`}>
-            {text}
-          </span>
-        );
-      })}
-    </div>
-  );
-};
-
-export const StatusMessage = ({
-  status,
-  me,
-}: {
-  status: string;
-  me?: boolean;
-}) => {
-  const props = { className: `w-[14px]` };
-
-  if (!me) return null;
-
-  if (status === "sent") return <Check {...props} />;
-
-  if (status === "delivered") return <CheckCheck {...props} />;
-
-  if (status === "recived") return null;
-
-  if (status === "read")
-    return <CheckCheck className={`${props.className} text-blue-600`} />;
-
-  if (status === "fail") return <AlertTriangle {...props} />;
-
-  return <Clock {...props} />;
-};
