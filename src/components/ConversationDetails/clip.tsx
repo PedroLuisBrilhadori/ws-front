@@ -66,7 +66,7 @@ export const Clip = () => {
 
         <PopoverContent>
           <AlertDialog>
-            <AlertDialogTrigger asChild>
+            <AlertDialogTrigger>
               <Icon className="bg-green-500">
                 <BookTemplate aria-label="Templates" />
               </Icon>
