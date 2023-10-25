@@ -23,7 +23,13 @@ const ImageBody = ({
 }) => {
   return (
     <div>
-      <img src={`http://localhost:3000/${message.id}.jpeg`} />
+      <a target="_blank" href={`http://localhost:3000/${message.id}.jpeg`}>
+        <img
+          className="w-[300px] h-[300px] object-cover rounded-sm"
+          src={`http://localhost:3000/${message.id}.jpeg`}
+        />
+      </a>
+
       <TextBody text={message.message} truncate={truncate} />
     </div>
   );
