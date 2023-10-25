@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { setTemplates } from "@/store/templates";
 import { useParams } from "react-router-dom";
 import { SendTemplate } from "./send-template";
+import { UploadImage } from "./upload-image";
 
 export const Clip = () => {
   const dispatch = useDispatch();
@@ -31,8 +32,9 @@ export const Clip = () => {
         </PopoverTrigger>
 
         <PopoverContent>
-          <div>
+          <div className="flex gap-3 flex-wrap items-center justify-center">
             <SendTemplate to={to} setOpen={setOpen} />
+            <UploadImage setOpen={setOpen} />
           </div>
         </PopoverContent>
       </Popover>

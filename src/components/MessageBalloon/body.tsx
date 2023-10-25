@@ -14,7 +14,7 @@ export const MessageBody = ({
   return <TextBody text={message.message} truncate={truncate} />;
 };
 
-const ImageBody = ({
+export const ImageBody = ({
   message,
   truncate,
 }: {
