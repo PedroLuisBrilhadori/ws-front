@@ -30,7 +30,7 @@ export default function MessageBalloon(props: MessageBalloonProps) {
       >
         <div className="max-w-[700px]">
           <div className="self-start w-full break-words">
-            <MessageBody message={message.message} />
+            <MessageBody message={message} />
           </div>
         </div>
 
@@ -47,6 +47,25 @@ export default function MessageBalloon(props: MessageBalloonProps) {
 }
 
 export const MessageBody = ({
+  message,
+  truncate,
+}: {
+  message: Message;
+  truncate?: boolean;
+}) => {
+  if (message.type == "text")
+    return <TextBody message={message.message} truncate={truncate} />;
+
+  if (message.type == "image")
+    return (
+      <div>
+        <img src={`http://localhost:3000/${message.id}.jpeg`} />
+        <TextBody message={message.message} truncate={truncate} />
+      </div>
+    );
+};
+
+export const TextBody = ({
   message,
   truncate,
 }: {
