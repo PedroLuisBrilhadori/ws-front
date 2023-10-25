@@ -10,10 +10,11 @@ import { Label } from "@/components/ui/label";
 import { FormEvent, useState } from "react";
 
 export type UploadImageProps = {
+  to?: string;
   setOpen: (open: boolean) => any;
 };
 
-export const UploadImage = ({ setOpen }: UploadImageProps) => {
+export const UploadImage = ({ setOpen, to }: UploadImageProps) => {
   const [input, onInput] = useState<HTMLInputElement>();
 
   return (
@@ -26,7 +27,12 @@ export const UploadImage = ({ setOpen }: UploadImageProps) => {
 
       <AlertDialogContent>
         <div className="flex flex-col gap-3 items-center justify-center">
-          <UploaderContent input={input} onInput={onInput} setOpen={setOpen} />
+          <UploaderContent
+            to={to}
+            input={input}
+            onInput={onInput}
+            setOpen={setOpen}
+          />
         </div>
       </AlertDialogContent>
     </AlertDialog>
@@ -37,10 +43,16 @@ type UploaderContentProps = {
   onInput?: (e: HTMLInputElement) => void;
   input?: HTMLInputElement;
   setOpen: (open: boolean) => any;
+  to?: string;
 };
 
-const UploaderContent = ({ input, onInput, setOpen }: UploaderContentProps) => {
-  if (input) return <ImagePreview setOpen={setOpen} input={input} />;
+const UploaderContent = ({
+  input,
+  onInput,
+  setOpen,
+  to,
+}: UploaderContentProps) => {
+  if (input) return <ImagePreview to={to} setOpen={setOpen} input={input} />;
 
   return (
     <InputImage
@@ -52,15 +64,29 @@ const UploaderContent = ({ input, onInput, setOpen }: UploaderContentProps) => {
 type ImagePreviewProps = {
   input: HTMLInputElement;
   setOpen: (open: boolean) => any;
+  to?: string;
 };
 
-const ImagePreview = ({ input, setOpen }: ImagePreviewProps) => {
+const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
   const [caption, setCaption] = useState("");
 
   if (!input.files) return null;
 
   const file = input.files[0];
   const src = URL.createObjectURL(file);
+
+  const sendImage = () => {
+    if (!file) return;
+
+    const data = new FormData();
+    data.append("file", file);
+    const url = "http://localhost:3000/messages/image";
+
+    fetch(`${url}/${to}`, {
+      method: "POST",
+      body: data,
+    });
+  };
 
   return (
     <div className="flex flex-col gap-1 items-center justify-center">
@@ -83,7 +109,12 @@ const ImagePreview = ({ input, setOpen }: ImagePreviewProps) => {
         >
           <X />
         </Icon>
-        <Icon className="bg-green-500">
+        <Icon
+          className="bg-green-500"
+          onClick={() => {
+            sendImage();
+          }}
+        >
           <Check />
         </Icon>
       </div>

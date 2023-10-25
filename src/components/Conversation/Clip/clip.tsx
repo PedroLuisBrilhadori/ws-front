@@ -34,7 +34,7 @@ export const Clip = () => {
         <PopoverContent>
           <div className="flex gap-3 flex-wrap items-center justify-center">
             <SendTemplate to={to} setOpen={setOpen} />
-            <UploadImage setOpen={setOpen} />
+            <UploadImage to={to} setOpen={setOpen} />
           </div>
         </PopoverContent>
       </Popover>
