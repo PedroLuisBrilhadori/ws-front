@@ -38,7 +38,7 @@ export default function MessageBalloon(props: MessageBalloonProps) {
           <div className="flex items-center gap-1 justify-between">
             <span>{time}</span>
 
-            <StatusMessage status={message.status} />
+            <StatusMessage me={message.me} status={message.status} />
           </div>
         </div>
       </div>
@@ -80,8 +80,16 @@ export const MessageBody = ({
   );
 };
 
-export const StatusMessage = ({ status }: { status: string }) => {
+export const StatusMessage = ({
+  status,
+  me,
+}: {
+  status: string;
+  me?: boolean;
+}) => {
   const props = { className: `w-[14px]` };
+
+  if (!me) return null;
 
   if (status === "sent") return <Check {...props} />;
 
@@ -89,7 +97,8 @@ export const StatusMessage = ({ status }: { status: string }) => {
 
   if (status === "recived") return null;
 
-  if (status === "read") return null;
+  if (status === "read")
+    return <CheckCheck className={`${props.className} text-blue-600`} />;
 
   if (status === "fail") return <AlertTriangle {...props} />;
 
