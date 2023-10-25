@@ -1,4 +1,4 @@
-import ConversationDetails from "@/components/ConversationDetails";
+import ConversationDetails from "@/components/Conversation";
 
 import {
   selectCurrentConversation,

@@ -1,10 +1,10 @@
 import { selectCurrentConversation } from "@/store/currentConversation";
 import { Conversation } from "@/models";
-import { Paperclip, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { KeyboardEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, updateMessage } from "@/store/messages";
-import { Clip } from "./clip";
+import { Clip } from "./Clip/clip";
 
 export const ConversationFooter = () => {
   const [message, setMessage] = useState("");

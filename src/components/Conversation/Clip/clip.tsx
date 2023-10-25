@@ -1,11 +1,11 @@
 import { BookTemplate, Paperclip } from "lucide-react";
-import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
-import { Icon } from "../ui/icon";
+import { Popover, PopoverTrigger, PopoverContent } from "../../ui/popover";
+import { Icon } from "../../ui/icon";
 import {
   AlertDialog,
   AlertDialogTrigger,
   AlertDialogContent,
-} from "../ui/alert-dialog";
+} from "../../ui/alert-dialog";
 import { TemplateCards } from "@/pages/templates/_components/templates-cards";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
