@@ -3,12 +3,13 @@ import { Conversation } from "@/models";
 import { Send } from "lucide-react";
 import { KeyboardEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage, updateMessage } from "@/store/messages";
+import { addMessage } from "@/store/messages";
 import { Clip } from "./Clip/clip";
+import { sendMessageService } from "@/services";
 
 export const ConversationFooter = () => {
-  const [message, setMessage] = useState("");
-  const dispach = useDispatch();
+  const [text, setMessage] = useState("");
+  const dispatch = useDispatch();
 
   const current = useSelector(selectCurrentConversation);
 
@@ -25,34 +26,8 @@ export const ConversationFooter = () => {
 
     const { to } = current as unknown as Conversation;
 
-    const headers = new Headers();
-
-    headers.append("Content-Type", "application/json");
-
-    fetch(`http://localhost:3000/messages/text`, {
-      method: `POST`,
-      headers,
-      body: JSON.stringify({
-        to,
-        message,
-      }),
-    }).then(async (response) => {
-      const dto = {
-        timestamp: `${new Date().getTime() / 1000}`,
-        message,
-        to,
-        me: true,
-        status: "",
-      };
-
-      const update = await response.json();
-
-      if (response.status === 201) {
-        dispach(addMessage(update));
-      } else {
-        dispach(addMessage({ ...dto, status: "fail" }));
-        throw new Error("Impossível enviar a menssagem.");
-      }
+    sendMessageService({ to, text }).then((message) => {
+      dispatch(addMessage(message));
     });
 
     setMessage("");
@@ -67,7 +42,7 @@ export const ConversationFooter = () => {
           placeholder="Mensagem..."
           onKeyDown={(evt) => changeHandler(evt)}
           onChange={(evt) => setMessage(evt.target.value)}
-          value={message}
+          value={text}
         />
       </div>
 
