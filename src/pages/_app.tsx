@@ -1,15 +1,18 @@
 import "../index.css";
 import { Outlet, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { socket } from "@/services";
 import { addMessage, updateMessage } from "@/store/messages";
 import { Message } from "postcss";
 import { addConversation } from "@/store/conversations";
+import { selectCurrentConversation } from "@/store/currentConversation";
+import { Conversation } from "@/models";
 
 function MyApp() {
   const dispatch = useDispatch();
-  const { to } = useParams();
+  const current = useSelector(selectCurrentConversation);
+  const to = current ? (current as unknown as Conversation).to : "";
 
   useEffect(() => {
     const onMessageRecived = (value: Message) => {
@@ -18,8 +21,10 @@ function MyApp() {
     };
 
     const onMessageUpdate = (value: Message) => {
-      if (value.to == to)
-        dispatch(updateMessage({ id: value.id, update: value }));
+      console.log(value);
+      console.log(to);
+
+      dispatch(updateMessage({ id: value.id, update: value }));
     };
 
     const onConversationUpdate = (value: boolean) => {
