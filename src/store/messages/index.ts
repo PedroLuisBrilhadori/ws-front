@@ -12,6 +12,14 @@ const slice = createSlice({
       return action.payload;
     },
     addMessage(state, action) {
+      if (state.length === 0) {
+        state[0] = {
+          day: new Date().toJSON(),
+          messages: [action.payload],
+        };
+        return state;
+      }
+
       let index = state.length - 1;
 
       state[index].messages.push(action.payload);

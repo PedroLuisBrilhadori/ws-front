@@ -21,12 +21,26 @@ export const ImageBody = ({
   message: Message;
   truncate?: boolean;
 }) => {
+  const path = `http://localhost:3000/public/${message.id}.jpeg`;
+  let attempt = 0;
+
   return (
     <div>
-      <a target="_blank" href={`http://localhost:3000/${message.id}.jpeg`}>
+      <a target="_blank" href={path}>
         <img
           className="w-[300px] h-[300px] object-cover rounded-sm"
-          src={`http://localhost:3000/${message.id}.jpeg`}
+          onError={async ({ currentTarget }) => {
+            if (attempt > 5) return;
+
+            await new Promise((resolve, reject) => {
+              setTimeout(resolve, 500);
+            });
+
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src = path;
+            attempt++;
+          }}
+          src={path}
         />
       </a>
 

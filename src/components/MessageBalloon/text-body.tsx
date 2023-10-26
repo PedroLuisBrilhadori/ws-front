@@ -5,6 +5,8 @@ export const TextBody = ({
   text: string;
   truncate?: boolean;
 }) => {
+  if (!text?.split) return "";
+
   const components = text.split("\n");
 
   return (

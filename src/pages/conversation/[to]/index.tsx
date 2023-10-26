@@ -22,13 +22,17 @@ export default function Index() {
         dispatch(setMessages(messages));
 
         if (!current) {
-          fetch(`http://localhost:3000/messages/conversations/${to}`).then(
-            async (response) => {
+          fetch(`http://localhost:3000/messages/conversations/${to}`)
+            .then(async (response) => {
+              if (response.status !== 200) throw new Error();
+
               const conversations = await response.json();
 
               dispatch(setCurrentConversation(conversations));
-            }
-          );
+            })
+            .catch((error) => {
+              dispatch(setCurrentConversation({ to }));
+            });
         }
       });
 

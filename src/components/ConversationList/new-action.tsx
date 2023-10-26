@@ -1,7 +1,8 @@
-import { BookTemplate, Plus } from "lucide-react";
+import { BookTemplate, MessageSquarePlus, Plus } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "../ui/icon";
+import { NewConversation } from "./new-conversation";
 
 export const NewAction = () => {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ const Actions = () => {
       >
         <BookTemplate aria-label="Templates" />
       </Icon>
+      <NewConversation />
     </>
   );
 };
