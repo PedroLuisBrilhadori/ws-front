@@ -28,7 +28,7 @@ function MyApp() {
     };
 
     const onConversationUpdate = (value: boolean) => {
-      dispatch(addConversation(false));
+      dispatch(addConversation(value));
     };
 
     socket.on("conversation.created", onConversationUpdate);

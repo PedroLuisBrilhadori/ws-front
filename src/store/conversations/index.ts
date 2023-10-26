@@ -12,6 +12,8 @@ const slice = createSlice({
       return action.payload;
     },
     addConversation(state, action) {
+      if (action.payload === false) return;
+
       return state.concat([action.payload]);
     },
   },
