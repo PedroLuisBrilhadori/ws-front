@@ -36,7 +36,7 @@ const slice = createSlice({
         }
       });
 
-      if (!index) return state;
+      if (!index && index !== 0) return state;
 
       state[dayIndex].messages[index] = action.payload.update;
 
