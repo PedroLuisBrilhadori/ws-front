@@ -17,13 +17,10 @@ function MyApp() {
   useEffect(() => {
     const onMessageRecived = (value: Message) => {
       dispatch(addConversation(false));
-      if (value.to == to) dispatch(addMessage(value));
+      dispatch(addMessage(value));
     };
 
     const onMessageUpdate = (value: Message) => {
-      console.log(value);
-      console.log(to);
-
       dispatch(updateMessage({ id: value.id, update: value }));
     };
 
