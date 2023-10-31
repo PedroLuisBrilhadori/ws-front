@@ -8,6 +8,8 @@ import { Check, ImagePlus, Upload, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormEvent, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addMessage } from "@/store/messages";
 
 export type UploadImageProps = {
   to?: string;
@@ -68,6 +70,7 @@ type ImagePreviewProps = {
 };
 
 const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
+  const dispatch = useDispatch();
   const [caption, setCaption] = useState("");
 
   if (!input.files) return null;
@@ -75,17 +78,26 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
   const file = input.files[0];
   const src = URL.createObjectURL(file);
 
-  const sendImage = () => {
+  const sendImage = async () => {
     if (!file) return;
 
     const data = new FormData();
     data.append("file", file);
+    data.append("caption", caption);
+
     const url = "http://localhost:3000/messages/image";
 
-    fetch(`${url}/${to}`, {
+    const response = await fetch(`${url}/${to}`, {
       method: "POST",
       body: data,
     });
+
+    const json = await response.json();
+
+    if (json?.message) {
+      setOpen(false);
+      dispatch(addMessage(json?.message));
+    }
   };
 
   return (
@@ -100,6 +112,7 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
       <input
         className="w-full bg-transparent"
         placeholder="legenda para a imagem"
+        onChange={(e) => setCaption(e.target.value)}
       />
 
       <div className="flex gap-3">
