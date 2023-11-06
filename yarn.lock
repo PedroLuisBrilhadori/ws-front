@@ -801,6 +801,11 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
+"@types/recordrtc@^5.6.13":
+  version "5.6.13"
+  resolved "https://registry.yarnpkg.com/@types/recordrtc/-/recordrtc-5.6.13.tgz#a968ed8d2ae04240a4816a3214e4e3d8532f590c"
+  integrity sha512-1OZMY09w9wRQ8y8A158GhCPQr/ClKrR9yT3Y18uUB8Q+V8KDhQj+JhiIrV9jrVVw8CbqisQ31R4pVLJduK60rQ==
+
 "@types/scheduler@*":
   version "0.16.4"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.4.tgz#fedc3e5b15c26dc18faae96bf1317487cb3658cf"
@@ -2068,6 +2073,11 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
+
+recordrtc@^5.6.2:
+  version "5.6.2"
+  resolved "https://registry.yarnpkg.com/recordrtc/-/recordrtc-5.6.2.tgz#48fc214b35084973ccce82c6251198b5742bc327"
+  integrity sha512-1QNKKNtl7+KcwD1lyOgP3ZlbiJ1d0HtXnypUy7yq49xEERxk31PHvE9RCciDrulPCY7WJ+oz0R9hpNxgsIurGQ==
 
 redux-thunk@^2.4.2:
   version "2.4.2"

@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import RecordRTC from "recordrtc";
 
 type RecorderState = "inactive" | "recording" | "paused";
 
@@ -10,23 +11,16 @@ type RecorderResult = {
 
 export const useRecorder = (): RecorderResult => {
   const [state, setState] = useState<RecorderState>("inactive");
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
+  const mediaRecorderRef = useRef<RecordRTC | null>(null);
 
   const start = () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      const mediaRecorder = new MediaRecorder(stream);
+      const mediaRecorder = new RecordRTC(stream, {
+        mimeType: "audio/wav",
+      });
       mediaRecorderRef.current = mediaRecorder;
 
-      mediaRecorder.addEventListener("dataavailable", (event) => {
-        chunksRef.current.push(event.data);
-      });
-
-      mediaRecorder.addEventListener("stop", () => {
-        setState("inactive");
-      });
-
-      mediaRecorder.start();
+      mediaRecorder.startRecording();
       setState("recording");
     });
   };
@@ -38,16 +32,12 @@ export const useRecorder = (): RecorderResult => {
         throw new Error("MediaRecorder not initialized");
       }
 
-      mediaRecorder.addEventListener("stop", () => {
-        const blob = new Blob(chunksRef.current, {
-          type: "audio/ogg",
-        });
-        chunksRef.current = [];
-        resolve(blob);
-      });
+      mediaRecorder.stopRecording(() => {
+        const blob = mediaRecorder.getBlob();
 
-      mediaRecorder.stop();
-      setState("inactive");
+        resolve(blob);
+        setState("inactive");
+      });
     });
   };
 
