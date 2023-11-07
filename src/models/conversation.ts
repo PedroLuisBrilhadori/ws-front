@@ -6,4 +6,5 @@ export type Conversation = {
   timestamp: string;
   to: string;
   unread: string;
+  type?: string;
 };
