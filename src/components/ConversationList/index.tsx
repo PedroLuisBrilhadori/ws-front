@@ -5,7 +5,6 @@ import { setCurrentConversation } from "@/store/currentConversation";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { NewAction } from "./new-action";
-import { MessageBody } from "../MessageBalloon/body";
 import { TextBody } from "../MessageBalloon/text-body";
 
 export default function ConversationList() {
@@ -45,24 +44,22 @@ const Item = ({ conversation }: ItemProps) => {
 
   return (
     <div
-      className="flex items-center w-full h-[4.5rem] bg-[#111B21] pl-3 pr-4 hover:bg-[#2A3942] cursor-pointer
-    "
+      className="cursor-pointer bg-[#111B21] hover:bg-[#2A3942] h-[70px] overflow-hidden"
       onClick={() => {
         dispatch(setCurrentConversation(conversation));
         navigate(`/conversation/${conversation?.to}`);
       }}
     >
+      <hr />
+
       <div className="flex flex-col w-full px-1 justify-between">
-        <hr style={{ borderTop: ` solid rgba(134,150,160,0.15)` }} />
-        <div className="flex">
-          <div className="flex flex-col overflow-hidden w-full">
-            <span className=" text-ellipsis text-white text-base">
+        <div className="flex mt-1">
+          <div className="flex flex-col overflow-hidden w-full justify-between">
+            <span className="text-ellipsis text-white text-base">
               {conversation.name} - {conversation.to}
             </span>
 
-            <span className="text-[#aebac1] text-sm truncate ">
-              <TextBody truncate text={conversation.message} />
-            </span>
+            <MessageItem className="" conversation={conversation} />
           </div>
 
           <div className="flex flex-col items-end justify-between text-[#aebac1]">
@@ -77,6 +74,19 @@ const Item = ({ conversation }: ItemProps) => {
         </div>
       </div>
     </div>
+  );
+};
+
+type MessageItemProps = {
+  conversation: Conversation;
+  className?: string;
+};
+
+const MessageItem = ({ conversation, className }: MessageItemProps) => {
+  return (
+    <span className={`text-[#aebac1] text-sm truncate ${className}`}>
+      <TextBody truncate text={conversation.message} />
+    </span>
   );
 };
 
