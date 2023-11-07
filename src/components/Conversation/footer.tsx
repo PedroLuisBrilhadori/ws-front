@@ -1,7 +1,7 @@
 import { selectCurrentConversation } from "@/store/currentConversation";
 import { Conversation } from "@/models";
 import { Mic, Send } from "lucide-react";
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "@/store/messages";
 import { Clip } from "./Clip/clip";
@@ -9,7 +9,7 @@ import { sendMessageService } from "@/services";
 import { Recorder } from "./recorder";
 
 export const ConversationFooter = () => {
-  const [text, setMessage] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const [recording, setRecording] = useState(false);
   const dispatch = useDispatch();
   const justify = recording ? "justify-end" : "justify-between";
@@ -25,15 +25,16 @@ export const ConversationFooter = () => {
   };
 
   const sendMessage = () => {
-    if (!current) return;
+    if (!current || !inputRef || !inputRef?.current) return;
 
     const { to } = current as unknown as Conversation;
+    const text = inputRef.current?.value || "";
 
     sendMessageService({ to, text }).then((message) => {
       dispatch(addMessage(message));
     });
 
-    setMessage("");
+    inputRef.current.value = "";
   };
 
   const FooterHandler = () => {
@@ -43,18 +44,21 @@ export const ConversationFooter = () => {
       <>
         <div className="flex w-full h-12">
           <input
+            ref={inputRef}
             type={"text"}
             className="bg-[#2a3942] rounded-lg w-full px-3 py-3 text-white"
             placeholder="Mensagem..."
             onKeyDown={(evt) => changeHandler(evt)}
-            onChange={(evt) => setMessage(evt.target.value)}
-            value={text}
           />
         </div>
 
         <Clip />
 
-        <Sender onRecord={setRecording} text={text} onClick={sendMessage} />
+        <Sender
+          text={inputRef?.current?.value == ""}
+          onRecord={setRecording}
+          onClick={sendMessage}
+        />
       </>
     );
   };
@@ -69,12 +73,12 @@ export const ConversationFooter = () => {
 };
 
 export type SenderProps = {
-  text: string;
+  text: boolean;
   onClick: (e: any) => void;
   onRecord: (record: boolean) => void;
 };
 export const Sender = ({ text, onClick, onRecord }: SenderProps) => {
-  if (text.length === 0)
+  if (text)
     return (
       <Mic
         className="cursor-pointer"
