@@ -25,14 +25,12 @@ export const SideBarSearch = ({ search, setSearch }: SidaBarSearchProps) => {
           </div>
         )}
 
-        <div className="">
-          <input
-            className="w-full h-9 rounded-lg bg-[#202c33] text-white text-sm px-10"
-            placeholder="Pesquisar ou começar uma nova conversa"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+        <input
+          className="w-full h-9 rounded-lg bg-[#202c33] text-white text-sm px-10"
+          placeholder="Pesquisar ou começar uma nova conversa"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
         {search && (
           <div onClick={(e) => setSearch("")} className="cursor-pointer">
