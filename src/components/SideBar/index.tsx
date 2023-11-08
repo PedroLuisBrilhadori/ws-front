@@ -14,7 +14,7 @@ export default function SideBar() {
       <SideBarSearch search={search} setSearch={setSearch} />
 
       <div className="flex flex-col w-full overflow-y-scroll" id="conversation">
-        <ConversationList />
+        <ConversationList search={search} />
       </div>
     </div>
   );

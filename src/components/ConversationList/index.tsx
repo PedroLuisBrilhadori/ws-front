@@ -7,7 +7,11 @@ import { useEffect } from "react";
 import { NewAction } from "./new-action";
 import { MessageItem } from "./item";
 
-export default function ConversationList() {
+export type ConversationListProps = {
+  search: string;
+};
+
+export default function ConversationList({ search }: ConversationListProps) {
   const conversations = useSelector(selectConversations);
 
   const dispatch = useDispatch();
@@ -24,9 +28,18 @@ export default function ConversationList() {
   return (
     <div>
       {conversations.map((conversation) => {
-        return (
-          <Item key={`item-${conversation.to}`} conversation={conversation} />
-        );
+        if (search.length === 0)
+          return (
+            <Item key={`item-${conversation.to}`} conversation={conversation} />
+          );
+
+        if (conversation.name.toLowerCase().includes(search.toLowerCase())) {
+          return (
+            <Item key={`item-${conversation.to}`} conversation={conversation} />
+          );
+        }
+
+        return null;
       })}
 
       <NewAction />
