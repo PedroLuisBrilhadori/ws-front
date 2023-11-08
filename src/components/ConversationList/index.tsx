@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { NewAction } from "./new-action";
 import { MessageItem } from "./item";
+import { removeTelephoneMask, telephoneMask } from "@/lib/telephone";
 
 export type ConversationListProps = {
   search: string;
@@ -33,7 +34,11 @@ export default function ConversationList({ search }: ConversationListProps) {
             <Item key={`item-${conversation.to}`} conversation={conversation} />
           );
 
-        if (conversation.name.toLowerCase().includes(search.toLowerCase())) {
+        if (
+          conversation.name.toLowerCase().includes(search.toLowerCase()) ||
+          conversation.to.includes(removeTelephoneMask(search)) ||
+          telephoneMask(conversation.to).includes(search)
+        ) {
           return (
             <Item key={`item-${conversation.to}`} conversation={conversation} />
           );
@@ -69,7 +74,7 @@ const Item = ({ conversation }: ItemProps) => {
         <div className="flex mt-1">
           <div className="flex flex-col overflow-hidden w-full justify-between">
             <span className="text-ellipsis text-white text-base">
-              {conversation.name} - {conversation.to}
+              {conversation.name} - {telephoneMask(conversation.to)}
             </span>
 
             <MessageItem className="" conversation={conversation} />

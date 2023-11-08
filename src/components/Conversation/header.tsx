@@ -1,3 +1,4 @@
+import { telephoneMask } from "@/lib/telephone";
 import { Conversation } from "@/models";
 import { selectCurrentConversation } from "@/store/currentConversation";
 import { ArrowLeft } from "lucide-react";
@@ -11,7 +12,9 @@ export const ConversationHeader = () => {
     selectCurrentConversation
   ) as unknown as Conversation;
 
-  const contactName = current ? `${current.name} - ${current.to}` : null;
+  const contactName = current
+    ? `${current.name} - ${telephoneMask(current.to)}`
+    : null;
 
   return (
     <div className="flex justify-between w-full">
