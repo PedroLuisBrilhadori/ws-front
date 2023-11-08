@@ -116,8 +116,6 @@ export default function CreateTemplates() {
             placeholder="Categoria"
           >
             <option value="MARKETING">Marketing</option>
-            <option value="UTILITY">Utilidades</option>
-            <option value="AUTHENTICATION">Autenticação</option>
           </select>
 
           <SelectLanguage register={register} name="language" />
