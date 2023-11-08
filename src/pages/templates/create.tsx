@@ -13,6 +13,16 @@ type CreateTemplate = {
   components: Component[];
 };
 
+export const transformTemplate = (template: CreateTemplate) => {
+  template.name = template.name.toLowerCase();
+
+  if (!template.components[2].text) template.components.pop();
+
+  if (!template.components[0].text) template.components.reverse().pop();
+
+  return template;
+};
+
 export default function CreateTemplates() {
   const defaultValues: CreateTemplate = {
     name: "",
@@ -50,10 +60,12 @@ export default function CreateTemplates() {
 
     headers.append("Content-Type", "application/json");
 
+    const body = JSON.stringify(transformTemplate(data));
+
     fetch("http://localhost:3000/templates", {
       method: "POST",
       headers,
-      body: JSON.stringify(data),
+      body,
     }).then(async (response) => {
       const data = await response.json();
 
