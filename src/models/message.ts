@@ -4,7 +4,7 @@ export type Message = {
   message: string;
   timestamp: string;
   me?: boolean;
-  type: "image" | "text" | "audio";
+  type: "image" | "text" | "audio" | "document";
   to: string;
 };
 

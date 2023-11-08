@@ -54,11 +54,7 @@ export const ConversationFooter = () => {
 
         <Clip />
 
-        <Sender
-          text={inputRef?.current?.value == ""}
-          onRecord={setRecording}
-          onClick={sendMessage}
-        />
+        <Sender text={false} onRecord={setRecording} onClick={sendMessage} />
       </>
     );
   };
