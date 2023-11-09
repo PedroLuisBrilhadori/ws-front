@@ -38,19 +38,17 @@ export const DocumentBody = ({
   useEffect(() => {
     fetchDocumentInfo()
       .then(() => {})
-      .catch((error) => {
-        setError(true);
-      });
+      .catch((error) => {});
   }, []);
 
-  if (!info || error)
+  if (!info)
     return (
       <div>
         <div className="cursor-pointer w-[300px] h-[100px] object-cover rounded-sm flex items-center justify-center">
           <div className="flex flex-col gap-2 mt-3 justify-center items-center">
             <RefreshCcw
               className="w-[24px] h-[24px]"
-              onClick={() => setError(false)}
+              onClick={() => fetchDocumentInfo()}
             />
             Falha ao carregar a documento
           </div>
