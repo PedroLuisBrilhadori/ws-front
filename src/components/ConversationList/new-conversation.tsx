@@ -51,6 +51,7 @@ export const NewConversation = () => {
           <Input
             ref={numberRef}
             className=""
+            type="number"
             placeholder="Numero..."
             maxLength={20}
             onChange={(e) => {
