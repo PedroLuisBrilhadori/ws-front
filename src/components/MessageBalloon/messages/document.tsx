@@ -65,7 +65,7 @@ export const DocumentBody = ({
       <a
         target="_blank"
         href={path}
-        className={`flex gap-2 p-2 items-center justify-between bg-[#1D282F] rounded-sm ${stype}`}
+        className={`flex gap-2 p-2 items-center justify-between rounded-sm ${stype}`}
       >
         <div className="flex flex-col">
           <h1>Documento: {info.name} </h1>
