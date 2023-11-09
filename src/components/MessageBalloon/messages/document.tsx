@@ -3,6 +3,17 @@ import { TextBody } from "../text-body";
 import { Message } from "postcss";
 import { useEffect, useState } from "react";
 
+export type Media = {
+  id: string;
+  storageUrl?: string;
+  cacheName?: string;
+  whatsappMediaId?: string;
+  type: string;
+  name: string;
+  messageId: string;
+  size: string;
+};
+
 export const DocumentBody = ({
   message,
   truncate,
@@ -12,27 +23,27 @@ export const DocumentBody = ({
 }) => {
   const [error, setError] = useState(false);
   const path = `http://localhost:3000/public/${message.id}`;
-  const [blob, setBlob] = useState(new Blob());
+  const [info, setInfo] = useState<Media>();
 
-  const fetchDocument = async () => {
-    const response = await fetch(path);
+  const fetchDocumentInfo = async () => {
+    const response = await fetch(
+      `http://localhost:3000/public/${message.id}/info`
+    );
 
-    const blob = await response.blob();
+    const info = await response.json();
 
-    setBlob(blob);
+    setInfo(info);
   };
 
   useEffect(() => {
-    fetchDocument()
-      .then(() => {
-        console.log(blob);
-      })
-      .catch(() => {
+    fetchDocumentInfo()
+      .then(() => {})
+      .catch((error) => {
         setError(true);
       });
   }, []);
 
-  if (error)
+  if (!info || error)
     return (
       <div>
         <div className="cursor-pointer w-[300px] h-[100px] object-cover rounded-sm flex items-center justify-center">
@@ -51,8 +62,15 @@ export const DocumentBody = ({
 
   return (
     <div>
-      <a target="_blank" href={path} className="flex gap-2 p-2">
-        <h1>Documento: </h1>
+      <a
+        target="_blank"
+        href={path}
+        className="flex gap-2 p-2 items-center justify-between"
+      >
+        <div className="flex flex-col">
+          <h1>Documento: {info.name} </h1>
+          <p className="text-sm">size: {info.size} B</p>
+        </div>
 
         <Download />
       </a>

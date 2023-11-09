@@ -10,7 +10,7 @@ export const ImageBody = ({
   message: Message;
   truncate?: boolean;
 }) => {
-  const path = `http://localhost:3000/public/${message.id}.jpeg`;
+  const path = `http://localhost:3000/public/${message.id}?buffer=true`;
 
   const [error, setError] = useState(false);
 
