@@ -101,12 +101,20 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-1 items-center justify-center">
-      <h1>Documento selecionado: </h1>
+    <div className="flex flex-col gap-3 items-center justify-center">
+      <div className="flex flex-col gap-1 border-2 border-[#8696a0] rounded-lg px-3 py-3">
+        <h1>Documento selecionado: </h1>
 
-      <a target="_blank" href={src}>
-        {file.name} ({file.size / 1000} KB)
-      </a>
+        <a target="_blank" href={src}>
+          {file.name} ({file.size / 1000} KB)
+        </a>
+      </div>
+
+      <input
+        className="w-full bg-transparent border-2 border-[#8696a0] rounded-lg px-3 py-3 "
+        placeholder="legenda para o documento"
+        onChange={(e) => setCaption(e.target.value)}
+      />
 
       <div className="flex gap-3">
         <Icon

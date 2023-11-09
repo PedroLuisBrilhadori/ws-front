@@ -1,7 +1,7 @@
 import { Download, RefreshCcw } from "lucide-react";
 import { TextBody } from "../text-body";
-import { Message } from "postcss";
 import { useEffect, useState } from "react";
+import { Message } from "@/models";
 
 export type Media = {
   id: string;
@@ -21,9 +21,12 @@ export const DocumentBody = ({
   message: Message;
   truncate?: boolean;
 }) => {
+  const me = message.me;
   const [error, setError] = useState(false);
   const path = `http://localhost:3000/public/${message.id}`;
   const [info, setInfo] = useState<Media>();
+
+  const stype = me ? `bg-[#025144]` : `bg-[#1D282F]`;
 
   const fetchDocumentInfo = async () => {
     const response = await fetch(
@@ -59,11 +62,11 @@ export const DocumentBody = ({
     );
 
   return (
-    <div>
+    <div className="flex flex-col justify-between gap-1">
       <a
         target="_blank"
         href={path}
-        className="flex gap-2 p-2 items-center justify-between"
+        className={`flex gap-2 p-2 items-center justify-between bg-[#1D282F] rounded-sm ${stype}`}
       >
         <div className="flex flex-col">
           <h1>Documento: {info.name} </h1>
