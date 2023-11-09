@@ -1,5 +1,5 @@
 export const validNumber = (number: string) => {
-  if (number.length != 18) return false;
+  if (number.length != 20) return false;
 
   return number !== "";
 };

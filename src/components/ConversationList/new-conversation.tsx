@@ -52,7 +52,7 @@ export const NewConversation = () => {
             ref={numberRef}
             className=""
             placeholder="Numero..."
-            maxLength={18}
+            maxLength={20}
             onChange={(e) => {
               if (!e.target.value) return;
 
