@@ -1,3 +1,5 @@
+import { baseUrl } from "..";
+
 export type SendMessageDto = {
   to: string;
   text: string;
@@ -8,7 +10,7 @@ export const sendMessageService = async ({ to, text }: SendMessageDto) => {
 
   headers.append("Content-Type", "application/json");
 
-  const response = await fetch(`http://localhost:3000/messages/text`, {
+  const response = await fetch(`${baseUrl}/messages/text`, {
     method: `POST`,
     headers,
     body: JSON.stringify({

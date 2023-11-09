@@ -4,13 +4,14 @@ import { useDispatch } from "react-redux";
 import { TemplateCards } from "./_components/templates-cards";
 import { ArrowLeft, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "@/services";
 
 export default function Template() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/templates").then(async (data) => {
+    fetch(`${baseUrl}/templates`).then(async (data) => {
       const templates = await data.json();
 
       dispatch(setTemplates(templates));

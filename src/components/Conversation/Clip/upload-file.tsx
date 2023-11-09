@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMessage } from "@/store/messages";
+import { baseUrl } from "@/services";
 
 export type UploadFileProps = {
   to?: string;
@@ -85,7 +86,7 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
     data.append("file", file);
     data.append("caption", caption);
 
-    const url = "http://localhost:3000/messages/image";
+    const url = `${baseUrl}/messages/image`;
 
     const response = await fetch(`${url}/${to}`, {
       method: "POST",

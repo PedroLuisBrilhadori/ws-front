@@ -2,6 +2,7 @@ import { Download, RefreshCcw } from "lucide-react";
 import { TextBody } from "../text-body";
 import { useEffect, useState } from "react";
 import { Message } from "@/models";
+import { baseUrl } from "@/services";
 
 export type Media = {
   id: string;
@@ -23,15 +24,13 @@ export const DocumentBody = ({
 }) => {
   const me = message.me;
   const [error, setError] = useState(false);
-  const path = `http://localhost:3000/public/${message.id}`;
+  const path = `${baseUrl}/public/${message.id}`;
   const [info, setInfo] = useState<Media>();
 
   const stype = me ? `bg-[#025144]` : `bg-[#1D282F]`;
 
   const fetchDocumentInfo = async () => {
-    const response = await fetch(
-      `http://localhost:3000/public/${message.id}/info`
-    );
+    const response = await fetch(`${baseUrl}/public/${message.id}/info`);
 
     const info = await response.json();
 

@@ -1,5 +1,6 @@
 import { useRecorder } from "@/hooks/use-recorder";
 import { useTimer } from "@/hooks/use-timer";
+import { baseUrl } from "@/services";
 import { Send, Trash2 } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -28,7 +29,7 @@ export const Recorder = ({ recordHandler }: RecorderProps) => {
       const formData = new FormData();
       formData.append("file", data);
 
-      const url = "http://localhost:3000/messages/image";
+      const url = `${baseUrl}/messages/image`;
 
       const response = await fetch(`${url}/${to}`, {
         method: "POST",

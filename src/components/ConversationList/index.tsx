@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { NewAction } from "./new-action";
 import { MessageItem } from "./item";
 import { removeTelephoneMask, telephoneMask } from "@/lib/telephone";
+import { baseUrl } from "@/services";
 
 export type ConversationListProps = {
   search: string;
@@ -18,12 +19,10 @@ export default function ConversationList({ search }: ConversationListProps) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/messages/conversations`).then(
-      async (response) => {
-        const conversations = await response.json();
-        dispatch(setConversations(conversations));
-      }
-    );
+    fetch(`${baseUrl}/messages/conversations`).then(async (response) => {
+      const conversations = await response.json();
+      dispatch(setConversations(conversations));
+    });
   }, []);
 
   return (

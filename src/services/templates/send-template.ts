@@ -1,4 +1,5 @@
 import { Message } from "@/models";
+import { baseUrl } from "..";
 
 export type SendTemplateDto = {
   to?: string;
@@ -27,7 +28,7 @@ export const sendTemplateService = ({
 
   headers.append("Content-Type", "application/json");
 
-  fetch("http://localhost:3000/messages/template", {
+  fetch(`${baseUrl}/messages/template`, {
     method: "POST",
     headers,
     body: JSON.stringify(dto),

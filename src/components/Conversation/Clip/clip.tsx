@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { SendTemplate } from "./send-template";
 import { UploadImage } from "./upload-image";
 import { UploadFile } from "./upload-file";
+import { baseUrl } from "@/services";
 
 export const Clip = () => {
   const dispatch = useDispatch();
@@ -16,13 +17,11 @@ export const Clip = () => {
   const { to } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:3000/templates?status=APPROVED").then(
-      async (data) => {
-        const templates = await data.json();
+    fetch(`${baseUrl}/templates?status=APPROVED`).then(async (data) => {
+      const templates = await data.json();
 
-        dispatch(setTemplates(templates));
-      }
-    );
+      dispatch(setTemplates(templates));
+    });
   }, []);
 
   return (

@@ -2,6 +2,7 @@ import { RefreshCcw } from "lucide-react";
 import { TextBody } from "../text-body";
 import { Message } from "postcss";
 import { useState } from "react";
+import { baseUrl } from "@/services";
 
 export const ImageBody = ({
   message,
@@ -10,7 +11,7 @@ export const ImageBody = ({
   message: Message;
   truncate?: boolean;
 }) => {
-  const path = `http://localhost:3000/public/${message.id}?buffer=true`;
+  const path = `${baseUrl}/public/${message.id}?buffer=true`;
 
   const [error, setError] = useState(false);
 

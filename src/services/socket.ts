@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
+import { baseUrl } from ".";
 
-export const socket = io("http://localhost:3000", {
+export const socket = io(`${baseUrl}`, {
   autoConnect: true,
 });

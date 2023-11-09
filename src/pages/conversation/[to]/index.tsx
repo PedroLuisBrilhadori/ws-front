@@ -1,4 +1,5 @@
 import ConversationDetails from "@/components/Conversation";
+import { baseUrl } from "@/services";
 
 import {
   selectCurrentConversation,
@@ -16,13 +17,13 @@ export default function Index() {
 
   useEffect(() => {
     if (to) {
-      fetch(`http://localhost:3000/messages/${to}`).then(async (response) => {
+      fetch(`${baseUrl}/messages/${to}`).then(async (response) => {
         const messages = await response.json();
 
         dispatch(setMessages(messages));
 
         if (!current) {
-          fetch(`http://localhost:3000/messages/conversations/${to}`)
+          fetch(`${baseUrl}/messages/conversations/${to}`)
             .then(async (response) => {
               if (response.status !== 200) throw new Error();
 

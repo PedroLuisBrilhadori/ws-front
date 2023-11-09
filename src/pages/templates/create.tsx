@@ -4,6 +4,7 @@ import { SelectLanguage } from "./_components/select-language";
 import { MessageTemplateView } from "./_components/message-template-view";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload } from "lucide-react";
+import { baseUrl } from "@/services";
 
 type CreateTemplate = {
   name: string;
@@ -62,7 +63,7 @@ export default function CreateTemplates() {
 
     const body = JSON.stringify(transformTemplate(data));
 
-    fetch("http://localhost:3000/templates", {
+    fetch(`${baseUrl}/templates`, {
       method: "POST",
       headers,
       body,
