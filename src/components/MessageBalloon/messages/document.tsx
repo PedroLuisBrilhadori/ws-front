@@ -67,7 +67,7 @@ export const DocumentBody = ({
       >
         <div className="flex flex-col">
           <h1>Documento: {info.name} </h1>
-          <p className="text-sm">size: {info.size} B</p>
+          <p className="text-sm">size: {Number(info.size) / 1000} KB</p>
         </div>
 
         <Download />
