@@ -110,7 +110,7 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
       </a>
 
       <input
-        className="w-full bg-transparent"
+        className="w-full bg-transparent border-2 border-[#8696a0] rounded-lg px-3 py-3 "
         placeholder="legenda para a imagem"
         onChange={(e) => setCaption(e.target.value)}
       />
