@@ -3,6 +3,7 @@ import conversationReducer from "./conversations";
 import currentConversationReducer from "./currentConversation";
 import messageReducer from "./messages";
 import templateReducer from "./templates";
+import userReducer from "./user";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     currentConversation: currentConversationReducer,
     messages: messageReducer,
     templates: templateReducer,
+    user: userReducer,
   },
 });
 

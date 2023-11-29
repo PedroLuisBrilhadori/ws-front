@@ -8,6 +8,7 @@ import { Message } from "postcss";
 import { addConversation } from "@/store/conversations";
 import { selectCurrentConversation } from "@/store/currentConversation";
 import { Conversation } from "@/models";
+import { AuthProvider } from "@/context/auth";
 
 function MyApp() {
   const dispatch = useDispatch();
@@ -39,7 +40,11 @@ function MyApp() {
     };
   }, []);
 
-  return <Outlet />;
+  return (
+    <AuthProvider>
+      <Outlet />
+    </AuthProvider>
+  );
 }
 
 export default MyApp;

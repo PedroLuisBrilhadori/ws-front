@@ -25,6 +25,8 @@ export default function ConversationList({ search }: ConversationListProps) {
     });
   }, []);
 
+  if (!conversations?.map) return null;
+
   return (
     <div>
       {conversations.map((conversation) => {

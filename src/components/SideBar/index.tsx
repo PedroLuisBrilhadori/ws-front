@@ -8,7 +8,7 @@ export default function SideBar() {
 
   return (
     <div
-      className="flex flex-col w-full h-full bg-[#202c33]"
+      className="flex flex-col w-full h-full "
       style={{ borderRight: "1px solid rgba(134,150,160,0.15)" }}
     >
       <SideBarSearch search={search} setSearch={setSearch} />
