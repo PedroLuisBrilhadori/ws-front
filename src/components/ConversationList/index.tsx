@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import { NewAction } from "./new-action";
 import { MessageItem } from "./item";
 import { removeTelephoneMask, telephoneMask } from "@/lib/telephone";
-import { baseUrl } from "@/services";
+import { findConversations } from "@/services/conversations/find-conversations";
+import { useUserHeaders } from "@/hooks";
 
 export type ConversationListProps = {
   search: string;
@@ -15,15 +16,16 @@ export type ConversationListProps = {
 
 export default function ConversationList({ search }: ConversationListProps) {
   const conversations = useSelector(selectConversations);
+  const { user, headers } = useUserHeaders();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`${baseUrl}/messages/conversations`).then(async (response) => {
-      const conversations = await response.json();
-      dispatch(setConversations(conversations));
-    });
-  }, []);
+    if (user.id)
+      findConversations({ user, headers }).then((conversations) => {
+        dispatch(setConversations(conversations));
+      });
+  }, [user]);
 
   if (!conversations?.map) return null;
 

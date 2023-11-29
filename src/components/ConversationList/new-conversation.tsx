@@ -28,8 +28,6 @@ export const NewConversation = () => {
 
     if (!number) return;
 
-    console.log(validNumber(number));
-
     if (!validNumber(number)) return;
 
     const num = removeTelephoneMask(number);

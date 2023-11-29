@@ -18,9 +18,7 @@ export const Recorder = ({ recordHandler }: RecorderProps) => {
   }, []);
 
   const close = () => {
-    stop().then((data) => {
-      console.log(data);
-    });
+    stop().then((data) => {});
     recordHandler(false);
   };
 

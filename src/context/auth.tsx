@@ -5,12 +5,13 @@ import { APIRoutes } from "@/services";
 import { useNavigate } from "@/router";
 import { PUBLIC_ROUTES } from "@/public.routes";
 import { setUser } from "@/store/user";
+import { User } from "@/models";
 
 type AuthContextType = {
   signOut: () => Promise<void>;
 };
 
-const fetchUser = async (token: string) => {
+const fetchUser = async (token: string): Promise<User> => {
   const headers = new Headers();
 
   headers.append("Authorization", `Bearer ${token}`);
@@ -36,7 +37,7 @@ export function AuthProvider({ children }: any) {
     if (!token) return navigate("/login");
 
     fetchUser(token).then((user) => {
-      dispach(setUser(user));
+      dispach(setUser({ ...user, access_token: token }));
     });
   }, []);
 

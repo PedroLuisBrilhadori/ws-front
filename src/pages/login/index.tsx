@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { baseUrl } from "@/services";
 import { setUser } from "@/store/user";
+import { setCookie } from "nookies";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +42,10 @@ const Login = () => {
       const data = await response.json();
 
       if (data?.error) throw new Error(data.error);
+
+      setCookie(undefined, "nextauth.token", data.access_token, {
+        maxAge: 60 * 60 * 1, // 1 hour
+      });
 
       dispatch(setUser(data));
       navigate("/");

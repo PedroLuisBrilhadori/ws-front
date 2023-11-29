@@ -21,8 +21,8 @@ const slice = createSlice({
 
 export const { setUser } = slice.actions;
 
-export const selectTemplates = (state: RootState) => {
-  return state.templates;
+export const selectUser = (state: RootState) => {
+  return state.user;
 };
 
 export default slice.reducer;

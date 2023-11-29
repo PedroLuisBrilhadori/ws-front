@@ -30,8 +30,6 @@ const slice = createSlice({
       let dayIndex = state.length - 1;
       let index;
 
-      console.log(dayIndex, index);
-
       state[dayIndex].messages.forEach((message, i) => {
         if (message.id == action.payload.id) {
           index = i;
