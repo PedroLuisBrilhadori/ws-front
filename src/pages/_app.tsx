@@ -9,6 +9,7 @@ import { addConversation } from "@/store/conversations";
 import { selectCurrentConversation } from "@/store/currentConversation";
 import { Conversation } from "@/models";
 import { AuthProvider } from "@/context/auth";
+import { Toaster } from "@/components/ui/toaster";
 
 function MyApp() {
   const dispatch = useDispatch();
@@ -43,6 +44,8 @@ function MyApp() {
   return (
     <AuthProvider>
       <Outlet />
+
+      <Toaster />
     </AuthProvider>
   );
 }

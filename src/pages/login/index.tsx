@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { baseUrl } from "@/services";
 import { setUser } from "@/store/user";
 import { setCookie } from "nookies";
@@ -26,6 +27,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const onSubmit: SubmitHandler<LoginDto> = (data) => {
     const headers = new Headers();
@@ -38,18 +40,26 @@ const Login = () => {
       method: "POST",
       headers,
       body,
-    }).then(async (response) => {
-      const data = await response.json();
+    })
+      .then(async (response) => {
+        const data = await response.json();
 
-      if (data?.error) throw new Error(data.error);
+        if (response.status !== 200) throw new Error(data.message[0]);
 
-      setCookie(undefined, "nextauth.token", data.access_token, {
-        maxAge: 60 * 60 * 1, // 1 hour
+        setCookie(undefined, "nextauth.token", data.access_token, {
+          maxAge: 60 * 60 * 1, // 1 hour
+        });
+
+        dispatch(setUser(data));
+        navigate("/");
+      })
+      .catch((error) => {
+        toast({
+          title: "Erro",
+          description: error.message,
+          variant: "destructive",
+        });
       });
-
-      dispatch(setUser(data));
-      navigate("/");
-    });
   };
 
   return (
