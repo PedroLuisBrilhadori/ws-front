@@ -1,4 +1,5 @@
 import ConversationDetails from "@/components/Conversation";
+import { useUserHeaders } from "@/hooks";
 import { baseUrl } from "@/services";
 
 import {
@@ -15,15 +16,17 @@ export default function Index() {
   const current = useSelector(selectCurrentConversation);
   const dispatch = useDispatch();
 
+  const { headers, user } = useUserHeaders();
+
   useEffect(() => {
-    if (to) {
-      fetch(`${baseUrl}/messages/${to}`).then(async (response) => {
+    if (user.id && to) {
+      fetch(`${baseUrl}/messages/${to}`, { headers }).then(async (response) => {
         const messages = await response.json();
 
         dispatch(setMessages(messages));
 
         if (!current) {
-          fetch(`${baseUrl}/messages/conversations/${to}`)
+          fetch(`${baseUrl}/messages/conversations/${to}`, { headers })
             .then(async (response) => {
               if (response.status !== 200) throw new Error();
 
@@ -41,7 +44,7 @@ export default function Index() {
         scroll();
       }, 100);
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="flex justify-center">

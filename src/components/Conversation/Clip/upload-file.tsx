@@ -11,6 +11,7 @@ import { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMessage } from "@/store/messages";
 import { baseUrl } from "@/services";
+import { useUserHeaders } from "@/hooks";
 
 export type UploadFileProps = {
   to?: string;
@@ -73,6 +74,7 @@ type ImagePreviewProps = {
 const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
   const dispatch = useDispatch();
   const [caption, setCaption] = useState("");
+  const { headers } = useUserHeaders(false);
 
   if (!input.files) return null;
 
@@ -89,6 +91,7 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
     const url = `${baseUrl}/messages/image`;
 
     const response = await fetch(`${url}/${to}`, {
+      headers,
       method: "POST",
       body: data,
     });

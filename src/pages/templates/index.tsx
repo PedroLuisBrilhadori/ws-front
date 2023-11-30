@@ -5,18 +5,21 @@ import { TemplateCards } from "./_components/templates-cards";
 import { ArrowLeft, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { baseUrl } from "@/services";
+import { useUserHeaders } from "@/hooks";
 
 export default function Template() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { headers, user } = useUserHeaders();
 
   useEffect(() => {
-    fetch(`${baseUrl}/templates`).then(async (data) => {
-      const templates = await data.json();
+    if (user.id)
+      fetch(`${baseUrl}/templates`, { headers }).then(async (data) => {
+        const templates = await data.json();
 
-      dispatch(setTemplates(templates));
-    });
-  }, []);
+        dispatch(setTemplates(templates));
+      });
+  }, [user]);
 
   return (
     <div className="flex flex-col">

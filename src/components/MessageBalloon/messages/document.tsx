@@ -3,6 +3,7 @@ import { TextBody } from "../text-body";
 import { useEffect, useState } from "react";
 import { Message } from "@/models";
 import { baseUrl } from "@/services";
+import { useUserHeaders } from "@/hooks";
 
 export type Media = {
   id: string;
@@ -26,11 +27,14 @@ export const DocumentBody = ({
   const [error, setError] = useState(false);
   const path = `${baseUrl}/public/${message.id}`;
   const [info, setInfo] = useState<Media>();
+  const { headers, user } = useUserHeaders();
 
   const stype = me ? `bg-[#025144]` : `bg-[#1D282F]`;
 
   const fetchDocumentInfo = async () => {
-    const response = await fetch(`${baseUrl}/public/${message.id}/info`);
+    const response = await fetch(`${baseUrl}/public/${message.id}/info`, {
+      headers,
+    });
 
     const info = await response.json();
 
@@ -38,10 +42,11 @@ export const DocumentBody = ({
   };
 
   useEffect(() => {
-    fetchDocumentInfo()
-      .then(() => {})
-      .catch((error) => {});
-  }, []);
+    if (user.id)
+      fetchDocumentInfo()
+        .then(() => {})
+        .catch((error) => {});
+  }, [user]);
 
   if (!info)
     return (

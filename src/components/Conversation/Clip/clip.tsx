@@ -9,20 +9,25 @@ import { SendTemplate } from "./send-template";
 import { UploadImage } from "./upload-image";
 import { UploadFile } from "./upload-file";
 import { baseUrl } from "@/services";
+import { useUserHeaders } from "@/hooks";
 
 export const Clip = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const { headers, user } = useUserHeaders();
 
   const { to } = useParams();
 
   useEffect(() => {
-    fetch(`${baseUrl}/templates?status=APPROVED`).then(async (data) => {
-      const templates = await data.json();
+    if (user.id)
+      fetch(`${baseUrl}/templates?status=APPROVED`, { headers }).then(
+        async (data) => {
+          const templates = await data.json();
 
-      dispatch(setTemplates(templates));
-    });
-  }, []);
+          dispatch(setTemplates(templates));
+        }
+      );
+  }, [user]);
 
   return (
     <div>

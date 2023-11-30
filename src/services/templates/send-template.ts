@@ -1,18 +1,19 @@
 import { Message } from "@/models";
-import { baseUrl } from "..";
+import { BaseServiceOptions, baseUrl } from "..";
 
-export type SendTemplateDto = {
+export class SendTemplateDto extends BaseServiceOptions {
   to?: string;
   name: string;
   language: string;
   callback?: (message?: Message) => void;
-};
+}
 
 export const sendTemplateService = ({
   to,
   name,
   language,
   callback,
+  headers,
 }: SendTemplateDto) => {
   const dto = {
     to,
@@ -23,10 +24,6 @@ export const sendTemplateService = ({
       },
     },
   };
-
-  const headers = new Headers();
-
-  headers.append("Content-Type", "application/json");
 
   fetch(`${baseUrl}/messages/template`, {
     method: "POST",

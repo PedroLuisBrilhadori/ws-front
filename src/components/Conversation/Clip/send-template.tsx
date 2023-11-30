@@ -11,6 +11,7 @@ import { addMessage } from "@/store/messages";
 import { Template } from "@/models/template";
 import { BookTemplate } from "lucide-react";
 import { TemplateCards } from "@/pages/templates/_components/templates-cards";
+import { useUserHeaders } from "@/hooks";
 
 export type SendTemplateProps = {
   to?: string;
@@ -19,12 +20,14 @@ export type SendTemplateProps = {
 
 export const SendTemplate = ({ to, setOpen }: SendTemplateProps) => {
   const dispatch = useDispatch();
+  const { headers } = useUserHeaders();
 
   const sendTemplate = ({ name, language }: Template) => {
     sendTemplateService({
       name,
       language,
       to,
+      headers,
       callback: (message?: Message) => {
         if (!message) return;
 

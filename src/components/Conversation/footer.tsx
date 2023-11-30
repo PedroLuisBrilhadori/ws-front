@@ -7,12 +7,14 @@ import { addMessage } from "@/store/messages";
 import { Clip } from "./Clip/clip";
 import { sendMessageService } from "@/services";
 import { Recorder } from "./recorder";
+import { useUserHeaders } from "@/hooks";
 
 export const ConversationFooter = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [recording, setRecording] = useState(false);
   const dispatch = useDispatch();
   const justify = recording ? "justify-end" : "justify-between";
+  const { headers } = useUserHeaders();
 
   const current = useSelector(selectCurrentConversation);
 
@@ -30,7 +32,7 @@ export const ConversationFooter = () => {
     const { to } = current as unknown as Conversation;
     const text = inputRef.current?.value || "";
 
-    sendMessageService({ to, text }).then((message) => {
+    sendMessageService({ to, text, headers }).then((message) => {
       dispatch(addMessage(message));
     });
 

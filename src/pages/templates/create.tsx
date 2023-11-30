@@ -5,6 +5,7 @@ import { MessageTemplateView } from "./_components/message-template-view";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload } from "lucide-react";
 import { baseUrl } from "@/services";
+import { useUserHeaders } from "@/hooks";
 
 type CreateTemplate = {
   name: string;
@@ -55,12 +56,9 @@ export default function CreateTemplates() {
   } = useForm<CreateTemplate>({ defaultValues });
 
   const navigate = useNavigate();
+  const { headers } = useUserHeaders();
 
   const onSubmit: SubmitHandler<CreateTemplate> = (data) => {
-    const headers = new Headers();
-
-    headers.append("Content-Type", "application/json");
-
     const body = JSON.stringify(transformTemplate(data));
 
     fetch(`${baseUrl}/templates`, {

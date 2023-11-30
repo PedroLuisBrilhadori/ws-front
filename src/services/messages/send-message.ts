@@ -1,15 +1,15 @@
-import { baseUrl } from "..";
+import { BaseServiceOptions, baseUrl } from "..";
 
-export type SendMessageDto = {
+export class SendMessageDto extends BaseServiceOptions {
   to: string;
   text: string;
-};
+}
 
-export const sendMessageService = async ({ to, text }: SendMessageDto) => {
-  const headers = new Headers();
-
-  headers.append("Content-Type", "application/json");
-
+export const sendMessageService = async ({
+  to,
+  text,
+  headers,
+}: SendMessageDto) => {
   const response = await fetch(`${baseUrl}/messages/text`, {
     method: `POST`,
     headers,

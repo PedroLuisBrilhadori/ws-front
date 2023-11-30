@@ -5,7 +5,7 @@ import { useRef } from "react";
 import MessageBalloon from "../MessageBalloon";
 
 export const ConversationMessages = () => {
-  const days = useSelector(selectMessage);
+  let days = useSelector(selectMessage);
 
   return (
     <div
@@ -57,6 +57,8 @@ const Messages = ({ messages }: { messages: Message[] }) => {
   setTimeout(() => {
     scroll();
   }, 100);
+
+  if (!messages?.map) return null;
 
   return messages.map((message, index) => {
     if (index == messages.length - 1) {
