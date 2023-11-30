@@ -14,7 +14,7 @@ export const ConversationFooter = () => {
   const [recording, setRecording] = useState(false);
   const dispatch = useDispatch();
   const justify = recording ? "justify-end" : "justify-between";
-  const { headers } = useUserHeaders();
+  const { headers, user } = useUserHeaders();
 
   const current = useSelector(selectCurrentConversation);
 
@@ -27,14 +27,16 @@ export const ConversationFooter = () => {
   };
 
   const sendMessage = () => {
-    if (!current || !inputRef || !inputRef?.current) return;
+    if (!current || !inputRef || !inputRef?.current || !user.company) return;
 
     const { to } = current as unknown as Conversation;
     const text = inputRef.current?.value || "";
 
-    sendMessageService({ to, text, headers }).then((message) => {
-      dispatch(addMessage(message));
-    });
+    sendMessageService({ to, text, headers, company: user.company }).then(
+      (message) => {
+        dispatch(addMessage(message));
+      }
+    );
 
     inputRef.current.value = "";
   };
