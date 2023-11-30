@@ -22,7 +22,5 @@ export const findConversations = async ({
 
   if (response.status !== 200) throw new Error("Erro ao buscar conversas");
 
-  const { conversations } = await response.json();
-
-  return conversations;
+  return response.json();
 };
