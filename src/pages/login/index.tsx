@@ -46,7 +46,7 @@ const Login = () => {
 
         if (response.status !== 200) throw new Error(data.message[0]);
 
-        setCookie(undefined, "nextauth.token", data.access_token, {
+        setCookie(undefined, "nextauth.whatsapp.token", data.access_token, {
           maxAge: 60 * 60 * 1, // 1 hour
         });
 

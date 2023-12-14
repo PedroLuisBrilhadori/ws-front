@@ -30,7 +30,7 @@ export function AuthProvider({ children }: any) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { "nextauth.token": token } = parseCookies();
+    const { "nextauth.whatsapp.token": token } = parseCookies();
 
     if (PUBLIC_ROUTES.includes(location.pathname)) return;
 
@@ -42,7 +42,7 @@ export function AuthProvider({ children }: any) {
   }, []);
 
   const signOut = async () => {
-    destroyCookie(null, "nextauth.token");
+    destroyCookie(null, "nextauth.whatsapp.token");
 
     setUser(null);
 

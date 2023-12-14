@@ -33,7 +33,7 @@ const Actions = () => {
   const dispatch = useDispatch();
 
   const logout = () => {
-    destroyCookie(undefined, "nextauth.token");
+    destroyCookie(undefined, "nextauth.whatsapp.token");
 
     dispatch(setUser(null));
 
