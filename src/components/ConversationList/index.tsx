@@ -68,7 +68,7 @@ const Item = ({ conversation }: ItemProps) => {
       className="cursor-pointer bg-[#111B21] hover:bg-[#2A3942] h-[70px] overflow-hidden"
       onClick={() => {
         dispatch(setCurrentConversation(conversation));
-        navigate(`/conversation/${conversation?.to}`);
+        navigate(`/conversa/${conversation?.to}`);
       }}
     >
       <hr />

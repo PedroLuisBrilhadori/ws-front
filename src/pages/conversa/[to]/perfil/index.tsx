@@ -1,5 +1,6 @@
 import { useCurrentConversation } from "@/hooks/conversa";
 import { telephoneMask } from "@/lib/telephone";
+import { PhotosGalery } from "./_components/galery";
 
 const Perfil = () => {
   const { current } = useCurrentConversation();
@@ -12,7 +13,7 @@ const Perfil = () => {
     <div>
       <h1>Perfil de: {contactName}</h1>
 
-      <h2>Fotos e videos</h2>
+      <PhotosGalery />
     </div>
   );
 };

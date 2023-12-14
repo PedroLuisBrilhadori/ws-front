@@ -1,10 +1,12 @@
 export type Conversation = {
   id: string;
+  to: string;
   name: string;
+  companyId: string;
+  messageId: string;
   message: string;
   status: string;
   timestamp: string;
-  to: string;
-  unread: string;
   type?: string;
+  unread: string;
 };

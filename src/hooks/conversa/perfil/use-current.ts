@@ -1,10 +1,12 @@
 import { useUserHeaders } from "@/hooks/use-fetch";
 import { Conversation } from "@/models";
-import { baseUrl } from "@/services";
+import { baseUrl, findMedia } from "@/services";
+import conversations from "@/store/conversations";
 import {
   selectCurrentConversation,
   setCurrentConversation,
 } from "@/store/currentConversation";
+import { setMedias } from "@/store/media";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -17,6 +19,8 @@ export const useCurrentConversation = () => {
   const dispatch = useDispatch();
 
   const { headers, user } = useUserHeaders();
+
+  console.log(current);
 
   useEffect(() => {
     if (user.id) {
@@ -32,9 +36,13 @@ export const useCurrentConversation = () => {
           .catch((error) => {
             dispatch(setCurrentConversation({ to }));
           });
+      } else {
+        findMedia({ headers, conversationId: current.id }).then((medias) => {
+          dispatch(setMedias(medias));
+        });
       }
     }
-  }, [user]);
+  }, [user, current]);
 
   return { current, user, to };
 };
