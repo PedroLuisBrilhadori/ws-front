@@ -5,7 +5,7 @@ import { Message } from "@/models";
 import { baseUrl } from "@/services";
 import { useUserHeaders } from "@/hooks";
 
-export type Media = {
+export type MediaInfo = {
   id: string;
   storageUrl?: string;
   cacheName?: string;
@@ -26,7 +26,7 @@ export const DocumentBody = ({
   const me = message.me;
   const [error, setError] = useState(false);
   const path = `${baseUrl}/public/${message.id}`;
-  const [info, setInfo] = useState<Media>();
+  const [info, setInfo] = useState<MediaInfo>();
   const { headers, user } = useUserHeaders();
 
   const stype = me ? `bg-[#025144]` : `bg-[#1D282F]`;

@@ -2,7 +2,9 @@
 
 import { AscHeader, TextRow } from "@/components/table-rows/rows";
 import { Media, User } from "@/models";
+import { baseUrl } from "@/services";
 import { ColumnDef, Row } from "@tanstack/react-table";
+import { DocumentColumn } from "./document-column";
 
 export const AdminActions = ({ row }: { row: Row<Media> }) => {};
 
@@ -14,9 +16,20 @@ export const columns = (authorized: boolean): ColumnDef<Media>[] => {
       accessorKey: "messageId",
       header: ({ column }) => <AscHeader column={column}> Image </AscHeader>,
       cell: ({ row }) => {
-        const value = row.getValue("messageId") as string;
+        const messageId = row.getValue("messageId") as string;
 
-        return <TextRow>{value}</TextRow>;
+        const type = row.original.type;
+
+        const path = `${baseUrl}/public/${messageId}?buffer=true`;
+
+        if (type.includes("image"))
+          return (
+            <a target="_blank" href={path}>
+              <img className="w-[100px] h-[100px] object-cover" src={path} />
+            </a>
+          );
+
+        return <DocumentColumn messageId={messageId} />;
       },
     },
 
@@ -26,7 +39,7 @@ export const columns = (authorized: boolean): ColumnDef<Media>[] => {
       cell: ({ row }) => {
         const size = row.getValue("size") as string;
 
-        return <TextRow className="w-full">{size}</TextRow>;
+        return <TextRow className="w-full">{Number(size) / 1000} KB</TextRow>;
       },
     },
 
