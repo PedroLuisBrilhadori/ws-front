@@ -20,12 +20,13 @@ export const useCurrentConversation = () => {
 
   const { headers, user } = useUserHeaders();
 
-  console.log(current);
-
   useEffect(() => {
     if (user.id) {
       if (!current) {
-        fetch(`${baseUrl}/messages/conversations/${to}`, { headers })
+        fetch(
+          `${baseUrl}/conversations?companyId=${user?.company?.id}&to=${to}`,
+          { headers }
+        )
           .then(async (response) => {
             if (response.status !== 200) throw new Error();
 

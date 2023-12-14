@@ -26,8 +26,12 @@ export default function Index() {
         dispatch(setMessages(messages));
 
         if (!current) {
-          fetch(`${baseUrl}/messages/conversations/${to}`, { headers })
+          fetch(
+            `${baseUrl}/conversations?companyId=${user?.company?.id}&to=${to}`,
+            { headers }
+          )
             .then(async (response) => {
+              console.log(response);
               if (response.status !== 200) throw new Error();
 
               const conversations = await response.json();
