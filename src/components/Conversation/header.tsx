@@ -22,12 +22,14 @@ export const ConversationHeader = () => {
         <ArrowLeft
           className="cursor-pointer text-white"
           onClick={() => {
-            navigate(`/`);
+            navigate(-1);
           }}
         />
 
         <div className="flex items-center gap-4 h-full">
-          <h1 className="text-white font-normal">{contactName}</h1>
+          <a href={`/conversa/${current.to}/perfil`}>
+            <h1 className="text-white font-normal">{contactName}</h1>
+          </a>
         </div>
       </div>
     </div>
