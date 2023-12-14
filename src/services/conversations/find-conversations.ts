@@ -14,7 +14,7 @@ export const findConversations = async ({
   const companyId = user.company.id;
 
   const response = await fetch(
-    `${baseUrl}/messages/conversations?company=${companyId}`,
+    `${baseUrl}/conversations?companyId=${companyId}`,
     {
       headers,
     }

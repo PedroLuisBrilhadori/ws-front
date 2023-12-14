@@ -4,6 +4,7 @@ import currentConversationReducer from "./currentConversation";
 import messageReducer from "./messages";
 import templateReducer from "./templates";
 import userReducer from "./user";
+import mediaReducer from "./media";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     messages: messageReducer,
     templates: templateReducer,
     user: userReducer,
+    media: mediaReducer,
   },
 });
 
