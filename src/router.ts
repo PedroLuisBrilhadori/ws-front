@@ -6,9 +6,11 @@ import { components, hooks, utils } from '@generouted/react-router/client'
 export type Path =
   | `/`
   | `/conversation/:to`
+  | `/empresa`
   | `/login`
   | `/templates`
   | `/templates/create`
+  | `/usuario`
 
 export type Params = {
   '/conversation/:to': { to: string }
