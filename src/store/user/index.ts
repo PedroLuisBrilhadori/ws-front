@@ -7,6 +7,12 @@ const initialState: User = {
   name: "",
   email: "",
   access_token: "",
+  group: {
+    id: "",
+    name: "",
+    description: "",
+    permissions: [],
+  },
 };
 
 const slice = createSlice({
