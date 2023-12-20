@@ -5,18 +5,15 @@ class DeleteMetaAccountDto extends BaseServiceOptions {
   id: string;
 }
 
-export const deleteMetaAccount = async ({
-  id,
-  headers,
-}: DeleteMetaAccountDto): Promise<MetaAccount> => {
-  const response = await fetch(`${baseUrl}/meta-business/?=${id}`, {
+export const deleteMetaAccount = async (
+  dto: DeleteMetaAccountDto
+): Promise<MetaAccount> => {
+  const response = await fetch(`${baseUrl}/meta-business/?=${dto.id}`, {
     method: "DELETE",
-    headers,
+    headers: dto.headers,
   });
 
-  if (!response.ok) {
-    throw new Error("Erro ao excluir conta.");
-  }
+  if (!response.ok) throw new Error("Erro ao excluir conta.");
 
   return await response.json();
 };
