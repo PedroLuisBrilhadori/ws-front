@@ -25,9 +25,11 @@ import { useUserHeaders } from "@/hooks";
 import { useToast } from "@/components/ui/use-toast";
 
 export function MetaAccountForm({
+  handleDelete,
   metaAccount,
   updatePermission,
 }: {
+  handleDelete: (id: string) => void;
   metaAccount: MetaAccount;
   updatePermission: any;
 }) {
@@ -50,10 +52,10 @@ export function MetaAccountForm({
       metaAccount = data;
       toast({
         title: "Sucesso",
-        description: "Conta atualizada com sucesso",
+        description: "Conta atualizada com sucesso.",
         variant: "success",
       });
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Erro",
         description: error.message,
@@ -64,11 +66,23 @@ export function MetaAccountForm({
     setBusy(false);
   });
 
-  const onSubmitDelete = form.handleSubmit((data) => {
+  const onSubmitDelete = form.handleSubmit(async (data) => {
     setBusy(true);
     try {
-      deleteMetaAccount({ headers, id: data.id });
-    } catch (error) {}
+      await deleteMetaAccount({ headers, id: data.id });
+      handleDelete(data.id);
+      toast({
+        title: "Sucesso",
+        description: "Conta excluida com sucesso.",
+        variant: "success",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Erro",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
     setBusy(false);
   });
 
@@ -99,7 +113,7 @@ export function MetaAccountForm({
                 />
                 <Check
                   onClick={() => {
-                    onSubmitDelete(), window.location.reload();
+                    onSubmitDelete();
                   }}
                   className={`${
                     deleting ? "flex" : "hidden"

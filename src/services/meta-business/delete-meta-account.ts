@@ -8,7 +8,7 @@ class DeleteMetaAccountDto extends BaseServiceOptions {
 export const deleteMetaAccount = async (
   dto: DeleteMetaAccountDto
 ): Promise<MetaAccount> => {
-  const response = await fetch(`${baseUrl}/meta-business/?=${dto.id}`, {
+  const response = await fetch(`${baseUrl}/meta-business/${dto.id}`, {
     method: "DELETE",
     headers: dto.headers,
   });
