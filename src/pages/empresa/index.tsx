@@ -1,5 +1,9 @@
 import { ArrowLeft } from "lucide-react";
-import { BaseForm, RestrictedForms } from "./_components";
+import {
+  BaseForm,
+  CreateMetaAccountButton,
+  RestrictedForms,
+} from "./_components";
 import { useUserHeaders } from "@/hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -27,6 +31,7 @@ export default function Index() {
       <div className="flex flex-col gap-y-4 h-[calc(100vh-53px)] overflow-y-auto p-4 pb-20 w-full">
         <BaseForm />
         <RestrictedForms />
+        <CreateMetaAccountButton />
       </div>
     </div>
   );

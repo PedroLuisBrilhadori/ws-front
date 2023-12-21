@@ -18,25 +18,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { MetaAccount, DeleteMetaAccount, UpdateMetaAccount } from "@/models";
+import { MetaAccount, UpdateMetaAccount } from "@/models";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useUserHeaders } from "@/hooks";
+import { useCheckPermission, useUserHeaders } from "@/hooks";
 import { useToast } from "@/components/ui/use-toast";
+import { useDispatch } from "react-redux";
+import { removeMetaAccount } from "@/store/meta-account";
 
-export function MetaAccountForm({
-  handleDelete,
-  metaAccount,
-  updatePermission,
-}: {
-  handleDelete: (id: string) => void;
-  metaAccount: MetaAccount;
-  updatePermission: any;
-}) {
+export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
   const [busy, setBusy] = useState(false);
   // const busy = true;
   const [deleting, setDeleting] = useState(false);
   const [editting, setEditting] = useState(false);
+
+  const updatePermission = useCheckPermission("UPDATE_COMPANY");
+  const dispatch = useDispatch();
 
   const form = useForm<UpdateMetaAccount>({ defaultValues: metaAccount });
   const { reset } = form;
@@ -50,6 +47,7 @@ export function MetaAccountForm({
     try {
       await updateMetaAccount({ headers, metaAccount: data });
       metaAccount = data;
+
       toast({
         title: "Sucesso",
         description: "Conta atualizada com sucesso.",
@@ -70,7 +68,9 @@ export function MetaAccountForm({
     setBusy(true);
     try {
       await deleteMetaAccount({ headers, id: data.id });
-      handleDelete(data.id);
+
+      dispatch(removeMetaAccount(data));
+
       toast({
         title: "Sucesso",
         description: "Conta excluida com sucesso.",

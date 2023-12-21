@@ -20,20 +20,22 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
 import { useUserHeaders } from "@/hooks";
+import { useDispatch } from "react-redux";
+import { addMetaAccount } from "@/store/meta-account";
 
-export function CreateMetaAccountButton({
-  handleCreate,
-}: {
-  handleCreate: (metaAccount: MetaAccount) => void;
-}) {
+export function CreateMetaAccountButton() {
   const [busy, setBusy] = useState(false);
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+  const { headers, user } = useUserHeaders();
+
+  const dispatch = useDispatch();
 
   const form = useForm<MetaAccount>();
 
-  const { toast } = useToast();
-
-  const { headers, user } = useUserHeaders();
+  const handleCreate = (metaAccount: MetaAccount) => {
+    dispatch(addMetaAccount(metaAccount));
+  };
 
   if (!user) return;
 
@@ -49,12 +51,16 @@ export function CreateMetaAccountButton({
         metaAccount: data,
         company: user.company,
       });
+
       handleCreate(data);
+
       toast({
         title: "Sucesso",
         description: "Conta atualizada com sucesso.",
         variant: "success",
       });
+
+      setOpen(false);
     } catch (error: any) {
       toast({
         title: "Erro",
