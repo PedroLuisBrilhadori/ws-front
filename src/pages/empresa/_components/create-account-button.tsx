@@ -3,6 +3,7 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { addMetaAccount } from "@/store/meta-account";
 import {
   Form,
   FormControl,
@@ -11,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createMetaAccount } from "@/services";
+import { createMetaAccountService } from "@/services";
 import { Icon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { MetaAccount } from "@/models";
@@ -21,7 +22,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { useForm } from "react-hook-form";
 import { useUserHeaders } from "@/hooks";
 import { useDispatch } from "react-redux";
-import { addMetaAccount } from "@/store/meta-account";
 
 export function CreateMetaAccountButton() {
   const [busy, setBusy] = useState(false);
@@ -46,11 +46,11 @@ export function CreateMetaAccountButton() {
 
       if (!user?.company?.id) throw new Error("Empresa não encontrada");
 
-      await createMetaAccount({
+      data.id = await createMetaAccountService({
         headers,
         metaAccount: data,
         company: user.company,
-      });
+      }).then((res) => res.id);
 
       handleCreate(data);
 

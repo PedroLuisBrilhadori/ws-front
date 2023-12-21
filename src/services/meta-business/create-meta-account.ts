@@ -6,7 +6,7 @@ class CreateMetaAccountDto extends BaseServiceOptions {
   company: Company;
 }
 
-export const createMetaAccount = async (
+export const createMetaAccountService = async (
   dto: CreateMetaAccountDto
 ): Promise<MetaAccount> => {
   const response = await fetch(`${baseUrl}/meta-business/`, {
