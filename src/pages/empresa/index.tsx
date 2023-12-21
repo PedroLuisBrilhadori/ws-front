@@ -1,4 +1,5 @@
-import { ArrowLeft, Building2, FileCheck } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { BaseForm, RestrictedForms } from "./_components";
 import { useUserHeaders } from "@/hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -10,35 +11,22 @@ export default function Index() {
 
   if (!user) return;
 
-  console.log(user);
-
   return (
-    <div className="w-full h-full text-[#AEBAC1] ">
-      <div className="h-fit w-full gap-y-2 px-4 bg-[#111b21]">
-        <h2 className="min-h-[53px] w-full flex flex-row items-center gap-x-2 place-content-between text-[#AEBAC1]">
-          <div className="flex flex-row gap-x-4 items-center ">
-            <ArrowLeft onClick={handleGoBack} />{" "}
-            <p className="font-semibold text-lg text-gray-300">Empresa</p>
-          </div>
-        </h2>
+    <div className="flex flex-col h-full w-full">
+      <div className="h-[53px] text-gray-300 w-full">
+        <div className="bg-[#111b21] fixed gap-y-2 h-fit px-4 top-0 w-full z-20">
+          <h2 className="flex flex-row gap-x-2 min-h-[53px] items-center place-content-between text-[#AEBAC1] w-full">
+            <div className="flex flex-row gap-x-4 items-center">
+              <ArrowLeft onClick={handleGoBack} />
+              <p className="font-semibold text-gray-300 text-lg">Empresa</p>
+            </div>
+          </h2>
+        </div>
       </div>
 
-      <div className="flex flex-col w-full pt-10 gap-y-4">
-        <div className="flex flex-col w-[150px] mx-auto gap-y-2">
-          <p>Sua empresa</p>
-          <div className="flex flex-row w-full gap-x-4">
-            <Building2 style={{ height: 20 }} />
-            <p>{user.company?.name.split(" ")[0]}</p>
-          </div>
-        </div>
-
-        <div className="flex flex-col w-[150px] mx-auto gap-y-2">
-          <p>CNPJ</p>
-          <div className="flex flex-row w-full gap-x-4">
-            <FileCheck style={{ height: 20 }} />
-            <p>{user.company?.cnpj}</p>
-          </div>
-        </div>
+      <div className="flex flex-col gap-y-4 h-[calc(100vh-53px)] overflow-y-auto p-4 pb-20 w-full">
+        <BaseForm />
+        <RestrictedForms />
       </div>
     </div>
   );
