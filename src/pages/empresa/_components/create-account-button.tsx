@@ -1,9 +1,11 @@
+import { addMetaAccount } from "@/store/meta-account";
 import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { addMetaAccount } from "@/store/meta-account";
+import { Building2, Check, Cloud, Loader2, Phone, Plus, X } from "lucide-react";
+import { createMetaAccountService } from "@/services";
 import {
   Form,
   FormControl,
@@ -12,16 +14,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createMetaAccountService } from "@/services";
 import { Icon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { MetaAccount } from "@/models";
-import { Plus, Check, X, Phone, Cloud, Loader2, Building2 } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { useForm } from "react-hook-form";
 import { useUserHeaders } from "@/hooks";
-import { useDispatch } from "react-redux";
 
 export function CreateMetaAccountButton() {
   const [busy, setBusy] = useState(false);

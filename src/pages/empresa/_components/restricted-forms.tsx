@@ -1,9 +1,9 @@
 import { findMetaAccounts } from "@/services";
-import { MetaAccountForm, CreateMetaAccountButton } from "./";
+import { MetaAccountForm } from "./";
+import { selectMetaAccounts, setMetaAccounts } from "@/store/meta-account";
 import { useEffect } from "react";
 import { useCheckPermission, useUserHeaders } from "@/hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { selectMetaAccounts, setMetaAccounts } from "@/store/meta-account";
 
 export function RestrictedForms() {
   const { user, headers } = useUserHeaders();

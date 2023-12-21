@@ -1,4 +1,4 @@
-import { Building2, Badge } from "lucide-react";
+import { Badge, Building2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -23,7 +23,7 @@ export function BaseForm() {
   }, [user, reset]);
 
   return (
-    <div className="bg-black h-fit p-4 rounded-xl w-full self-center max-w-[350px]">
+    <div className="bg-black h-fit p-4 rounded-xl w-full self-center min-w-[280px] max-w-[350px]">
       <Form {...form}>
         <form className="flex flex-col gap-3 justify-center">
           <FormField

@@ -1,12 +1,12 @@
 import {
   Building2,
   Check,
-  X,
   Cloud,
   Loader2,
   Pencil,
   Phone,
   Trash,
+  X,
 } from "lucide-react";
 import { deleteMetaAccount, updateMetaAccount } from "@/services/meta-business";
 import {
@@ -19,16 +19,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { MetaAccount, UpdateMetaAccount } from "@/models";
+import { removeMetaAccount } from "@/store/meta-account";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useCheckPermission, useUserHeaders } from "@/hooks";
 import { useToast } from "@/components/ui/use-toast";
 import { useDispatch } from "react-redux";
-import { removeMetaAccount } from "@/store/meta-account";
 
 export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
   const [busy, setBusy] = useState(false);
-  // const busy = true;
   const [deleting, setDeleting] = useState(false);
   const [editting, setEditting] = useState(false);
 
@@ -84,6 +83,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
       });
     }
     setBusy(false);
+    setDeleting(false);
   });
 
   useEffect(() => {
@@ -91,9 +91,9 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
   }, [metaAccount, reset]);
 
   return (
-    <div className="bg-black h-fit p-4 rounded-xl w-full max-w-[350px]">
+    <div className="bg-black h-fit p-4 rounded-xl w-full min-w-[280px] max-w-[350px]">
       <Form {...form}>
-        <form className="flex flex-col gap-3 justify-center relative min-w-[200px]">
+        <form className="flex flex-col gap-3 justify-center relative ">
           <div
             className={`absolute flex flex-row gap-4 top-[-5px] ${
               busy ? "right-[15px]" : "right-0"
