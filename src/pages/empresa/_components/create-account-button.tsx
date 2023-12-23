@@ -74,32 +74,32 @@ export function CreateMetaAccountButton() {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger>
-        <Icon className="bg-green-600 bottom-4 right-4 fixed">
-          <Plus aria-label="Templates" />
+        <Icon className="bg-component-button bottom-6 right-6 fixed">
+          <Plus className="text-icon" aria-label="Templates" />
         </Icon>
       </AlertDialogTrigger>
 
       <AlertDialogContent>
-        <div className="bg-black h-fit p-4 rounded-xl w-full max-w-[350px]">
+        <div className="bg-background-dark h-fit p-4 rounded-xl w-full min-w-[280px] max-w-[350px]">
           <Form {...form}>
-            <form className="flex flex-col gap-3 justify-center relative min-w-[200px]">
+            <form className="flex flex-col gap-3 justify-center relative">
               <div
                 className={`absolute flex flex-row gap-4 top-[-5px] ${
                   busy ? "right-[15px]" : "right-0"
                 }`}
               >
                 {busy ? (
-                  <Loader2 className="animate-spin text-blue-700" />
+                  <Loader2 className="animate-spin text-info" />
                 ) : (
                   <>
                     <Check
                       onClick={() => {
                         onSubmitCreate();
                       }}
-                      className={` hover:cursor-pointer text-green-600`}
+                      className={` hover:cursor-pointer text-success`}
                     />
                     <X
-                      className={`hover:cursor-pointer text-red-600`}
+                      className={`hover:cursor-pointer text-destructive`}
                       onClick={() => setOpen(false)}
                     />
                   </>
@@ -111,13 +111,15 @@ export function CreateMetaAccountButton() {
                 name="numberId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Número da empresa</FormLabel>
+                    <FormLabel className="text-typography-embedded-dark">
+                      Número da empresa
+                    </FormLabel>
                     <FormControl>
                       <div className="flex flex-row gap-x-4 h-fit items-center">
-                        <Phone />
+                        <Phone className="text-icon" />
                         <Input
                           type="number"
-                          className={"disabled:cursor-default"}
+                          className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
                           {...field}
                         />
                       </div>
@@ -132,11 +134,16 @@ export function CreateMetaAccountButton() {
                 name="accountId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>ID da conta WhatsApp Business</FormLabel>
+                    <FormLabel className="text-typography-embedded-dark">
+                      ID da conta WhatsApp Business
+                    </FormLabel>
                     <FormControl>
                       <div className="flex flex-row gap-x-4 h-fit items-center">
-                        <Building2 />
-                        <Input className="disabled:cursor-default" {...field} />
+                        <Building2 className="text-icon" />
+                        <Input
+                          className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
+                          {...field}
+                        />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -149,11 +156,16 @@ export function CreateMetaAccountButton() {
                 name="token"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Token para cloud WhatsApp API</FormLabel>
+                    <FormLabel className="text-typography-embedded-dark">
+                      Token para cloud WhatsApp API
+                    </FormLabel>
                     <FormControl>
                       <div className="flex flex-row gap-x-4 h-fit items-center">
-                        <Cloud />
-                        <Input className="disabled:cursor-default" {...field} />
+                        <Cloud className="text-icon" />
+                        <Input
+                          className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
+                          {...field}
+                        />
                       </div>
                     </FormControl>
                     <FormMessage />

@@ -42,7 +42,7 @@ export function DataTableToolbar<TData>({
           placeholder={placeholder}
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 w-[150px] lg:w-[280px]"
         />
 
         {filters &&

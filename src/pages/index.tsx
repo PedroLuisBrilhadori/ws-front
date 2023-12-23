@@ -11,7 +11,7 @@ export default function Home() {
   dispatch(clearCurrentConversation(false));
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center bg-background-dark h-screen w-full">
       <div
         className="flex flex-col w-full h-full "
         style={{ borderRight: "1px solid rgba(134,150,160,0.15)" }}

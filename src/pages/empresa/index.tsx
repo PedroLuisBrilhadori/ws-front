@@ -16,13 +16,15 @@ export default function Index() {
   if (!user) return;
 
   return (
-    <div className="flex flex-col h-full w-full">
-      <div className="h-[53px] text-gray-300 w-full">
-        <div className="bg-[#111b21] fixed gap-y-2 h-fit px-4 top-0 w-full z-20">
-          <h2 className="flex flex-row gap-x-2 min-h-[53px] items-center place-content-between text-[#AEBAC1] w-full">
+    <div className="w-full h-screen bg-background-dark">
+      <div className="h-[53px] text-typography-embedded-dark w-full">
+        <div className="bg-component-pageHeader fixed gap-y-2 h-fit px-4 top-0 w-full z-20">
+          <h2 className="flex flex-row gap-x-2 min-h-[53px] items-center place-content-between text-typography-embedded-dark w-full">
             <div className="flex flex-row gap-x-4 items-center">
-              <ArrowLeft onClick={handleGoBack} />
-              <p className="font-semibold text-gray-300 text-lg">Empresa</p>
+              <ArrowLeft className="text-icon" onClick={handleGoBack} />
+              <p className="font-semibold text-typography-embedded-dark text-lg">
+                Empresa
+              </p>
             </div>
           </h2>
         </div>

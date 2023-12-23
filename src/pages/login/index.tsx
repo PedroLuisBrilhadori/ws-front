@@ -63,31 +63,38 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center  text-white">
-      <div className="flex flex-col w-full items-center  gap-3 p-4">
-        <h1 className="font-bold text-xl">Login</h1>
+    <div className="bg-background-dark h-screen w-full flex flex-col items-center text-typography-embedded-dark">
+      <div className="bg-component-card  flex flex-col min-w-[280px] max-w-[350px] rounded-xl items-center gap-3 p-4">
+        <h1 className="font-bold text-xl text-typography-embedded-dark">
+          Login
+        </h1>
 
-        <p> Realize o login para acessar o sistema</p>
+        <p className="text-typography-embedded-dark">
+          {" "}
+          Realize o login para acessar o sistema
+        </p>
 
         <form
-          className="flex flex-col items-center gap-3 w-full "
+          className="flex flex-col items-center gap-3 w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
           <input
             {...register("email")}
             type={"email"}
-            className="bg-[#2a3942] rounded-sm w-full px-3 py-3 "
+            className="bg-component-textInputField rounded-xl w-full px-3 py-3 text-typography-input"
             placeholder="Email"
           />
 
           <input
             {...register("password")}
             type={"password"}
-            className="bg-[#2a3942] rounded-sm w-full px-3 py-3 "
+            className="bg-component-textInputField rounded-xl w-full px-3 py-3 text-typography-input"
             placeholder="Senha"
           />
 
-          <button className="bg-green-600 rounded-lg px-2 py-1">Login</button>
+          <button className="bg-component-button text-typography-embedded-dark rounded-xl px-5 py-2 text-base shadow-md">
+            Entrar
+          </button>
         </form>
       </div>
     </div>

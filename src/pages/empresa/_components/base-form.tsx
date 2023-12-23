@@ -23,7 +23,7 @@ export function BaseForm() {
   }, [user, reset]);
 
   return (
-    <div className="bg-black h-fit p-4 rounded-xl w-full self-center min-w-[280px] max-w-[350px]">
+    <div className="bg-component-card h-fit p-4 rounded-xl w-full self-center min-w-[280px] max-w-[350px]">
       <Form {...form}>
         <form className="flex flex-col gap-3 justify-center">
           <FormField
@@ -31,12 +31,14 @@ export function BaseForm() {
             name="company.name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Sua empresa</FormLabel>
+                <FormLabel className="text-typography-embedded-dark">
+                  Sua empresa
+                </FormLabel>
                 <FormControl>
                   <div className="flex flex-row h-fit gap-x-4 items-center">
-                    <Building2 />
+                    <Building2 className="text-icon" />
                     <Input
-                      className={"disabled:cursor-default"}
+                      className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
                       {...field}
                       disabled={true}
                     />
@@ -52,12 +54,14 @@ export function BaseForm() {
             name="company.cnpj"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>CNPJ</FormLabel>
+                <FormLabel className="text-typography-embedded-dark">
+                  CNPJ
+                </FormLabel>
                 <FormControl>
                   <div className="flex flex-row h-fit gap-x-4 items-center">
-                    <Badge />
+                    <Badge className="text-icon" />
                     <Input
-                      className="disabled:cursor-default"
+                      className="text-typography-input bg-component-textInputField-dark  disabled:cursor-default"
                       {...field}
                       disabled={true}
                     />

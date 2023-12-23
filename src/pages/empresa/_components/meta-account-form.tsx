@@ -91,7 +91,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
   }, [metaAccount, reset]);
 
   return (
-    <div className="bg-black h-fit p-4 rounded-xl w-full min-w-[280px] max-w-[350px]">
+    <div className="bg-component-card h-fit p-4 rounded-xl w-full min-w-[280px] max-w-[350px]">
       <Form {...form}>
         <form className="flex flex-col gap-3 justify-center relative ">
           <div
@@ -100,13 +100,15 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
             }`}
           >
             {busy ? (
-              <Loader2 className="animate-spin text-blue-700" />
+              <Loader2 className="animate-spin text-info" />
             ) : (
               <>
                 <Trash
                   className={`${updatePermission ? "flex" : "hidden"} ${
                     editting ? "hidden" : "flex"
-                  }  ${deleting ? "" : "hover:cursor-pointer"} text-red-600`}
+                  }  ${
+                    deleting ? "" : "hover:cursor-pointer"
+                  } text-destructive`}
                   onClick={() => {
                     if (!deleting) setDeleting(!deleting);
                   }}
@@ -117,12 +119,12 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                   }}
                   className={`${
                     deleting ? "flex" : "hidden"
-                  } hover:cursor-pointer text-green-600`}
+                  } hover:cursor-pointer text-success`}
                 />
                 <X
                   className={`${
                     deleting ? "flex" : "hidden"
-                  } hover:cursor-pointer text-red-600`}
+                  } hover:cursor-pointer text-destructive`}
                   onClick={() => setDeleting(false)}
                 />
 
@@ -132,7 +134,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                   }}
                   className={` ${deleting ? "hidden" : "flex "} ${
                     editting ? "" : "hover:cursor-pointer"
-                  } text-[#AEBAC1]`}
+                  } text-icon`}
                 />
                 <Check
                   onClick={() => {
@@ -141,12 +143,12 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                   }}
                   className={`${
                     editting ? "flex" : "hidden"
-                  } hover:cursor-pointer text-green-600`}
+                  } hover:cursor-pointer text-success`}
                 />
                 <X
                   className={`${
                     editting ? "flex" : "hidden"
-                  } hover:cursor-pointer text-red-600`}
+                  } hover:cursor-pointer text-destructive`}
                   onClick={() => {
                     setEditting(false);
                     form.reset();
@@ -161,13 +163,15 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
             name="numberId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Número da empresa</FormLabel>
+                <FormLabel className="text-typography-embedded-dark">
+                  Número da empresa
+                </FormLabel>
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
-                    <Phone />
+                    <Phone className="text-icon" />
                     <Input
                       type="number"
-                      className={"disabled:cursor-default"}
+                      className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
                       {...field}
                       disabled={!editting}
                     />
@@ -183,12 +187,14 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
             name="accountId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ID da conta WhatsApp Business</FormLabel>
+                <FormLabel className="text-typography-embedded-dark">
+                  ID da conta WhatsApp Business
+                </FormLabel>
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
-                    <Building2 />
+                    <Building2 className="text-icon" />
                     <Input
-                      className="disabled:cursor-default"
+                      className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
                       {...field}
                       disabled={!editting}
                     />
@@ -204,12 +210,14 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
             name="token"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Token para cloud WhatsApp API</FormLabel>
+                <FormLabel className="text-typography-embedded-dark">
+                  Token para cloud WhatsApp API
+                </FormLabel>
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
-                    <Cloud />
+                    <Cloud className="text-icon" />
                     <Input
-                      className="disabled:cursor-default"
+                      className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
                       {...field}
                       disabled={!editting}
                     />

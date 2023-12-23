@@ -38,18 +38,21 @@ export const NewConversation = () => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger>
-        <Icon className="bg-green-500">
-          <MessageSquarePlus aria-label="Templates" />
+        <Icon className="bg-component-button">
+          <MessageSquarePlus aria-label="Templates" className="text-icon" />
         </Icon>
       </AlertDialogTrigger>
 
       <AlertDialogContent>
-        <form className="flex flex-col gap-3" onSubmit={onSubmit}>
-          <h1>Nova conversa</h1>
+        <form
+          className="flex flex-col gap-3 bg-component-card p-4 rounded-xl"
+          onSubmit={onSubmit}
+        >
+          <h1 className="text-typography-embedded-dark">Nova conversa</h1>
           <Input
             ref={numberRef}
-            className=""
-            placeholder="Numero..."
+            className="bg-component-textInputField-dark text-typography-input"
+            placeholder="Número..."
             maxLength={20}
             onChange={(e) => {
               if (!e.target.value) return;
@@ -58,21 +61,21 @@ export const NewConversation = () => {
 
               e.target.value = num;
             }}
-          ></Input>
+          />
 
           <div className="flex gap-3 self-end">
             <Icon
               onClick={() => {
                 setOpen(false);
               }}
-              className="border-2 border-red-500"
+              className="border-2 border-destructive"
             >
-              <X className=" text-red-500" />
+              <X className=" text-destructive" />
             </Icon>
 
             <button>
-              <Icon className="bg-green-500">
-                <Check />
+              <Icon className="border-2 border-success">
+                <Check className="text-success" />
               </Icon>
             </button>
           </div>
