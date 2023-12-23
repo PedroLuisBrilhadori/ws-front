@@ -4,3 +4,4 @@ export * from "./status";
 export * from "./company";
 export * from "./user";
 export * from "./media";
+export * from "./meta-account";
