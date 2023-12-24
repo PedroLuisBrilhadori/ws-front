@@ -1,11 +1,19 @@
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 import { baseUrl } from "@/services";
-import { setUser } from "@/store/user";
+import { Button, Input } from "@/components/ui";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { LockKeyhole, Mail } from "lucide-react";
 import { setCookie } from "nookies";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { setUser } from "@/store/user";
 import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 type LoginDto = {
   email: string;
@@ -13,23 +21,18 @@ type LoginDto = {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+
   const defaultValues: LoginDto = {
     email: "",
     password: "",
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<LoginDto>({ defaultValues });
+  const form = useForm<LoginDto>({ defaultValues });
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { toast } = useToast();
-
-  const onSubmit: SubmitHandler<LoginDto> = (data) => {
+  const onSubmitLogin = form.handleSubmit(async (data) => {
     const headers = new Headers();
 
     headers.append("Content-Type", "application/json");
@@ -60,42 +63,65 @@ const Login = () => {
           variant: "destructive",
         });
       });
-  };
+  });
 
   return (
-    <div className="bg-background-dark h-screen w-full flex flex-col items-center text-typography-embedded-dark">
-      <div className="bg-component-card  flex flex-col min-w-[280px] max-w-[350px] rounded-xl items-center gap-3 p-4">
-        <h1 className="font-bold text-xl text-typography-embedded-dark">
+    <div className="bg-background-dark flex h-screen justify-center place-items-center text-typography-embedded-dark w-full">
+      <div className="bg-component-card flex flex-col gap-4 p-4 rounded-md min-w-[280px] max-w-[350px]">
+        <h1 className="font-bold self-center text-typography-embedded-dark text-xl">
           Login
         </h1>
 
         <p className="text-typography-embedded-dark">
-          {" "}
           Realize o login para acessar o sistema
         </p>
 
-        <form
-          className="flex flex-col items-center gap-3 w-full"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <input
-            {...register("email")}
-            type={"email"}
-            className="bg-component-textInputField rounded-xl w-full px-3 py-3 text-typography-input"
-            placeholder="Email"
-          />
+        <Form {...form}>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+            }}
+            className="flex flex-col gap-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-typography-embedded-dark">
+                    Seu nome
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row gap-x-4 h-fit items-center">
+                      <Mail className="text-icon" />
+                      <Input {...field} type={"email"} placeholder="Email" />
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-          <input
-            {...register("password")}
-            type={"password"}
-            className="bg-component-textInputField rounded-xl w-full px-3 py-3 text-typography-input"
-            placeholder="Senha"
-          />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-typography-embedded-dark">
+                    Seu e-mail
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row gap-x-4 h-fit items-center">
+                      <LockKeyhole className="text-icon" />
+                      <Input {...field} type={"password"} placeholder="Senha" />
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-          <button className="bg-component-button text-typography-embedded-dark rounded-xl px-5 py-2 text-base shadow-md">
-            Entrar
-          </button>
-        </form>
+            <Button onClick={() => onSubmitLogin()}>Entrar</Button>
+          </form>
+        </Form>
       </div>
     </div>
   );
