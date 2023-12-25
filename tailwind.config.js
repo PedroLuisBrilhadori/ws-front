@@ -45,7 +45,7 @@ module.exports = {
       icon: "#F5F5F5",
       destructive: "#D12121",
       info: "#0055FF",
-      success: "#0FFF37",
+      success: "#15C56A",
     },
     extend: {
       // colors: {
