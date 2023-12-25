@@ -63,7 +63,7 @@ export default function Index() {
       {/* TODO: refator o card para receber o botão de edição dentro do seu
       corpo. */}
       <Form {...form}>
-        <form className="bg-component-card shadow-md rounded-xl px-4 py-4 flex flex-col gap-3 justify-center min-w-[280px] max-w-[350px]">
+        <form className="bg-component-card shadow-md rounded-md px-4 py-4 flex flex-col gap-3 justify-center min-w-[280px] max-w-[350px]">
           <FormField
             control={form.control}
             name="name"

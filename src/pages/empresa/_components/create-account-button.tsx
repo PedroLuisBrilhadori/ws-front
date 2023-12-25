@@ -80,7 +80,7 @@ export function CreateMetaAccountButton() {
       </AlertDialogTrigger>
 
       <AlertDialogContent>
-        <div className="bg-background-dark h-fit p-4 rounded-xl w-full min-w-[280px] max-w-[350px]">
+        <div className="bg-background-dark h-fit p-4 rounded-md w-full min-w-[280px] max-w-[350px]">
           <Form {...form}>
             <form className="flex flex-col gap-3 justify-center relative">
               <div

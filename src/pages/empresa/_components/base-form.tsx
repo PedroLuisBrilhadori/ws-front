@@ -23,7 +23,7 @@ export function BaseForm() {
   }, [user, reset]);
 
   return (
-    <div className="bg-component-card h-fit p-4 rounded-xl w-full self-center min-w-[280px] max-w-[350px]">
+    <div className="bg-component-card h-fit p-4 rounded-md w-full self-center min-w-[280px] max-w-[350px]">
       <Form {...form}>
         <form className="flex flex-col gap-3 justify-center">
           <FormField
@@ -37,11 +37,7 @@ export function BaseForm() {
                 <FormControl>
                   <div className="flex flex-row h-fit gap-x-4 items-center">
                     <Building2 className="text-icon" />
-                    <Input
-                      className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
-                      {...field}
-                      disabled={true}
-                    />
+                    <Input {...field} disabled={true} />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -60,11 +56,7 @@ export function BaseForm() {
                 <FormControl>
                   <div className="flex flex-row h-fit gap-x-4 items-center">
                     <Badge className="text-icon" />
-                    <Input
-                      className="text-typography-input bg-component-textInputField-dark  disabled:cursor-default"
-                      {...field}
-                      disabled={true}
-                    />
+                    <Input {...field} disabled={true} />
                   </div>
                 </FormControl>
                 <FormMessage />

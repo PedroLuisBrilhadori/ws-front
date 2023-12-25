@@ -91,7 +91,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
   }, [metaAccount, reset]);
 
   return (
-    <div className="bg-component-card h-fit p-4 rounded-xl w-full min-w-[280px] max-w-[350px]">
+    <div className="bg-component-card h-fit p-4 rounded-md w-full min-w-[280px] max-w-[350px]">
       <Form {...form}>
         <form className="flex flex-col gap-3 justify-center relative ">
           <div
@@ -169,12 +169,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
                     <Phone className="text-icon" />
-                    <Input
-                      type="number"
-                      className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
-                      {...field}
-                      disabled={!editting}
-                    />
+                    <Input type="phone" {...field} disabled={!editting} />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -193,11 +188,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
                     <Building2 className="text-icon" />
-                    <Input
-                      className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
-                      {...field}
-                      disabled={!editting}
-                    />
+                    <Input {...field} disabled={!editting} />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -216,11 +207,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
                     <Cloud className="text-icon" />
-                    <Input
-                      className="text-typography-input bg-component-textInputField-dark disabled:cursor-default"
-                      {...field}
-                      disabled={!editting}
-                    />
+                    <Input {...field} disabled={!editting} />
                   </div>
                 </FormControl>
                 <FormMessage />

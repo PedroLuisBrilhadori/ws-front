@@ -45,13 +45,12 @@ export const NewConversation = () => {
 
       <AlertDialogContent>
         <form
-          className="flex flex-col gap-3 bg-component-card p-4 rounded-xl"
+          className="flex flex-col gap-3 bg-component-card p-4 rounded-md"
           onSubmit={onSubmit}
         >
           <h1 className="text-typography-embedded-dark">Nova conversa</h1>
           <Input
             ref={numberRef}
-            className="bg-component-textInputField-dark text-typography-input"
             placeholder="Número..."
             maxLength={20}
             onChange={(e) => {
