@@ -1,34 +1,61 @@
-import { useUserHeaders } from "@/hooks";
-import { useNavigate } from "react-router-dom";
-import { User, ArrowLeft, Mail, Building2 } from "lucide-react";
-import { Icon } from "@/components/ui/icon";
-import { Pencil } from "lucide-react";
-import { useState, useEffect } from "react";
+import {
+  ArrowLeft,
+  Building2,
+  Check,
+  Loader2,
+  Mail,
+  Pencil,
+  User,
+  X,
+} from "lucide-react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { UpdateUser } from "@/models/user";
 import { Input } from "@/components/ui/input";
+import { UpdateUser } from "@/models/user";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import { useUserHeaders } from "@/hooks";
 
 export default function Index() {
-  const { user } = useUserHeaders();
   const [editting, setEditting] = useState(false);
-
+  const [busy, setBusy] = useState(false);
+  const { user } = useUserHeaders();
   const navigate = useNavigate();
-  const handleGoBack = () => navigate(-1);
+  const { toast } = useToast();
 
   const form = useForm<UpdateUser>({
     defaultValues: user,
   });
 
+  const handleGoBack = () => navigate(-1);
   const { reset } = form;
+
+  const onSubmitUpdate = form.handleSubmit(async (data) => {
+    console.log(data);
+    setBusy(true);
+    try {
+      toast({
+        title: "Sucesso",
+        description: "Conta atualizada com sucesso.",
+        variant: "success",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Erro",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+    setBusy(false);
+  });
 
   useEffect(() => {
     reset(user);
@@ -37,106 +64,127 @@ export default function Index() {
   if (!user) return;
 
   return (
-    <div className="bg-background-dark w-full h-screen flex flex-col items-center gap-y-4 text-gray-300">
-      <div className="h-fit w-full gap-y-2 px-4 bg-component-pageHeader">
-        <h2 className="min-h-[53px] w-full flex flex-row items-center gap-x-2 place-content-between">
-          <div className="flex flex-row gap-x-4 items-center ">
-            <ArrowLeft className="text-icon" onClick={handleGoBack} />{" "}
-            <p className="font-semibold text-lg text-typography-embedded-dark">
-              Perfil
-            </p>
-          </div>
-          <Icon className="h-fit w-fit" onClick={() => setEditting(!editting)}>
-            <Pencil
-              className="text-icon"
-              aria-label="Templates"
-              style={{ height: 20 }}
-            />
-          </Icon>
-        </h2>
+    <div className="bg-background-dark flex-col gap-y-4  h-screen flex items-center text-gray-300 w-full">
+      <div className="h-[53px] text-typography-embedded-dark w-full">
+        <div className="bg-component-pageHeader fixed gap-y-2 h-fit px-4 top-0 w-full z-20">
+          <h2 className="flex flex-row gap-x-2 min-h-[53px] items-center place-content-between text-typography-embedded-dark w-full">
+            <div className="flex flex-row gap-x-4 items-center">
+              <ArrowLeft className="text-icon" onClick={handleGoBack} />
+              <p className="font-semibold text-typography-embedded-dark text-lg">
+                Perfil
+              </p>
+            </div>
+          </h2>
+        </div>
       </div>
-      <div className="flex justify-center w-full pl-6">
+
+      <div className="flex justify-center w-full">
         <h1 className="text-typography-embedded-dark">
           Olá, <span className="font-semibold">{user.name.split(" ")[0]}</span>
         </h1>
       </div>
-      {/* TODO: refator o card para receber o botão de edição dentro do seu
-      corpo. */}
-      <Form {...form}>
-        <form className="bg-component-card shadow-md rounded-md px-4 py-4 flex flex-col gap-3 justify-center min-w-[280px] max-w-[350px]">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-typography-embedded-dark">
-                  Seu nome
-                </FormLabel>
-                <FormControl>
-                  <div className="flex flex-row items-center h-fit gap-x-4 ">
-                    <User className="text-icon" />
-                    <Input
-                      className="disabled:cursor-default bg-component-textInputField-dark text-typography-input"
-                      placeholder="Digite seu nome..."
-                      {...field}
-                      disabled={!editting}
-                    />
-                  </div>
-                </FormControl>
-                <FormDescription></FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-typography-embedded-dark">
-                  Seu e-mail
-                </FormLabel>
-                <FormControl>
-                  <div className={`flex flex-row items-center h-fit gap-x-4`}>
-                    <Mail className="text-icon" />
-                    <Input
-                      className="disabled:cursor-default bg-component-textInputField-dark text-typography-input"
-                      placeholder="Digite seu e-mail..."
-                      {...field}
-                      disabled={!editting}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <div className="bg-component-card h-fit p-4 rounded-md w-full min-w-[280px] max-w-[350px]">
+        <Form {...form}>
+          <form className="flex flex-col gap-3 justify-center relative">
+            <div
+              className={`absolute flex flex-row gap-4 top-[-5px] ${
+                busy ? "right-[15px]" : "right-0"
+              }`}
+            >
+              {busy ? (
+                <Loader2 className="animate-spin text-info" />
+              ) : (
+                <>
+                  <Pencil
+                    onClick={() => {
+                      if (!editting) setEditting(!editting);
+                    }}
+                    className={`${
+                      editting ? "" : "hover:cursor-pointer"
+                    } text-icon`}
+                  />
+                  <Check
+                    onClick={() => {
+                      onSubmitUpdate();
+                      setEditting(false);
+                    }}
+                    className={`${
+                      editting ? "flex" : "hidden"
+                    } hover:cursor-pointer text-success`}
+                  />
+                  <X
+                    className={`${
+                      editting ? "flex" : "hidden"
+                    } hover:cursor-pointer text-destructive`}
+                    onClick={() => {
+                      setEditting(false);
+                      form.reset();
+                    }}
+                  />
+                </>
+              )}
+            </div>
 
-          <FormField
-            control={form.control}
-            name="company.name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-typography-embedded-dark">
-                  Sua empresa
-                </FormLabel>
-                <FormControl>
-                  <div className={`flex flex-row items-center h-fit gap-x-4`}>
-                    <Building2 className="text-icon" />
-                    <Input
-                      className="disabled:cursor-default bg-component-textInputField-dark text-typography-input"
-                      {...field}
-                      disabled={true}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </form>
-      </Form>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-typography-embedded-dark">
+                    Seu nome
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row gap-x-4 h-fit items-center">
+                      <User className="text-icon" />
+                      <Input type="phone" {...field} disabled={!editting} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-typography-embedded-dark">
+                    Seu e-mail
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row gap-x-4 h-fit items-center">
+                      <Mail className="text-icon" />
+                      <Input {...field} disabled={!editting} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="company.name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-typography-embedded-dark">
+                    Sua empresa
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row gap-x-4 h-fit items-center">
+                      <Building2 className="text-icon" />
+                      <Input {...field} disabled={true} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }
