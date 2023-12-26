@@ -10,15 +10,17 @@ export type TemplateCardProps = {
 export const TemplateCards = ({ onClick }: TemplateCardProps) => {
   const templates = useSelector(selectTemplates);
 
+  // TODO: corrigir o scroll ficando atrás do header
+
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2 overflow-y-auto px-2 pt-8 pb-24">
       {templates.map((template) => (
         <div
           key={`template-card${template.id}`}
           onClick={() => onClick && onClick(template)}
           className={onClick && `cursor-pointer`}
         >
-          <TemplateCard {...{ template, className: "text-white" }} />
+          <TemplateCard {...{ template, className: "" }} />
         </div>
       ))}
     </div>

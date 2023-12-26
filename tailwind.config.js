@@ -21,7 +21,7 @@ module.exports = {
     colors: {
       background: {
         DEFAULT: "#E5E5E5",
-        dark: "#191919",
+        dark: "#2A2A2A",
       },
       component: {
         textInputField: {
@@ -31,7 +31,8 @@ module.exports = {
         pageHeader: "#185947",
         button: "#1BA456",
         // card: "#0F6836",
-        card: "#0C0C0C",
+        card: "#161616",
+        templateCard: "#161616",
       },
       typography: {
         input: {
