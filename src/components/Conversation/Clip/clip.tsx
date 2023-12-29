@@ -33,10 +33,10 @@ export const Clip = () => {
     <div>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Paperclip className="cursor-pointer" />
+          <Paperclip className="cursor-pointer text-foreground" />
         </PopoverTrigger>
 
-        <PopoverContent>
+        <PopoverContent className="w-fit h-fit">
           <div className="flex gap-3 flex-wrap items-center justify-center">
             <SendTemplate to={to} setOpen={setOpen} />
             <UploadImage to={to} setOpen={setOpen} />

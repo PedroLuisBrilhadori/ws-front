@@ -5,8 +5,9 @@ import { components, hooks, utils } from '@generouted/react-router/client'
 
 export type Path =
   | `/`
-  | `/conversa/:to`
-  | `/conversa/:to/perfil`
+  | `/colors`
+  | `/conversa/:numberId/:to`
+  | `/conversa/:numberId/:to/perfil`
   | `/empresa`
   | `/login`
   | `/templates`
@@ -14,8 +15,8 @@ export type Path =
   | `/usuario`
 
 export type Params = {
-  '/conversa/:to': { to: string }
-  '/conversa/:to/perfil': { to: string }
+  '/conversa/:numberId/:to': { numberId: string; to: string }
+  '/conversa/:numberId/:to/perfil': { numberId: string; to: string }
 }
 
 export type ModalPath = never

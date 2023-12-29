@@ -1,84 +1,126 @@
-import { Check, MessageSquarePlus, X } from "lucide-react";
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Icon } from "../ui/icon";
-import { Input } from "../ui/input";
-import { FormEvent, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui";
+import { MessageSquarePlus, Phone } from "lucide-react";
 import {
   removeTelephoneMask,
   telephoneMask,
   validNumber,
 } from "@/lib/telephone";
+import { useForm } from "react-hook-form";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentMetaAccount } from "@/store/current-meta-account";
+import { useToast } from "../ui/use-toast";
+
+type PhoneDto = {
+  number: string;
+};
 
 export const NewConversation = () => {
   const [open, setOpen] = useState(false);
   const numberRef = useRef<HTMLInputElement>(null);
+  const metaAccount = useSelector(selectCurrentMetaAccount);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const defaultValues: PhoneDto = {
+    number: "",
+  };
 
-    if (event.type !== "submit") return;
+  const form = useForm<PhoneDto>({ defaultValues });
 
+  const onSubmit = form.handleSubmit(async (data) => {
     const number = numberRef.current?.value;
 
-    if (!number) return;
+    if (!number) {
+      toast({
+        title: "Número inválido",
+        description: "Por favor, digite um número válido",
+        variant: "destructive",
+      });
+
+      return;
+    }
+
+    if (!metaAccount.id) {
+      toast({
+        title: "Nenhuma conta foi selecionada",
+        description: "Por favor, selecione uma conta para iniciar uma conversa",
+        variant: "destructive",
+      });
+      return;
+    }
 
     if (!validNumber(number)) return;
 
     const num = removeTelephoneMask(number);
 
-    navigate(`conversation/${num}`);
-  };
+    navigate(`conversa/${metaAccount.id}/${num}`);
+  });
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger>
-        <Icon className="bg-component-button">
-          <MessageSquarePlus aria-label="Templates" className="text-icon" />
+        <Icon className="bg-primary">
+          <MessageSquarePlus className="text-primary-foreground" />
         </Icon>
       </AlertDialogTrigger>
 
-      <AlertDialogContent>
-        <form
-          className="flex flex-col gap-3 bg-component-card p-4 rounded-md"
-          onSubmit={onSubmit}
-        >
-          <h1 className="text-typography-embedded-dark">Nova conversa</h1>
-          <Input
-            ref={numberRef}
-            placeholder="Número..."
-            maxLength={20}
-            onChange={(e) => {
-              if (!e.target.value) return;
+      <AlertDialogContent className="rounded-md w-[350px] bg-card">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Nova conversa</AlertDialogTitle>
+          <AlertDialogDescription>
+            Digite um número para iniciar uma nova conversa
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Form {...form}>
+          <FormField
+            control={form.control}
+            name="number"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex flex-row gap-x-4 h-fit items-center">
+                    <Phone className="text-card-foreground" />
+                    <Input
+                      ref={numberRef}
+                      placeholder="Número"
+                      maxLength={20}
+                      onChange={(e) => {
+                        if (!e.target.value) return;
 
-              const num = telephoneMask(e.target.value);
+                        const num = telephoneMask(e.target.value);
 
-              e.target.value = num;
-            }}
+                        e.target.value = num;
+                      }}
+                    />
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
           />
-
-          <div className="flex gap-3 self-end">
-            <Icon
-              onClick={() => {
-                setOpen(false);
-              }}
-              className="border-2 border-destructive"
-            >
-              <X className=" text-destructive" />
-            </Icon>
-
-            <button>
-              <Icon className="border-2 border-success">
-                <Check className="text-success" />
-              </Icon>
-            </button>
-          </div>
-        </form>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-secondary">
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={() => onSubmit()}>
+              Iniciar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </Form>
       </AlertDialogContent>
     </AlertDialog>
   );

@@ -1,10 +1,12 @@
-import { Message } from "@/models";
+import { Company, Message, MetaAccount } from "@/models";
 import { BaseServiceOptions, baseUrl } from "..";
 
 export class SendTemplateDto extends BaseServiceOptions {
   to?: string;
   name: string;
   language: string;
+  metaBusinessAccount: MetaAccount;
+  company: Company;
   callback?: (message?: Message) => void;
 }
 
@@ -12,6 +14,8 @@ export const sendTemplateService = ({
   to,
   name,
   language,
+  metaBusinessAccount,
+  company,
   callback,
   headers,
 }: SendTemplateDto) => {
@@ -23,6 +27,8 @@ export const sendTemplateService = ({
         code: language,
       },
     },
+    metaBusinessAccount,
+    company,
   };
 
   fetch(`${baseUrl}/messages/template`, {

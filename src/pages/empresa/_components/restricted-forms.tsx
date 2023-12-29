@@ -25,13 +25,11 @@ export function RestrictedForms() {
   if (metaAccounts.length === 0) return;
 
   return (
-    <>
-      <div className="flex flex-wrap h-fit w-full gap-4 place-content-evenly">
-        {read &&
-          metaAccounts?.map((account, key) => (
-            <MetaAccountForm key={key} metaAccount={account} />
-          ))}
-      </div>
-    </>
+    <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-fit justify-items-center w-full">
+      {read &&
+        metaAccounts?.map((account, key) => (
+          <MetaAccountForm key={key} metaAccount={account} />
+        ))}
+    </div>
   );
 }

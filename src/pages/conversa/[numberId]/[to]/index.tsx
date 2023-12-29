@@ -1,6 +1,10 @@
 import ConversationDetails from "@/components/Conversation";
 import { useUserHeaders } from "@/hooks";
 import { baseUrl } from "@/services";
+import {
+  selectCurrentMetaAccount,
+  setCurrentMetaAccounts,
+} from "@/store/current-meta-account";
 
 import {
   selectCurrentConversation,
@@ -12,14 +16,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 export default function Index() {
-  const { to } = useParams();
+  const { to, numberId } = useParams();
   const current = useSelector(selectCurrentConversation);
+  const metaAccount = useSelector(selectCurrentMetaAccount);
   const dispatch = useDispatch();
 
   const { headers, user } = useUserHeaders();
 
   useEffect(() => {
-    if (user.id && to) {
+    if (!metaAccount.id) {
+      dispatch(setCurrentMetaAccounts({ id: numberId }));
+    }
+
+    if (user.id && metaAccount.id && to) {
       fetch(`${baseUrl}/messages/${to}`, { headers }).then(async (response) => {
         const messages = await response.json();
 
@@ -27,7 +36,7 @@ export default function Index() {
 
         if (!current) {
           fetch(
-            `${baseUrl}/conversations?companyId=${user?.company?.id}&to=${to}`,
+            `${baseUrl}/conversations?metaAccountId=${metaAccount.id}&to=${to}`,
             { headers }
           )
             .then(async (response) => {
@@ -48,11 +57,13 @@ export default function Index() {
         scroll();
       }, 100);
     }
-  }, [user]);
+  }, [user, metaAccount]);
+
+  if (!metaAccount.id || !current) return null;
 
   return (
     <div className="flex justify-center">
-      <div className="flex w-full xl:container h-screen xl:py-4">
+      <div className="flex w-full h-screen ">
         <ConversationDetails />
       </div>
     </div>

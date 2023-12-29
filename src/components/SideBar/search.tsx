@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Search, X } from "lucide-react";
+import { NumberCombobox } from "./numberSelection";
 
 export type SidaBarSearchProps = {
   search: string;
@@ -8,14 +9,9 @@ export type SidaBarSearchProps = {
 
 export const SideBarSearch = ({ search, setSearch }: SidaBarSearchProps) => {
   return (
-    <div className="flex items-center bg-component-pageHeader w-full h-max py-2">
-      {/* TODO: assess className usage */}
-      <div className="relative w-full h-max px-2 flex flex-row items-center gap-2 justify-center place-content-evenly">
-        {!search && (
-          <div className=" text-icon h-full">
-            <Search className="text-icon" />
-          </div>
-        )}
+    <div className="flex flex-col md:flex-row gap-2 h-max items-center p-4 shadow-lg shadow-background w-full z-10">
+      <div className="flex flex-row gap-2 h-max items-center justify-center place-content-evenly relative w-full">
+        {!search && <Search />}
 
         <Input
           placeholder="Pesquisar ou começar uma nova conversa"
@@ -24,11 +20,10 @@ export const SideBarSearch = ({ search, setSearch }: SidaBarSearchProps) => {
         />
 
         {search && (
-          <div onClick={(e) => setSearch("")} className="cursor-pointer">
-            <X className="text-icon" />
-          </div>
+          <X onClick={(e) => setSearch("")} className="cursor-pointer" />
         )}
       </div>
+      <NumberCombobox />
     </div>
   );
 };

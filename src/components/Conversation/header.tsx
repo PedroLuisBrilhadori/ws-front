@@ -12,26 +12,27 @@ export const ConversationHeader = () => {
     selectCurrentConversation
   ) as unknown as Conversation;
 
-  const contactName = current
-    ? `${current.name} - ${telephoneMask(current.to)}`
-    : null;
+  const contactName =
+    current.name != "Desconhecido"
+      ? `${current.name}`
+      : `${telephoneMask(current.to)}`;
 
   return (
-    <div className="flex justify-between w-full">
-      <div className="flex justify-between items-center bg-[#202c33] w-full h-14 px-4">
-        <ArrowLeft
-          className="cursor-pointer text-white"
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
-
-        <div className="flex items-center gap-4 h-full">
-          <a href={`/conversa/${current.to}/perfil`}>
-            <h1 className="text-white font-normal">{contactName}</h1>
+    <div className="bg-background fixed gap-y-2 h-[53px] px-4 shadow-background shadow-lg top-0 w-full z-20">
+      <h2 className="flex flex-row gap-x-2 h-[53px] items-center place-content-between w-full">
+        <div className="flex flex-row gap-x-4 items-center text-foreground">
+          <ArrowLeft
+            className="hover:cursor-pointer"
+            onClick={() => navigate("/")}
+          />
+          <a
+            href={`/conversa/${current.to}/perfil`}
+            className="font-semibold text-lg"
+          >
+            {contactName}
           </a>
         </div>
-      </div>
+      </h2>
     </div>
   );
 };

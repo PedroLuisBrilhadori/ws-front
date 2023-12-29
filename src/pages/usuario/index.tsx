@@ -8,6 +8,7 @@ import {
   User,
   X,
 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -64,45 +65,46 @@ export default function Index() {
   if (!user) return;
 
   return (
-    <div className="bg-background-dark flex-col gap-y-4  h-screen flex items-center text-gray-300 w-full">
-      <div className="h-[53px] text-typography-embedded-dark w-full">
-        <div className="bg-component-pageHeader fixed gap-y-2 h-fit px-4 top-0 w-full z-20">
-          <h2 className="flex flex-row gap-x-2 min-h-[53px] items-center place-content-between text-typography-embedded-dark w-full">
+    <div className="flex-col gap-y-4 h-screen flex items-center w-full">
+      <div className="h-[53px] w-full">
+        <div className="fixed gap-y-2 h-fit px-4 top-0 w-full z-20">
+          <h2 className="flex flex-row gap-x-2 min-h-[53px] items-center place-content-between w-full">
             <div className="flex flex-row gap-x-4 items-center">
-              <ArrowLeft className="text-icon" onClick={handleGoBack} />
-              <p className="font-semibold text-typography-embedded-dark text-lg">
-                Perfil
-              </p>
+              <ArrowLeft
+                className="text-foreground hover:cursor-pointer"
+                onClick={handleGoBack}
+              />
+              <p className="font-semibold text-foreground text-lg">Perfil</p>
             </div>
           </h2>
         </div>
       </div>
 
       <div className="flex justify-center w-full">
-        <h1 className="text-typography-embedded-dark">
+        <h1 className="text-foreground">
           Olá, <span className="font-semibold">{user.name.split(" ")[0]}</span>
         </h1>
       </div>
 
-      <div className="bg-component-card h-fit p-4 rounded-md w-full min-w-[280px] max-w-[350px]">
-        <Form {...form}>
-          <form className="flex flex-col gap-3 justify-center relative">
+      <Card className="pt-4 relative max-w-[350px]">
+        <CardContent>
+          <Form {...form}>
             <div
-              className={`absolute flex flex-row gap-4 top-[-5px] ${
-                busy ? "right-[15px]" : "right-0"
+              className={`absolute flex flex-row gap-4 top-[10px] ${
+                busy ? "right-[15px]" : "right-[24px]"
               }`}
             >
               {busy ? (
-                <Loader2 className="animate-spin text-info" />
+                <Loader2 className="animate-spin text-card-foreground" />
               ) : (
                 <>
                   <Pencil
                     onClick={() => {
                       if (!editting) setEditting(!editting);
                     }}
-                    className={`${
+                    className={` ${
                       editting ? "" : "hover:cursor-pointer"
-                    } text-icon`}
+                    } text-card-foreground`}
                   />
                   <Check
                     onClick={() => {
@@ -111,7 +113,7 @@ export default function Index() {
                     }}
                     className={`${
                       editting ? "flex" : "hidden"
-                    } hover:cursor-pointer text-success`}
+                    } hover:cursor-pointer text-primary`}
                   />
                   <X
                     className={`${
@@ -131,13 +133,13 @@ export default function Index() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-typography-embedded-dark">
+                  <FormLabel className="text-card-foreground">
                     Seu nome
                   </FormLabel>
                   <FormControl>
                     <div className="flex flex-row gap-x-4 h-fit items-center">
-                      <User className="text-icon" />
-                      <Input type="phone" {...field} disabled={!editting} />
+                      <User className="text-card-foreground" />
+                      <Input {...field} disabled={!editting} />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -150,13 +152,13 @@ export default function Index() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-typography-embedded-dark">
+                  <FormLabel className="text-card-foreground">
                     Seu e-mail
                   </FormLabel>
                   <FormControl>
                     <div className="flex flex-row gap-x-4 h-fit items-center">
-                      <Mail className="text-icon" />
-                      <Input {...field} disabled={!editting} />
+                      <Mail className="text-card-foreground" />
+                      <Input type="email" {...field} disabled={!editting} />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -169,12 +171,12 @@ export default function Index() {
               name="company.name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-typography-embedded-dark">
+                  <FormLabel className="text-card-foreground">
                     Sua empresa
                   </FormLabel>
                   <FormControl>
                     <div className="flex flex-row gap-x-4 h-fit items-center">
-                      <Building2 className="text-icon" />
+                      <Building2 className="text-card-foreground" />
                       <Input {...field} disabled={true} />
                     </div>
                   </FormControl>
@@ -182,9 +184,9 @@ export default function Index() {
                 </FormItem>
               )}
             />
-          </form>
-        </Form>
-      </div>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

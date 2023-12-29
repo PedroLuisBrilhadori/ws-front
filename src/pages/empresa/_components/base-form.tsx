@@ -1,4 +1,5 @@
 import { Badge, Building2 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -23,48 +24,48 @@ export function BaseForm() {
   }, [user, reset]);
 
   return (
-    <div className="bg-component-card h-fit p-4 rounded-md w-full self-center min-w-[280px] max-w-[350px]">
-      <Form {...form}>
-        <form className="flex flex-col gap-3 justify-center">
-          <FormField
-            control={form.control}
-            name="company.name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-typography-embedded-dark">
-                  Sua empresa
-                </FormLabel>
-                <FormControl>
-                  <div className="flex flex-row h-fit gap-x-4 items-center">
-                    <Building2 className="text-icon" />
-                    <Input {...field} disabled={true} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <Card className="min-w-[280px] max-w-[350px]">
+      <CardContent>
+        <Form {...form}>
+          <form>
+            <FormField
+              control={form.control}
+              name="company.name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-card-foreground">
+                    Sua empresa
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row h-fit gap-x-4 items-center">
+                      <Building2 className="text-card-foreground" />
+                      <Input {...field} disabled={true} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="company.cnpj"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-typography-embedded-dark">
-                  CNPJ
-                </FormLabel>
-                <FormControl>
-                  <div className="flex flex-row h-fit gap-x-4 items-center">
-                    <Badge className="text-icon" />
-                    <Input {...field} disabled={true} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </form>
-      </Form>
-    </div>
+            <FormField
+              control={form.control}
+              name="company.cnpj"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-card-foreground">CNPJ</FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row h-fit gap-x-4 items-center">
+                      <Badge className="text-card-foreground" />
+                      <Input {...field} disabled={true} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }

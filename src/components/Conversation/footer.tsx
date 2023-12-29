@@ -8,6 +8,8 @@ import { Clip } from "./Clip/clip";
 import { sendMessageService } from "@/services";
 import { Recorder } from "./recorder";
 import { useUserHeaders } from "@/hooks";
+import { Input } from "@/components/ui/input";
+import { selectCurrentMetaAccount } from "@/store/current-meta-account";
 
 export const ConversationFooter = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -15,6 +17,7 @@ export const ConversationFooter = () => {
   const dispatch = useDispatch();
   const justify = recording ? "justify-end" : "justify-between";
   const { headers, user } = useUserHeaders();
+  const metaBusinessAccount = useSelector(selectCurrentMetaAccount);
 
   const current = useSelector(selectCurrentConversation);
 
@@ -32,11 +35,15 @@ export const ConversationFooter = () => {
     const { to } = current as unknown as Conversation;
     const text = inputRef.current?.value || "";
 
-    sendMessageService({ to, text, headers, company: user.company }).then(
-      (message) => {
-        dispatch(addMessage(message));
-      }
-    );
+    sendMessageService({
+      to,
+      text,
+      headers,
+      company: user.company,
+      metaBusinessAccount,
+    }).then((message) => {
+      dispatch(addMessage(message));
+    });
 
     inputRef.current.value = "";
   };
@@ -45,28 +52,24 @@ export const ConversationFooter = () => {
     if (recording) return <Recorder recordHandler={setRecording} />;
 
     return (
-      <>
-        <div className="flex w-full h-12">
-          <input
-            ref={inputRef}
-            type={"text"}
-            className="bg-[#2a3942] rounded-lg w-full px-3 py-3 text-white"
-            placeholder="Mensagem..."
-            onKeyDown={(evt) => changeHandler(evt)}
-          />
-        </div>
+      <div className="flex flex-row gap-x-2 relative items-center px-4 pt-2 h-full w-full">
+        <Input
+          ref={inputRef}
+          type={"text"}
+          placeholder="Mensagem"
+          onKeyDown={(evt) => changeHandler(evt)}
+          className="rounded-full w-[97%] h-9/10"
+        />
 
         <Clip />
 
         <Sender text={false} onRecord={setRecording} onClick={sendMessage} />
-      </>
+      </div>
     );
   };
 
   return (
-    <footer
-      className={`flex w-full items-center ${justify} bg-[#202c33] text-[#8696a0] p-4 gap-3 h-16`}
-    >
+    <footer className={`flex w-full items-center mb-2 ${justify} h-[64px]`}>
       <FooterHandler />
     </footer>
   );
@@ -88,5 +91,7 @@ export const Sender = ({ text, onClick, onRecord }: SenderProps) => {
       />
     );
 
-  return <Send className="cursor-pointer" onClick={onClick} />;
+  return (
+    <Send className="cursor-pointer text-foreground w-fit" onClick={onClick} />
+  );
 };

@@ -21,11 +21,8 @@ export const NewAction = () => {
     <div className="flex flex-col gap-3 absolute right-6 bottom-6">
       {open && <Actions />}
 
-      <Icon
-        onClick={() => setOpen((prev) => !prev)}
-        className="bg-component-button"
-      >
-        <MoreHorizontal className="text-icon" />
+      <Icon onClick={() => setOpen((prev) => !prev)} className="bg-primary">
+        <MoreHorizontal className="text-primary-foreground" />
       </Icon>
     </div>
   );
@@ -52,34 +49,40 @@ const Actions = () => {
         }}
         className="bg-destructive"
       >
-        <LogOut aria-label="Templates" className="text-icon" />
+        <LogOut
+          aria-label="Templates"
+          className="text-destructive-foreground"
+        />
       </Icon>
       {/* Profile */}
       <Icon
         onClick={() => {
           navigate("/usuario");
         }}
-        className="bg-component-button"
+        className="bg-primary"
       >
-        <User aria-label="Templates" className="text-icon" />
+        <User aria-label="Templates" className="text-primary-foreground" />
       </Icon>
       {/* Company */}
       <Icon
         onClick={() => {
           navigate("/empresa");
         }}
-        className="bg-component-button"
+        className="bg-primary"
       >
-        <Building2 aria-label="Templates" className="text-icon" />
+        <Building2 aria-label="Templates" className="text-primary-foreground" />
       </Icon>
       {/* Template */}
       <Icon
         onClick={() => {
           navigate("/templates");
         }}
-        className="bg-component-button"
+        className="bg-primary"
       >
-        <BookTemplate aria-label="Templates" className="text-icon" />
+        <BookTemplate
+          aria-label="Templates"
+          className="text-primary-foreground"
+        />
       </Icon>
       {/* New Conversation */}
       <NewConversation />

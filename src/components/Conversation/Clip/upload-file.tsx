@@ -3,6 +3,7 @@ import {
   AlertDialog,
   AlertDialogTrigger,
   AlertDialogContent,
+  AlertDialogCancel,
 } from "../../ui/alert-dialog";
 import { Check, File, ImagePlus, Upload, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { addMessage } from "@/store/messages";
 import { baseUrl } from "@/services";
 import { useUserHeaders } from "@/hooks";
+import { Button } from "@/components/ui";
 
 export type UploadFileProps = {
   to?: string;
@@ -24,12 +26,15 @@ export const UploadFile = ({ setOpen, to }: UploadFileProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Icon className="bg-green-500">
-          <File aria-label="Upload de documentos" />
+        <Icon>
+          <File
+            className="text-popover-foreground"
+            aria-label="Upload de documentos"
+          />
         </Icon>
       </AlertDialogTrigger>
 
-      <AlertDialogContent>
+      <AlertDialogContent className="w-[350px] rounded-md">
         <div className="flex flex-col gap-3 items-center justify-center">
           <UploaderContent
             to={to}
@@ -38,6 +43,7 @@ export const UploadFile = ({ setOpen, to }: UploadFileProps) => {
             setOpen={setOpen}
           />
         </div>
+        <AlertDialogCancel>Fechar</AlertDialogCancel>
       </AlertDialogContent>
     </AlertDialog>
   );
@@ -81,7 +87,7 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
   const file = input.files[0];
   const src = URL.createObjectURL(file);
 
-  const sendImage = async () => {
+  const sendDocument = async () => {
     if (!file) return;
 
     const data = new FormData();
@@ -105,7 +111,7 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center justify-center">
+    <div className="flex flex-col gap-3 items-center justify-center w-full">
       <div className="flex flex-col gap-1 border-2 border-[#8696a0] rounded-lg px-3 py-3">
         <h1>Documento selecionado: </h1>
 
@@ -114,28 +120,19 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
         </a>
       </div>
 
-      <input
-        className="w-full bg-transparent border-2 border-[#8696a0] rounded-lg px-3 py-3 "
-        placeholder="legenda para o documento"
+      <Input
+        placeholder="Legenda para o documento"
         onChange={(e) => setCaption(e.target.value)}
       />
 
-      <div className="flex gap-3">
-        <Icon
-          className="border-2 text-red-500 border-red-500"
-          onClick={() => setOpen(false)}
-        >
-          <X />
-        </Icon>
-        <Icon
-          className="bg-green-500"
-          onClick={() => {
-            sendImage();
-          }}
-        >
-          <Check />
-        </Icon>
-      </div>
+      <Button
+        className="w-full"
+        onClick={() => {
+          sendDocument();
+        }}
+      >
+        Enviar
+      </Button>
     </div>
   );
 };

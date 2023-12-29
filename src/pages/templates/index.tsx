@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { baseUrl } from "@/services";
 import { useUserHeaders } from "@/hooks";
 import { Icon } from "@/components/ui/icon";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Template() {
   const dispatch = useDispatch();
@@ -25,25 +26,28 @@ export default function Template() {
   }, [user]);
 
   return (
-    <div className="bg-background-dark flex flex-col h-screen w-full">
+    <div className="bg-background flex flex-col h-screen w-full">
       <div className="h-[53px] w-full">
-        <div className="bg-component-pageHeader fixed gap-y-2 h-fit px-4 top-0 w-full z-20">
-          <h2 className="flex flex-row gap-x-2 h-[53px] items-center place-content-between text-typography-embedded-dark w-full">
+        <div className="fixed h-fit px-4 top-0 w-full z-20 shadow-lg shadow-background">
+          <h2 className="flex flex-row gap-x-2 h-[53px] items-center place-content-between w-full">
             <div className="flex flex-row gap-x-4 items-center">
-              <ArrowLeft className="text-icon" onClick={handleGoBack} />
-              <p className="font-semibold text-typography-embedded-dark text-lg">
-                Templates
-              </p>
+              <ArrowLeft
+                className="text-foreground hover:cursor-pointer"
+                onClick={handleGoBack}
+              />
+              <p className="font-semibold text-foreground text-lg">Templates</p>
             </div>
           </h2>
         </div>
       </div>
 
-      <TemplateCards />
+      <ScrollArea className="h-[calc(100vh-53px)]">
+        <TemplateCards />
+      </ScrollArea>
 
-      <Icon className="bg-component-button bottom-6 right-6 fixed">
+      <Icon className="bg-primary bottom-6 right-6 fixed">
         <Plus
-          className="text-icon"
+          className="text-primary-foreground"
           onClick={() => {
             navigate(`/templates/create`);
           }}

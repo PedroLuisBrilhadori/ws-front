@@ -13,7 +13,7 @@ export const TemplateCards = ({ onClick }: TemplateCardProps) => {
   // TODO: corrigir o scroll ficando atrás do header
 
   return (
-    <div className="flex flex-col gap-2 overflow-y-auto px-2 pt-8 pb-24">
+    <div className="flex flex-wrap gap-y-2 place-content-evenly pt-4 pb-24">
       {templates.map((template) => (
         <div
           key={`template-card${template.id}`}

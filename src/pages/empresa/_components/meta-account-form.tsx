@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Building2,
   Check,
@@ -49,8 +50,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
 
       toast({
         title: "Sucesso",
-        description: "Conta atualizada com sucesso.",
-        variant: "success",
+        description: "A conta foi atualizada.",
       });
     } catch (error: any) {
       toast({
@@ -72,8 +72,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
 
       toast({
         title: "Sucesso",
-        description: "Conta excluida com sucesso.",
-        variant: "success",
+        description: "A conta foi excluida",
       });
     } catch (error: any) {
       toast({
@@ -91,16 +90,16 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
   }, [metaAccount, reset]);
 
   return (
-    <div className="bg-component-card h-fit p-4 rounded-md w-full min-w-[280px] max-w-[350px]">
-      <Form {...form}>
-        <form className="flex flex-col gap-3 justify-center relative ">
+    <Card className="w-full flex flex-col gap-3 pt-4 relative">
+      <CardContent>
+        <Form {...form}>
           <div
-            className={`absolute flex flex-row gap-4 top-[-5px] ${
-              busy ? "right-[15px]" : "right-0"
+            className={`absolute flex flex-row gap-4 top-[10px] ${
+              busy ? "right-[15px]" : "right-[24px]"
             }`}
           >
             {busy ? (
-              <Loader2 className="animate-spin text-info" />
+              <Loader2 className="animate-spin text-card-foreground" />
             ) : (
               <>
                 <Trash
@@ -119,7 +118,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                   }}
                   className={`${
                     deleting ? "flex" : "hidden"
-                  } hover:cursor-pointer text-success`}
+                  } hover:cursor-pointer text-primary`}
                 />
                 <X
                   className={`${
@@ -134,7 +133,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                   }}
                   className={` ${deleting ? "hidden" : "flex "} ${
                     editting ? "" : "hover:cursor-pointer"
-                  } text-icon`}
+                  } text-card-foreground`}
                 />
                 <Check
                   onClick={() => {
@@ -143,7 +142,7 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
                   }}
                   className={`${
                     editting ? "flex" : "hidden"
-                  } hover:cursor-pointer text-success`}
+                  } hover:cursor-pointer text-primary`}
                 />
                 <X
                   className={`${
@@ -163,12 +162,12 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
             name="numberId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-typography-embedded-dark">
+                <FormLabel className="text-card-foreground">
                   Número da empresa
                 </FormLabel>
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
-                    <Phone className="text-icon" />
+                    <Phone className="text-card-foreground" />
                     <Input type="phone" {...field} disabled={!editting} />
                   </div>
                 </FormControl>
@@ -182,12 +181,12 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
             name="accountId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-typography-embedded-dark">
+                <FormLabel className="text-card-foreground">
                   ID da conta WhatsApp Business
                 </FormLabel>
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
-                    <Building2 className="text-icon" />
+                    <Building2 className="text-card-foreground" />
                     <Input {...field} disabled={!editting} />
                   </div>
                 </FormControl>
@@ -201,12 +200,12 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
             name="token"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-typography-embedded-dark">
+                <FormLabel className="text-card-foreground">
                   Token para cloud WhatsApp API
                 </FormLabel>
                 <FormControl>
                   <div className="flex flex-row gap-x-4 h-fit items-center">
-                    <Cloud className="text-icon" />
+                    <Cloud className="text-card-foreground" />
                     <Input {...field} disabled={!editting} />
                   </div>
                 </FormControl>
@@ -214,8 +213,8 @@ export function MetaAccountForm({ metaAccount }: { metaAccount: MetaAccount }) {
               </FormItem>
             )}
           />
-        </form>
-      </Form>
-    </div>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }

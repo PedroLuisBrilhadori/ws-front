@@ -1,6 +1,13 @@
 import { baseUrl } from "@/services";
 import { Button, Input } from "@/components/ui";
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
   Form,
   FormControl,
   FormField,
@@ -66,63 +73,65 @@ const Login = () => {
   });
 
   return (
-    <div className="bg-background-dark flex h-screen justify-center place-items-center text-typography-embedded-dark w-full">
-      <div className="bg-component-card flex flex-col gap-4 p-4 rounded-md min-w-[280px] max-w-[350px]">
-        <h1 className="font-bold self-center text-typography-embedded-dark text-xl">
-          Login
-        </h1>
-
-        <p className="text-typography-embedded-dark">
-          Realize o login para acessar o sistema
-        </p>
-
-        <Form {...form}>
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-            }}
-            className="flex flex-col gap-y-4"
-          >
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-typography-embedded-dark">
-                    Seu nome
-                  </FormLabel>
-                  <FormControl>
-                    <div className="flex flex-row gap-x-4 h-fit items-center">
-                      <Mail className="text-icon" />
-                      <Input {...field} type={"email"} placeholder="Email" />
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-typography-embedded-dark">
-                    Seu e-mail
-                  </FormLabel>
-                  <FormControl>
-                    <div className="flex flex-row gap-x-4 h-fit items-center">
-                      <LockKeyhole className="text-icon" />
-                      <Input {...field} type={"password"} placeholder="Senha" />
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <Button onClick={() => onSubmitLogin()}>Entrar</Button>
-          </form>
-        </Form>
-      </div>
+    <div className="flex h-screen justify-center place-items-center w-full">
+      <Card className="w-[350px]">
+        <CardHeader>
+          <CardTitle>Login</CardTitle>
+          <CardDescription>
+            Realize o login para acessar o sistema
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+              }}
+              className="flex flex-col gap-y-4"
+            >
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-typography-embedded">
+                      Seu nome
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex flex-row gap-x-4 h-fit items-center">
+                        <Mail className="text-icon" />
+                        <Input {...field} type={"email"} placeholder="Email" />
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-typography-embedded">
+                      Seu e-mail
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex flex-row gap-x-4 h-fit items-center">
+                        <LockKeyhole className="text-icon" />
+                        <Input
+                          {...field}
+                          type={"password"}
+                          placeholder="Senha"
+                        />
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <Button onClick={() => onSubmitLogin()}>Entrar</Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 };

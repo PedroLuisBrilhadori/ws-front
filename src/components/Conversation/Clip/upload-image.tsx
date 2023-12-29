@@ -3,6 +3,7 @@ import {
   AlertDialog,
   AlertDialogTrigger,
   AlertDialogContent,
+  AlertDialogCancel,
 } from "../../ui/alert-dialog";
 import { Check, ImagePlus, Upload, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { addMessage } from "@/store/messages";
 import { baseUrl } from "@/services";
 import { useUserHeaders } from "@/hooks";
+import { Button } from "@/components/ui";
 
 export type UploadImageProps = {
   to?: string;
@@ -24,13 +26,16 @@ export const UploadImage = ({ setOpen, to }: UploadImageProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Icon className="bg-green-500">
-          <ImagePlus aria-label="Upload de imagens" />
+        <Icon className="">
+          <ImagePlus
+            className="text-popover-foreground"
+            aria-label="Upload de imagens"
+          />
         </Icon>
       </AlertDialogTrigger>
 
-      <AlertDialogContent>
-        <div className="flex flex-col gap-3 items-center justify-center">
+      <AlertDialogContent className="w-[350px] rounded-md">
+        <div className="flex flex-col items-center justify-center">
           <UploaderContent
             to={to}
             input={input}
@@ -38,6 +43,7 @@ export const UploadImage = ({ setOpen, to }: UploadImageProps) => {
             setOpen={setOpen}
           />
         </div>
+        <AlertDialogCancel>Fechar</AlertDialogCancel>
       </AlertDialogContent>
     </AlertDialog>
   );
@@ -113,27 +119,20 @@ const ImagePreview = ({ input, setOpen, to }: ImagePreviewProps) => {
         />
       </a>
 
-      <input
-        className="w-full bg-transparent border-2 border-[#8696a0] rounded-lg px-3 py-3 "
-        placeholder="legenda para a imagem"
+      <Input
+        placeholder="Legenda para a imagem"
         onChange={(e) => setCaption(e.target.value)}
       />
 
-      <div className="flex gap-3">
-        <Icon
-          className="border-2 text-red-500 border-red-500"
-          onClick={() => setOpen(false)}
-        >
-          <X />
-        </Icon>
-        <Icon
-          className="bg-green-500"
+      <div className="flex w-full">
+        <Button
           onClick={() => {
             sendImage();
           }}
+          className="w-full"
         >
-          <Check />
-        </Icon>
+          Enviar
+        </Button>
       </div>
     </div>
   );
@@ -149,13 +148,13 @@ const InputImage = ({ onInput }: InputImageProps) => {
       <Input
         id="inputImage"
         placeholder="Escolher imagem"
-        className="bg-[#2a3942] rounded-lg w-full px-3 py-3 text-white hidden"
+        className="bg-[#2a3942] rounded-lg w-full px-3 text-white hidden"
         type="file"
         accept="image/png, image/gif, image/jpeg"
         onInput={onInput}
       />
       <Label htmlFor="inputImage">
-        <div className="flex gap-3 items-center cursor-pointer">
+        <div className="flex items-center cursor-pointer gap-2">
           Escolher uma imagem
           <Upload />
         </div>

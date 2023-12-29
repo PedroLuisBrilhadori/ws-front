@@ -29,7 +29,7 @@ export const DocumentBody = ({
   const [info, setInfo] = useState<MediaInfo>();
   const { headers, user } = useUserHeaders();
 
-  const stype = me ? `bg-[#025144]` : `bg-[#1D282F]`;
+  const stype = me ? `bg-black/20` : `bg-black/20`;
 
   const fetchDocumentInfo = async () => {
     const response = await fetch(`${baseUrl}/public/${message.id}/info`, {
@@ -51,7 +51,7 @@ export const DocumentBody = ({
   if (!info)
     return (
       <div>
-        <div className="cursor-pointer w-[300px] h-[100px] object-cover rounded-sm flex items-center justify-center">
+        <div className="cursor-pointer w-[300px] h-[100px] object-cover rounded-sm flex items-center justify-center ">
           <div className="flex flex-col gap-2 mt-3 justify-center items-center">
             <RefreshCcw
               className="w-[24px] h-[24px]"
@@ -66,7 +66,7 @@ export const DocumentBody = ({
     );
 
   return (
-    <div className="flex flex-col justify-between gap-1">
+    <div className="flex flex-col justify-between gap-1 ">
       <a
         target="_blank"
         href={path}

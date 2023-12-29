@@ -1,8 +1,8 @@
 export type MetaAccount = {
   id: string;
-  accountId: string;
-  numberId: number;
-  token: string;
+  accountId?: string;
+  numberId?: number;
+  token?: string;
 };
 
 export type DeleteMetaAccount = {

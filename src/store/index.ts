@@ -6,6 +6,7 @@ import templateReducer from "./templates";
 import userReducer from "./user";
 import mediaReducer from "./media";
 import metaAccountReducer from "./meta-account";
+import currentMetaAccountReducer from "./current-meta-account";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     user: userReducer,
     media: mediaReducer,
     metaAccount: metaAccountReducer,
+    currentMetaAccount: currentMetaAccountReducer,
   },
 });
 

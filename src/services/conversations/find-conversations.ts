@@ -1,20 +1,18 @@
-import { Conversation, User } from "@/models";
+import { Conversation, MetaAccount, User } from "@/models";
 import { BaseServiceOptions, baseUrl } from "..";
 
 class FindConversationsDto extends BaseServiceOptions {
-  user: User;
+  metaAccount: MetaAccount;
 }
 
 export const findConversations = async ({
   headers,
-  user,
+  metaAccount,
 }: FindConversationsDto): Promise<Conversation[]> => {
-  if (!user?.company?.id) throw new Error("Usuário não pertence a uma empresa");
-
-  const companyId = user.company.id;
+  if (!metaAccount.id) throw new Error("Conta não selecionada");
 
   const response = await fetch(
-    `${baseUrl}/conversations?companyId=${companyId}`,
+    `${baseUrl}/conversations?metaAccountId=${metaAccount.id}`,
     {
       headers,
     }

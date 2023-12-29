@@ -15,7 +15,7 @@ export const MessageItem = ({ conversation, className }: MessageItemProps) => {
   if (conversation?.type == "audio") return <AudioItem />;
 
   return (
-    <span className={`text-[#aebac1] text-sm truncate ${className}`}>
+    <span className={`text-muted-foreground text-sm truncate ${className}`}>
       <TextBody truncate text={conversation.message} />
     </span>
   );
@@ -23,7 +23,7 @@ export const MessageItem = ({ conversation, className }: MessageItemProps) => {
 
 const ImageItem = () => {
   return (
-    <span className="text-[#aebac1] text-sm  truncate flex items-center gap-1">
+    <span className="text-muted-foreground text-sm  truncate flex items-center gap-1">
       <Camera className="w-[14px]" />
       Imagem
     </span>
@@ -32,7 +32,7 @@ const ImageItem = () => {
 
 const DocumentItem = () => {
   return (
-    <span className="text-[#aebac1] text-sm truncate flex items-center gap-1">
+    <span className="text-muted-foreground text-sm truncate flex items-center gap-1">
       <File className="w-[14px]" />
       Documento
     </span>
@@ -41,7 +41,7 @@ const DocumentItem = () => {
 
 const AudioItem = () => {
   return (
-    <span className="text-[#aebac1] text-sm truncate flex items-center gap-1">
+    <span className="text-muted-foreground text-sm truncate flex items-center gap-1">
       <Mic className="w-[14px]" />
       Audio
     </span>

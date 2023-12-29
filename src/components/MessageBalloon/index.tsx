@@ -12,7 +12,9 @@ export default function MessageBalloon(props: MessageBalloonProps) {
   const me = message.me;
 
   const flexAlignItems = me ? "items-end" : "items-start";
-  const backgroundColor = me ? "bg-[#005c4b]" : "bg-[#202c33]";
+  const backgroundColor = me
+    ? "bg-ring !text-ring-foreground"
+    : "bg-secondary !text-secondary-foreground";
   const borderRounded = me ? "rounded-tr-none" : "rounded-tl-none";
 
   const date = new Date(Number(message.timestamp) * 1000);
@@ -27,15 +29,17 @@ export default function MessageBalloon(props: MessageBalloonProps) {
   return (
     <div className={`flex flex-col ${flexAlignItems} mb-3`}>
       <div
-        className={`flex flex-col ${backgroundColor} p-2 text-white rounded-lg ${borderRounded} `}
+        className={`flex flex-col ${backgroundColor} min-w-[100px] max-w-[80%] p-2 text-white rounded-md ${borderRounded}`}
       >
         <div className="max-w-[700px]">
-          <div className="self-start w-full break-words">
+          <div className="self-start w-full break-all">
             <MessageBody message={message} />
           </div>
         </div>
 
-        <div className="self-end text-[hsla(0,0%,100%,0.6)] text-xs">
+        {/* TODO: descobrir por que imagens e documentos recebidos no messageBaloon tem margem inferior menor */}
+
+        <div className="self-end text-foreground/70 text-xs">
           <div className="flex items-center gap-1 justify-between">
             <span>{time}</span>
 

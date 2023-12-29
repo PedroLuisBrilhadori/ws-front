@@ -1,5 +1,12 @@
 import { Component, Template } from "@/models/template";
 import { Check, Loader2, X } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export type TemplateProps = {
   template: Template;
@@ -8,27 +15,20 @@ export type TemplateProps = {
 
 export const TemplateCard = ({ template, className }: TemplateProps) => {
   return (
-    <div
-      className={`flex flex-col gap-3 bg-component-templateCard rounded-md p-4 ${className}`}
-    >
-      <div className="flex justify-between">
-        <h1 className="text-xl font-bold text-typography-embedded-dark">
-          {template.name}
-        </h1>
-      </div>
-
-      <div>
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle> {template.name}</CardTitle>
+      </CardHeader>
+      <CardContent>
         <Components template={template} />
-      </div>
-
-      <div className="flex justify-between">
-        <span className="text-typography-embedded-dark">
-          {template.language}
-        </span>
-
-        <Status status={template.status} />
-      </div>
-    </div>
+      </CardContent>
+      <CardFooter>
+        <div className="flex justify-between w-full">
+          <span className="text-typography-embedded">{template.language}</span>
+          <Status status={template.status} />
+        </div>
+      </CardFooter>
+    </Card>
   );
 };
 
@@ -47,32 +47,23 @@ const Components = ({ template }: TemplateProps) => {
 
 const ComponentType = ({ component }: { component: Component }) => {
   if (component.type === "HEADER")
-    return (
-      <h1 className="font-bold text-typography-embedded-dark">
-        {component.text}
-      </h1>
-    );
+    return <h1 className="font-bold">{component.text}</h1>;
 
-  if (component.type === "BODY")
-    return <p className=" text-typography-embedded-dark">{component.text}</p>;
+  if (component.type === "BODY") return <p>{component.text}</p>;
 
   if (component.type === "FOOTER")
-    return (
-      <span className="italic text-xs text-typography-embedded-dark">
-        {component.text}
-      </span>
-    );
+    return <span className="italic text-xs">{component.text}</span>;
 
   return <div></div>;
 };
 
 const Status = ({ status }: { status: string }) => {
-  if (status === "APPROVED") return <Check className="text-success" />;
+  if (status === "APPROVED") return <Check className="text-primary" />;
 
   if (status === "PENDING")
-    return <Loader2 className="animate-spin text-info" />;
+    return <Loader2 className="animate-spin text-card-foreground" />;
 
   if (status === "REJECTED") return <X className="text-destructive" />;
 
-  return <span className="text-typography-embedded-dark">{status}</span>;
+  return status;
 };
